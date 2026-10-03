@@ -62,7 +62,8 @@
   color: var(--media-ink);
 }
 .hero-intro {
-  max-width: 30ch;
+  max-width: 28rem;
+  text-wrap: pretty;
   color: #dfddd7;
   margin-top: 16px;
   font-size: 16px;
@@ -658,7 +659,7 @@
   }
   .hero-intro {
     margin-top: 16px;
-    max-width: 24ch;
+    max-width: min(100%, 18rem);
   }
   .hero-opening > .scene-link {
     margin-top: 25px;

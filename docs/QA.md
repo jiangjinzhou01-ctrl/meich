@@ -28,3 +28,5 @@ Chromium 本地静态服务使用 /meich 路径与 gzip。axe 采用 WCAG2A/AA �
 Lighthouse 为本地移动设备/网络模拟，服务器和缓存与 GitHub Pages 不完全相同。97 分不等同于真实用户 Core Web Vitals。
 所有导出目标经过检查，外部影片、原站报名和第三方体验有独立可用性与网络条件；上传源码不包含其后台。联系接口未配置时明确不发送，Culture × AI 不调用实时模型，Research Canvas 不是真实扫描系统。
 上线验收应检查 main 提交对应的 GitHub Actions 成功记录，再复查 Pages 上的新 Hero、搜索、案例和 Culture × AI，避免把旧部署作为本轮验证结果。
+
+上线搜索回归：排除推荐案例与通用 CTA 的正文索引，中文博物馆 55 项、英文 museum 62 项；规划馆与广场项目不会因“继续了解”中的其他博物馆而误命中。检查使用真实内容库，结果见 docs/qa/search-regression.json。标题与标签匹配优先排序。

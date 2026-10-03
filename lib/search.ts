@@ -1,8 +1,20 @@
 import { serviceEnglish } from "./english-content";
-import { catalogFor, getSourcePage, type CatalogItem } from "./source";
+import { catalogFor, getSourcePage, type CatalogItem, type SourceBlock } from "./source";
 import { services } from "./content";
 export type SearchKind = "case" | "service" | "research" | "product";
 export type SearchEntry = CatalogItem & { kind: SearchKind; keywords: string };
+function projectText(blocks: SourceBlock[] = []) {
+  const boundary = blocks.findIndex((b) =>
+    /^(LET[’']S TALK|PROJECT NOTES|内容导览|继续了解|Continue exploring)$/i.test(
+      b.text?.trim() || "",
+    ),
+  );
+  return (boundary < 0 ? blocks : blocks.slice(0, boundary))
+    .filter((b) => ["p", "h2", "h3", "ul", "ol"].includes(b.type))
+    .map((b) => [b.text, ...(b.items || [])].filter(Boolean).join(" "))
+    .join(" ")
+    .slice(0, 5000);
+}
 export function searchIndex(english = false): SearchEntry[] {
   const pre = english ? "/en" : "";
   const entries: SearchEntry[] = [];
@@ -21,11 +33,7 @@ export function searchIndex(english = false): SearchEntry[] {
           i.description,
           i.domain,
           ...i.labels,
-          p?.blocks
-            .filter((b) => ["p", "h2", "h3"].includes(b.type))
-            .map((b) => b.text)
-            .join(" ")
-            .slice(0, 2200),
+          projectText(p?.blocks),
           ...Object.values(i.tags).flat(),
         ].join(" "),
       });

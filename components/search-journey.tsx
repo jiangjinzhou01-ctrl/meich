@@ -67,6 +67,13 @@ export function SearchJourney({
       creative: en ? "Cultural & Creative Experiences" : "数字文创",
       operations: en ? "Digital Operations" : "数字运营",
     };
+    const tokens = q.split(/\s+/).filter(Boolean);
+    const relevance = (i: SearchEntry) => tokens.reduce((score, t) => {
+      const contains = (text: string) => text.toLowerCase().includes(t);
+      return score + (contains(i.title) ? 8 : 0)
+        + (contains(i.labels.join(" ") + " " + i.domain) ? 4 : 0)
+        + (contains(i.description) ? 2 : 0);
+    }, 0);
     return items.filter(
       (i) =>
         Object.entries(facets).every(
@@ -76,10 +83,8 @@ export function SearchJourney({
               ? i.domain === (domain[v] || v)
               : (i.tags[k] || []).includes(v)),
         ) &&
-        q
-          .split(/\s+/)
-          .every((t) => (i.keywords + " " + i.title).toLowerCase().includes(t)),
-    );
+        tokens.every((t) => (i.keywords + " " + i.title).toLowerCase().includes(t)),
+    ).sort((a, b) => relevance(b) - relevance(a));
   }, [items, query, en, facets]);
   const results = matches.filter((i) => !filter || i.kind === filter);
   function submit(value = draft) {

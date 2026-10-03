@@ -45,6 +45,7 @@
 
 ## G. Search Journey
 本地索引覆盖标题、说明、标签、领域及原始内容摘要，包含四种类型。输入聚焦后结果轻微降低亮度；关键词提示可直接探索。提交后收起大标题、显示结果数与向下细线；280ms 引导后平滑定位并把焦点交给结果区域。搜索框继续 sticky，关键词写入 URL，可修改、清除、刷新恢复。案例与产品大图，服务与研究编辑式索引；类型计数、无结果重置、加载更多均真实工作。旧产品标签与业务领域 URL 仍兼容。
+上线复查后，索引排除了历史页面末尾的推荐项目和通用联系文案，并按标题、标签和项目说明排序。中文“博物馆”从被推荐内容污染的 143 项缩减到 55 项真实匹配，毕节规划馆与韶山广场不再因其他项目推荐而误命中。中英文都做了这一回归检查。
 
 ## H. Dead interaction 处理
 导航与内容跳转使用 Link，阶段切换、筛选、主题、视频、菜单使用 Button。视觉箭头随真实操作移动。服务链接进入具体领域与案例；案例下一项目、完整档案、研究公开来源均有目标。菜单用原生 dialog，支持关闭、Esc、焦点及滚动恢复。电话 tel、地址复制、回顶、语言与主题保留有效行为。联系表单不伪装已送达：未配置 CONTACT_ENDPOINT 时仅整理需求并提供原站正式联系渠道；原站报名与体验入口继续保留。未捏造新的邮箱、后台或实时 AI。
@@ -59,7 +60,7 @@
 实测 320、360、390、412、430、768、1024、1280、1440、1920px，共 90 个主要页面/宽度组合，无横向溢出、失效已加载图片、重复 ID 或多 H1。手机首屏文字进入画面底部、服务索引先选择再阅读、案例全宽媒体与窄正文交替、AI 控件支持触控。菜单主次分层、短屏可滚动；搜索输入不依赖 hover，类型筛选横向可触达。保留完整内容与项目图片。
 
 ## L. 性能
-响应式图片使用真实存在的 640/960 WebP 与 AVIF；手机 Hero 使用真实照片的 640×959 竖构图（约 30KB），明确尺寸、首屏 high priority、次屏 lazy。中文系统字体，本地英文 Latin 子集；Logo 独立缓存。品牌完整影片约 97MB，仅打开弹层后请求 metadata，不在首屏自动下载。首页构建 First Load JS 112kB。当前本地 Lighthouse 移动模拟：Performance 97 / Accessibility 100 / Best Practices 100 / SEO 100；LCP 2.7s、CLS 0、TBT 30ms、传输约 520KiB。分数是本地模拟，不代表线上所有网络设备。
+响应式图片使用真实存在的 640/960 WebP 与 AVIF；手机 Hero 使用真实照片的 640×959 竖构图（约 30KB），明确尺寸、首屏 high priority、次屏 lazy。中文系统字体，本地英文 Latin 子集；Logo 独立缓存。品牌完整影片约 97MB，仅打开弹层后请求 metadata，不在首屏自动下载。首页构建 First Load JS 113kB。本地 Lighthouse 移动模拟：Performance 97 / Accessibility 100 / Best Practices 100 / SEO 100；LCP 2.7s、CLS 0、TBT 30ms、传输约 520KiB。分数是本地模拟，不代表线上所有网络设备；线上复查后的搜索修正另有构建与回归记录。
 
 ## M. SEO
 主路径 title、description、canonical、OpenGraph、Twitter、favicon、robots、sitemap；Organization、WebSite、BreadcrumbList；图片 alt、单 H1、语义章节、中英文 lang 与有效对应页 hreflang。569 个导出页面已检查站内目标和媒体 srcset，旧路由 canonical 化。404 错误页不设置内容 canonical。GitHub Pages 子路径资源与 /meich 域名信息在构建时同步。

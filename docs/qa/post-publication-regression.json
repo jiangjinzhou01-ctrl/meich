@@ -1,0 +1,61 @@
+{
+  "responsive": [
+    {
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "width": 360,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "width": 412,
+      "overflow": false
+    },
+    {
+      "width": 430,
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "overflow": false
+    },
+    {
+      "width": 1280,
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "width": 1920,
+      "overflow": false
+    }
+  ],
+  "search": [
+    {
+      "lang": "Chinese",
+      "term": "博物馆",
+      "count": 55,
+      "first": "/meich/cases/brochure-2026-changsha-museum/",
+      "unrelatedExcluded": true
+    },
+    {
+      "lang": "/en",
+      "term": "museum",
+      "count": 62,
+      "first": "/meich/en/cases/brochure-2026-changsha-museum/",
+      "unrelatedExcluded": true
+    }
+  ],
+  "errors": []
+}

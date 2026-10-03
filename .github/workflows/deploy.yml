@@ -36,6 +36,7 @@ jobs:
           python scripts/sync-source.py
       - run: npm ci
       - run: npm run typecheck
+      - run: npm run check:search
       - run: npm run build
         env:
           NEXT_PUBLIC_BASE_PATH: /meich
