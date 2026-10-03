@@ -14,12 +14,13 @@ npm run dev
 
 ```bash
 npm run typecheck
+npm run check:search
 NEXT_PUBLIC_BASE_PATH=/meich NEXT_PUBLIC_SITE_URL=https://jiangjinzhou01-ctrl.github.io/meich npm run build
 npm run check:export
 NEXT_PUBLIC_BASE_PATH=/meich npm start
 ```
-打开 http://localhost:3000/meich/。根域部署不设置 base path；改变路径或域名必须重新构建。
-推送 main 后 .github/workflows/deploy.yml 自动检查并发布 out/。仓库 Settings → Pages 使用 GitHub Actions。部署地址：https://jiangjinzhou01-ctrl.github.io/meich/。
+打开 <http://localhost:3000/meich/>。根域部署不设置 base path；改变路径或域名必须重新构建。
+推送 main 后 .github/workflows/deploy.yml 自动检查并发布 out/。仓库 Settings → Pages 使用 GitHub Actions。部署地址：<https://jiangjinzhou01-ctrl.github.io/meich/>。
 
 ## 文档
 - [完整 A–P 交付说明](docs/DELIVERY.md)

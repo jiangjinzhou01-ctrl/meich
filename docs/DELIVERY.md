@@ -81,4 +81,4 @@
 2400–3200px 无水印旗舰摄影与手机竖构图；6–12 秒静音 Case Film；真实扫描/点云/网格和公开可用研究资料；项目研究、平面图、草图、职责、实施与验收资料；有效资质、标准、专利与奖项清单；正式品牌规范与视觉资产授权。以上未用伪造素材填充。
 
 ## 发布状态
-GitHub 源码库为 jiangjinzhou01-ctrl/meich，Pages 地址为 https://jiangjinzhou01-ctrl.github.io/meich/。自动 Pages workflow 在部署前执行 typecheck、build、check:export。发布版本以 main 提交和对应 Actions 成功记录为准；本报告的性能分数来自本地验收。
+GitHub 源码库为 jiangjinzhou01-ctrl/meich，Pages 地址为 <https://jiangjinzhou01-ctrl.github.io/meich/>。自动 Pages workflow 在部署前执行 typecheck、check:search、build、check:export。发布版本以 main 提交和对应 Actions 成功记录为准；本报告的性能分数来自本地验收。
