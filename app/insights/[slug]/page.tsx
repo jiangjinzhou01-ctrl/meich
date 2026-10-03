@@ -1,8 +1,12 @@
+import { aliases, canonicalPath } from "@/lib/routes";
+import { pageMetadata } from "@/lib/metadata";
+import { StaticRedirect } from "@/components/static-redirect";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { sourcePages, getSourcePage } from "@/lib/source";
+import { SourceContent } from "@/components/source-content";
 import { SourcePageView } from "@/components/source-page";
 import { articles, siteUrl, sourceSite, asset } from "@/lib/content";
 import { PageHero, ContactCTA } from "@/components/ui";
@@ -21,34 +25,26 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const a = articles.find((a) => a.slug === slug);
-  if (!a) {
-    const p = getSourcePage(`/insights/${slug}`);
-    return {
-      title: p?.title,
-      description: p?.description,
-      alternates: { canonical: `${siteUrl}/insights/${slug}/` },
-      openGraph: {
-        title: p?.title,
-        description: p?.description,
-        images: p?.blocks.find((b) => b.type === "image")?.src
-          ? [p.blocks.find((b) => b.type === "image")!.src!]
-          : [],
-      },
-    };
-  }
+  const p = getSourcePage(`/insights/${slug}`);
+  const title = a?.title || p?.title || "洞察与动态";
+  const description = a?.description || p?.description || title;
+  const metadata = pageMetadata(title, description, `/insights/${slug}/`);
+  const image = a?.image
+    ? `${siteUrl}${a.image}`
+    : p?.blocks.find((b) => b.type === "image")?.src;
   return {
-    title: a?.title,
-    description: a?.description,
-    alternates: { canonical: `${siteUrl}/insights/${slug}/` },
+    ...metadata,
+    robots: aliases[`/insights/${slug}`]
+      ? { index: false, follow: true }
+      : undefined,
     openGraph: {
-      title: a?.title,
-      description: a?.description,
-      images: a?.image ? [`${siteUrl}${a.image}`] : [`${siteUrl}/og.png`],
+      ...metadata.openGraph,
+      type: "article",
+      images: image ? [image] : [`${siteUrl}/og.png`],
     },
     twitter: {
-      title: a?.title,
-      description: a?.description,
-      images: a?.image ? [`${siteUrl}${a.image}`] : [`${siteUrl}/og.png`],
+      ...metadata.twitter,
+      images: image ? [image] : [`${siteUrl}/og.png`],
     },
   };
 }
@@ -59,6 +55,8 @@ export default async function Article({
 }) {
   const { slug } = await params;
   const a = articles.find((a) => a.slug === slug);
+  if (aliases[`/insights/${slug}`])
+    return <StaticRedirect to={canonicalPath(`/insights/${slug}/`)} />;
   if (!a) {
     const p = getSourcePage(`/insights/${slug}`);
     if (!p) notFound();
@@ -102,6 +100,17 @@ export default async function Article({
               阅读官网原文 ↗
             </a>
           </p>
+        )}
+        {a.source && getSourcePage(a.source) && (
+          <section className="article-archive case-archive">
+            <details>
+              <summary>查阅完整原始报道</summary>
+              <SourceContent
+                page={getSourcePage(a.source)!}
+                idPrefix="article-archive-"
+              />
+            </details>
+          </section>
         )}
         <Link href="/insights/" className="text-link">
           返回全部洞察

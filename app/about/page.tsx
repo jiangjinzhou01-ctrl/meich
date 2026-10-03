@@ -110,7 +110,7 @@ export default function About() {
           <p className="about-research-note">
             尊重内容的来处，关注技术的适用性，在开放协作中找到新的表达。
           </p>
-          <Button href="/technology/" secondary>
+          <Button href="/research/technology/" secondary>
             了解研发与能力
           </Button>
         </div>
@@ -119,7 +119,7 @@ export default function About() {
         <section className="container company-archive" id="profile">
           <details>
             <summary>进一步了解美创：创始人、专家团队、资质与荣誉</summary>
-            <SourceContent page={source} />
+            <SourceContent page={source} excludeIds={["profile"]} />
           </details>
         </section>
       )}

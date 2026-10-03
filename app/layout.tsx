@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
+import localFont from "next/font/local";
+const GeistSans = localFont({
+  src: "../public/fonts/mgc-geist-latin.woff2",
+  variable: "--font-geist-sans",
+  weight: "100 900",
+  display: "swap",
+  preload: true,
+});
 import { Navbar, Footer, MotionProvider } from "@/components/shell";
 import { company, siteUrl, asset } from "@/lib/content";
 import "./globals.css";
@@ -7,7 +14,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: `美创数字 · ${company}`, template: `%s · 美创数字` },
   description:
-    "湖南美创数字科技有限公司，专注文化与科技融合。数字展示、数字文博、数字文创与数字运营，让文化成为可感知的体验。",
+    "湖南美创数字科技有限公司，专注文化与科技融合。连接文化研究、空间设计、数字技术与 AI，让文化成为可感知、可参与的体验。",
   icons: { icon: asset("/favicon.svg") },
   openGraph: {
     type: "website",
@@ -74,7 +81,7 @@ export default function RootLayout({
                   "@type": "WebSite",
                   name: company,
                   url: siteUrl,
-                  inLanguage: "zh-CN",
+                  inLanguage: ["zh-CN", "en"],
                 },
               ],
             }),

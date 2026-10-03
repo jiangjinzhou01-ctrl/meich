@@ -1,0 +1,338 @@
+.search-journey {
+  scroll-margin-top: 100px;
+}
+.search-heading {
+  margin-bottom: 45px;
+}
+.search-heading h2 {
+  font-size: clamp(28px, 3vw, 45px);
+  line-height: 1.5;
+}
+.search-heading p {
+  margin-top: 20px;
+  font-size: 16px;
+}
+.search-sticky {
+  position: sticky;
+  top: var(--nav-height);
+  z-index: 10;
+  padding: 30px 0 22px;
+  background: var(--bg);
+  transition: padding var(--normal);
+}
+.journey-submitted .search-heading {
+  display: none;
+}
+.journey-form {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 15px;
+  transition: border-color var(--fast);
+}
+.journey-focus .journey-form {
+  border-color: var(--accent);
+}
+.journey-form input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  height: 75px;
+  font-size: clamp(22px, 2.4vw, 38px);
+  outline: none;
+}
+.journey-form input::placeholder {
+  color: var(--muted);
+}
+.journey-submit {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 14px;
+}
+.journey-submit svg {
+  transition: transform var(--fast);
+}
+.journey-submit:hover svg {
+  transform: translateY(4px);
+}
+.search-suggestions {
+  display: flex;
+  gap: 10px 28px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+.search-suggestions button {
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.search-suggestions button:hover {
+  color: var(--accent-ink);
+}
+.search-guidance {
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  padding-block: 28px 35px;
+}
+.search-guidance i {
+  display: block;
+  width: 1px;
+  height: 55px;
+  background: var(--border);
+  margin: 12px auto 0;
+  transform-origin: top;
+}
+.search-guidance.is-guiding i {
+  animation: guide 0.28s var(--ease) both;
+}
+@keyframes guide {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+.journey-results {
+  scroll-margin-top: 110px;
+  outline: none;
+}
+.journey-status {
+  padding-block: 18px 30px;
+}
+.journey-status > p {
+  font-size: 15px;
+}
+.result-types {
+  display: flex;
+  gap: 10px 25px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.result-types button {
+  min-height: 44px;
+  border-bottom: 1px solid transparent;
+  font-size: 14px;
+}
+.result-types button[aria-pressed="true"] {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+.result-types small {
+  margin-left: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.journey-results-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px 35px;
+}
+.journey-result {
+  min-width: 0;
+  animation: result-in 0.6s var(--ease) var(--result-delay) both;
+}
+.result-image {
+  overflow: hidden;
+  background: var(--surface);
+  aspect-ratio: 1.6;
+}
+.result-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s var(--ease);
+}
+.journey-result:hover .result-image img {
+  transform: scale(1.03);
+}
+.result-copy {
+  padding-top: 20px;
+}
+.result-copy > span {
+  font-size: 12px;
+  color: var(--muted);
+}
+.result-copy h3 {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  font-size: clamp(22px, 2vw, 30px);
+  line-height: 1.5;
+  margin-top: 10px;
+}
+.result-copy h3 svg {
+  flex-shrink: 0;
+  transition: transform var(--fast);
+}
+.journey-result:hover h3 svg {
+  transform: translate(3px, -3px);
+}
+.result-copy p {
+  font-size: 16px;
+  line-height: 1.9;
+  margin-top: 15px;
+}
+.result-service,
+.result-research {
+  grid-column: 1/-1;
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+}
+.result-service .result-copy,
+.result-research .result-copy {
+  display: grid;
+  grid-template-columns: 150px 1fr 1fr;
+  gap: 30px;
+  align-items: start;
+}
+.result-service h3,
+.result-research h3,
+.result-service p,
+.result-research p {
+  margin-top: 0;
+}
+.journey-empty {
+  padding: 70px 0;
+}
+.journey-empty p {
+  margin-top: 18px;
+}
+.journey-empty .text-link,
+.results-more {
+  margin-top: 28px;
+}
+.journey-facets {
+  border-bottom: 1px solid var(--border);
+  padding-block: 20px;
+}
+.journey-facets summary {
+  min-height: 44px;
+  font-size: 15px;
+}
+.journey-facets > div {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 24px;
+  padding-block: 20px;
+}
+.journey-facets label {
+  font-size: 14px;
+}
+.journey-facets select {
+  width: 100%;
+  display: block;
+  background: var(--bg);
+  color: var(--ink);
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  min-height: 48px;
+  margin-top: 8px;
+  font-size: 16px;
+}
+#product-library,
+#case-results,
+#library,
+#directions,
+#projects {
+  scroll-margin-top: 100px;
+}
+@keyframes result-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (max-width: 767px) {
+  .search-sticky {
+    padding-top: 18px;
+  }
+  .search-heading {
+    margin-bottom: 25px;
+  }
+  .journey-form {
+    gap: 12px;
+    padding-bottom: 8px;
+  }
+  .journey-form > svg {
+    width: 19px;
+  }
+  .journey-form input {
+    height: 55px;
+    font-size: 19px;
+  }
+  .journey-submit {
+    padding-left: 5px;
+    gap: 0;
+  }
+  .journey-submit span {
+    display: none;
+  }
+  .journey-form .icon-button {
+    width: 32px;
+    min-width: 32px;
+  }
+  .search-suggestions {
+    gap: 6px 18px;
+    margin-top: 8px;
+  }
+  .search-suggestions button {
+    font-size: 13px;
+  }
+  .journey-results {
+    scroll-margin-top: 105px;
+  }
+  .journey-results-list {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+  .result-copy h3 {
+    font-size: 23px;
+  }
+  .result-types {
+    gap: 5px 18px;
+  }
+  .result-service .result-copy,
+  .result-research .result-copy {
+    display: block;
+  }
+  .result-service h3,
+  .result-research h3 {
+    margin-top: 10px;
+  }
+  .result-copy p {
+    font-size: 16px;
+  }
+  .search-guidance {
+    padding-block: 15px 20px;
+  }
+  .search-heading h2 {
+    font-size: 29px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .journey-result,
+  .search-guidance.is-guiding i {
+    animation: none;
+  }
+  .journey-result:hover .result-image img {
+    transform: none;
+  }
+}
+
+.journey-results{transition:opacity var(--fast)}
+.journey-focus .journey-results{opacity:.4}
+main:has(.journey-focus) .service-index{opacity:.7;transition:opacity var(--fast)}

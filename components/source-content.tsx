@@ -1,4 +1,5 @@
 import Link from "next/link";
+import {canonicalPath} from "@/lib/routes";
 import {
   sourceImage,
   sourceLink,
@@ -9,15 +10,19 @@ import { sourceSite } from "@/lib/content";
 export function SourceContent({
   page,
   blocks = page.blocks,
+  excludeIds = [],
+  idPrefix = "",
 }: {
   page: SourcePage;
   blocks?: SourceBlock[];
+  excludeIds?: string[];
+  idPrefix?: string;
 }) {
-  const usedIds = new Set<string>();
+  const usedIds = new Set<string>(excludeIds);
   function headingId(id?: string) {
     if (!id || usedIds.has(id)) return undefined;
     usedIds.add(id);
-    return id;
+    return `${idPrefix}${id}`;
   }
   const cardTitles = new Set(page.cards.map((c) => c.title));
   return (
@@ -140,7 +145,12 @@ export function SourceContent({
           );
         if (b.type === "link" && b.href) {
           if (page.cards.some((c) => b.href?.endsWith(c.path))) return null;
-          const href = sourceLink(b.href);
+          let href = sourceLink(b.href);
+          const fragment = href.split("#")[1];
+          const targetPath = href.split(/[?#]/)[0];
+          if (fragment && (href.startsWith("#") || (href.startsWith("/") && canonicalPath(targetPath) === canonicalPath(page.path)))) {
+            href = `#${idPrefix}${fragment}`;
+          }
           const external = /^https?:/.test(href);
           return (
             <p key={key}>

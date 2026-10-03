@@ -1,0 +1,189 @@
+[
+  {
+    "route": "/",
+    "w": 1440,
+    "selector": ".reel-scene",
+    "overflow": false,
+    "images": [
+      {
+        "src": "http://127.0.0.1:3025/meich/brand/liye-cinema.avif",
+        "width": 1080,
+        "height": 659
+      }
+    ]
+  },
+  {
+    "route": "/",
+    "w": 1440,
+    "selector": ".selected-project-0",
+    "overflow": false,
+    "images": [
+      {
+        "src": "http://127.0.0.1:3025/meich/brand/liye.avif",
+        "width": 1080,
+        "height": 651
+      }
+    ]
+  },
+  {
+    "route": "/",
+    "w": 390,
+    "selector": ".cinematic-hero",
+    "overflow": false,
+    "images": [
+      {
+        "src": "http://127.0.0.1:3025/meich/brand/gaomiao-portrait.avif",
+        "width": 640,
+        "height": 959
+      }
+    ]
+  },
+  {
+    "route": "/services/",
+    "w": 1440,
+    "selector": ".service-index",
+    "overflow": false,
+    "images": [
+      {
+        "src": "http://127.0.0.1:3025/meich/brand/gaomiao.webp",
+        "width": 1920,
+        "height": 959
+      },
+      {
+        "src": "http://127.0.0.1:3025/meich/brand/liye.webp",
+        "width": 1080,
+        "height": 651
+      },
+      {
+        "src": "http://127.0.0.1:3025/meich/brand/creative.webp",
+        "width": 626,
+        "height": 445
+      },
+      {
+        "src": "http://127.0.0.1:3025/meich/brand/operations.webp",
+        "width": 768,
+        "height": 432
+      }
+    ]
+  },
+  {
+    "route": "/cases/liye-qin-slips/",
+    "w": 1440,
+    "selector": ".case-film-hero",
+    "overflow": false,
+    "images": [
+      {
+        "src": "http://127.0.0.1:3025/meich/brand/liye.avif",
+        "width": 1080,
+        "height": 651
+      }
+    ]
+  },
+  {
+    "route": "/cases/liye-qin-slips/",
+    "w": 1440,
+    "selector": ".case-readable",
+    "overflow": false,
+    "images": [
+      {
+        "src": "http://127.0.0.1:3025/meich/brand/liye-cinema.avif",
+        "width": 1080,
+        "height": 659
+      }
+    ]
+  },
+  {
+    "route": "/culture-ai/",
+    "w": 1440,
+    "selector": ".installation-scene",
+    "overflow": false,
+    "images": [
+      {
+        "src": "http://127.0.0.1:3025/meich/brand/liye-details.webp",
+        "width": 1440,
+        "height": 1018
+      },
+      {
+        "src": "http://127.0.0.1:3025/meich/brand/liye-details.webp",
+        "width": 1440,
+        "height": 1018
+      },
+      {
+        "src": "http://127.0.0.1:3025/meich/brand/cultural-study.avif",
+        "width": 1536,
+        "height": 1024
+      },
+      {
+        "src": "http://127.0.0.1:3025/meich/brand/liye-cinema.avif",
+        "width": 1080,
+        "height": 659
+      }
+    ]
+  },
+  {
+    "route": "/en/",
+    "w": 320,
+    "selector": ".cinematic-hero",
+    "overflow": false,
+    "images": [
+      {
+        "src": "http://127.0.0.1:3025/meich/brand/gaomiao-portrait.avif",
+        "width": 640,
+        "height": 959
+      }
+    ]
+  },
+  {
+    "route": "/en/services/",
+    "w": 320,
+    "selector": ".service-index",
+    "overflow": false,
+    "images": [
+      {
+        "src": "http://127.0.0.1:3025/meich/brand/gaomiao.webp",
+        "width": 1920,
+        "height": 959
+      },
+      {
+        "src": "http://127.0.0.1:3025/meich/brand/liye.webp",
+        "width": 1080,
+        "height": 651
+      },
+      {
+        "src": "http://127.0.0.1:3025/meich/brand/creative.webp",
+        "width": 626,
+        "height": 445
+      },
+      {
+        "src": "http://127.0.0.1:3025/meich/brand/operations.webp",
+        "width": 768,
+        "height": 432
+      }
+    ]
+  },
+  {
+    "route": "/en/cases/brochure-2026-liye-qin-slips/",
+    "w": 320,
+    "selector": ".case-film-hero",
+    "overflow": false,
+    "images": [
+      {
+        "src": "http://127.0.0.1:3025/meich/brand/liye.webp",
+        "width": 1494,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "name": "Legacy product facet",
+    "results": 9
+  },
+  {
+    "name": "No JS homepage readable",
+    "passed": true
+  },
+  {
+    "name": "Animated search scroll",
+    "passed": true
+  }
+]

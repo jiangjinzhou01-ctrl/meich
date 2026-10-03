@@ -1,17 +1,22 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import { Search, X } from "lucide-react";
 import type { CatalogItem, CatalogFilter } from "@/lib/source";
 export function Catalog({
   items,
   filters = [],
   english = false,
+  id = "catalog-results",
+  searchLabel,
 }: {
   items: CatalogItem[];
   filters?: CatalogFilter[];
   english?: boolean;
+  id?: string;
+  searchLabel?: string;
 }) {
+  const searchId = useId();
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<Record<string, string>>({});
   const [limit, setLimit] = useState(12);
@@ -73,7 +78,7 @@ export function Catalog({
   const active =
     Object.entries(selected).some(([k, v]) => k !== "q" && v) || query;
   return (
-    <div className="catalog" id="catalog-results">
+    <div className="catalog" id={id}>
       <div className="catalog-top">
         <div
           className="catalog-domains"
@@ -98,16 +103,17 @@ export function Catalog({
         <form
           className="catalog-search"
           role="search"
+          aria-label={searchLabel || (english ? "Search catalog" : "搜索目录")}
           onSubmit={(e) => {
             e.preventDefault();
             update("q", query);
           }}
         >
-          <label className="sr-only" htmlFor="catalog-search">
+          <label className="sr-only" htmlFor={searchId}>
             {english ? "Search" : "搜索目录"}
           </label>
           <input
-            id="catalog-search"
+            id={searchId}
             value={query}
             onChange={(e) => {
               setQuery(e.target.value);

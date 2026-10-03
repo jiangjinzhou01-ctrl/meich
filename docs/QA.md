@@ -1,18 +1,30 @@
-# 质量验证记录
+# 当前版本验收
+日期：2026-10-03。测试生产静态导出，真实 Chromium 浏览器；不以阅读源码代替体验。
+\n## 结果
+| 检查 | 结果 |
+| --- | --- |
+| TypeScript | 通过 |
+| Production build | 通过，569 个可检查 HTML 页面 |
+| 站内链接 / 图片 | 0 失效 |
+| 本地 srcset / 锚点 | 0 失效 |
+| 响应式 | 10 宽度 × 9 页面 = 90 组，通过 |
+| 核心交互 | 8 项，通过 |
+| 双主题无障碍 | 5 页面 × light/dark = 10 次 axe，0 违规 |
+| 运行错误 | 0 |
+| 补充验证 | 真实媒体加载、旧产品筛选、无 JS 内容、非 reduced-motion 搜索滚动通过 |
+| 本地 Lighthouse mobile | 97 / 100 / 100 / 100；LCP 2.7s / CLS 0 / TBT 30ms / 约 520KiB |
 
-核对日期：2026-10-03。构建环境 Node.js / Next.js 15.5.27，GitHub Pages静态导出。
+宽度：320、360、390、412、430、768、1024、1280、1440、1920。
+页面：首页、服务、案例目录、里耶详情、Culture × AI、Research、产品、联系、英文首页。
+交互：移动导航、搜索定位与 URL、空结果与重置、文化装置四阶段/键盘/重置、案例释读和档案、研究采样、影片弹层、旧路径查询参数兼容。
+后续视觉检查确认手机 Hero 使用 640×959 的真实竖构图，而非被大幅放大的 640px 横图；案例标题孤字修复。补充旧产品参数 domain=heritage&venue=venue:museum，返回有效结果。
 
-- 生产构建与TypeScript检查通过。
-- 全部561个HTML页面检查：标题、唯一主标题、Canonical、站内链接与本地图片路径，无缺失。
-- 17种页面与功能布局，分别在360 / 390 / 430 / 768 / 1024 / 1440 / 1920宽度验证，共119组，无横向溢出。
-- 首页另做7档宽度 × 双主题共14组：实际滚动显示、图片加载、菜单焦点正常。
-- axe WCAG 2 / 2.1 / 2.2 A、AA扫描：10种代表页面 × 双主题无违规；最终首页双主题无违规。
-- 产品搜索、真实AI标签筛选、刷新恢复条件、加载更多、视频双条件筛选与播放控制通过。
-- 线上工具、伙伴申请、研发报名与后台链接连接正式服务。
-- 移动菜单进入、Esc退出和恢复滚动；中英文切换；咨询错误摘要焦点及本地文件下载通过。
-- 浏览器执行过程未发现未捕获JavaScript错误。
-- 无JavaScript时首页正文仍直接可见，未依赖强制开场Loading。
+## 报告
+rebuild-browser.json、rebuild-export.json、rebuild-visual-followup.json、export-links.json、lighthouse-summary.json 为当前记录。previous-snapshot 为历史/中间记录，不作为此次通过结果。
+截图以经过加载与实际滚动后的 viewport 为主：desktop-home-viewport、mobile-hero-final、home-reel、home-case、services-scene、case-hero-final、case-annotation、culture-installation、english-320。
 
-本地生产静态预览采用HTTP压缩，移动端Lighthouse：Performance 92、Accessibility 100、Best Practices 100、SEO 100。LCP 3.1秒、TBT 170ms。该分数是本地预览测量，部署后受网络与设备条件影响，并非线上结果保证。
-
-媒体播放依赖原站视频文件，外部体验、后台与正式提交服务未迁入GitHub Pages。详见FUNCTIONS.md。
+## 方法与限制
+Chromium 本地静态服务使用 /meich 路径与 gzip。axe 采用 WCAG2A/AA 与 WCAG2.1AA；自动扫描不能替代所有真实辅助技术测试。系统没有完整中文字体，截图验证临时注入 Noto Sans SC；正式网站仍使用系统中文字体，此 QA 字体未进入网页包。
+Lighthouse 为本地移动设备/网络模拟，服务器和缓存与 GitHub Pages 不完全相同。97 分不等同于真实用户 Core Web Vitals。
+所有导出目标经过检查，外部影片、原站报名和第三方体验有独立可用性与网络条件；上传源码不包含其后台。联系接口未配置时明确不发送，Culture × AI 不调用实时模型，Research Canvas 不是真实扫描系统。
+上线验收应检查 main 提交对应的 GitHub Actions 成功记录，再复查 Pages 上的新 Hero、搜索、案例和 Culture × AI，避免把旧部署作为本轮验证结果。

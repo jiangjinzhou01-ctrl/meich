@@ -47,10 +47,6 @@ export function TechnologySystem() {
   return (
     <div className="technology-system">
       <div className="tech-map">
-        <div className="tech-center">
-          美创<span>CULTURE × TECH</span>
-        </div>
-        <div className="tech-ring" />
         {nodes.map((n, i) => (
           <button
             key={n.en}

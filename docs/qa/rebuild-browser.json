@@ -1,0 +1,794 @@
+{
+  "responsive": [
+    {
+      "route": "/",
+      "width": 320,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/services/",
+      "width": 320,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/cases/",
+      "width": 320,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/cases/liye-qin-slips/",
+      "width": 320,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/culture-ai/",
+      "width": 320,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/research/",
+      "width": 320,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/products/",
+      "width": 320,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/contact/",
+      "width": 320,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/en/",
+      "width": 320,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/",
+      "width": 360,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/services/",
+      "width": 360,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/cases/",
+      "width": 360,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/cases/liye-qin-slips/",
+      "width": 360,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/culture-ai/",
+      "width": 360,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/research/",
+      "width": 360,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/products/",
+      "width": 360,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/contact/",
+      "width": 360,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/en/",
+      "width": 360,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/",
+      "width": 390,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/services/",
+      "width": 390,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/cases/",
+      "width": 390,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/cases/liye-qin-slips/",
+      "width": 390,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/culture-ai/",
+      "width": 390,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/research/",
+      "width": 390,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/products/",
+      "width": 390,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/contact/",
+      "width": 390,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/en/",
+      "width": 390,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/",
+      "width": 412,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/services/",
+      "width": 412,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/cases/",
+      "width": 412,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/cases/liye-qin-slips/",
+      "width": 412,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/culture-ai/",
+      "width": 412,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/research/",
+      "width": 412,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/products/",
+      "width": 412,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/contact/",
+      "width": 412,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/en/",
+      "width": 412,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/",
+      "width": 430,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/services/",
+      "width": 430,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/cases/",
+      "width": 430,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/cases/liye-qin-slips/",
+      "width": 430,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/culture-ai/",
+      "width": 430,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/research/",
+      "width": 430,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/products/",
+      "width": 430,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/contact/",
+      "width": 430,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/en/",
+      "width": 430,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/",
+      "width": 768,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/services/",
+      "width": 768,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/cases/",
+      "width": 768,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/cases/liye-qin-slips/",
+      "width": 768,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/culture-ai/",
+      "width": 768,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/research/",
+      "width": 768,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/products/",
+      "width": 768,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/contact/",
+      "width": 768,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/en/",
+      "width": 768,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/",
+      "width": 1024,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/services/",
+      "width": 1024,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/cases/",
+      "width": 1024,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/cases/liye-qin-slips/",
+      "width": 1024,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/culture-ai/",
+      "width": 1024,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/research/",
+      "width": 1024,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/products/",
+      "width": 1024,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/contact/",
+      "width": 1024,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/en/",
+      "width": 1024,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/",
+      "width": 1280,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/services/",
+      "width": 1280,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/cases/",
+      "width": 1280,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/cases/liye-qin-slips/",
+      "width": 1280,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/culture-ai/",
+      "width": 1280,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/research/",
+      "width": 1280,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/products/",
+      "width": 1280,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/contact/",
+      "width": 1280,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/en/",
+      "width": 1280,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/services/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/cases/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/cases/liye-qin-slips/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/culture-ai/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/research/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/products/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/contact/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/en/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/",
+      "width": 1920,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/services/",
+      "width": 1920,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/cases/",
+      "width": 1920,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/cases/liye-qin-slips/",
+      "width": 1920,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/culture-ai/",
+      "width": 1920,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/research/",
+      "width": 1920,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/products/",
+      "width": 1920,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/contact/",
+      "width": 1920,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    },
+    {
+      "route": "/en/",
+      "width": 1920,
+      "overflow": false,
+      "h1": 1,
+      "duplicates": [],
+      "broken": []
+    }
+  ],
+  "interactions": [
+    "Mobile navigation closes after route change",
+    "Search submits, URL persists, scroll guides to typed results",
+    "Empty search and reset",
+    "Culture installation four stages, reset and keyboard",
+    "Case annotations and full preserved project archive",
+    "Research sampling switches without animation loop",
+    "Brand film dialog opens and closes",
+    "Legacy case redirects preserve query"
+  ],
+  "axe": [
+    {
+      "theme": "light",
+      "route": "/",
+      "violations": []
+    },
+    {
+      "theme": "light",
+      "route": "/services/",
+      "violations": []
+    },
+    {
+      "theme": "light",
+      "route": "/cases/liye-qin-slips/",
+      "violations": []
+    },
+    {
+      "theme": "light",
+      "route": "/culture-ai/",
+      "violations": []
+    },
+    {
+      "theme": "light",
+      "route": "/research/",
+      "violations": []
+    },
+    {
+      "theme": "dark",
+      "route": "/",
+      "violations": []
+    },
+    {
+      "theme": "dark",
+      "route": "/services/",
+      "violations": []
+    },
+    {
+      "theme": "dark",
+      "route": "/cases/liye-qin-slips/",
+      "violations": []
+    },
+    {
+      "theme": "dark",
+      "route": "/culture-ai/",
+      "violations": []
+    },
+    {
+      "theme": "dark",
+      "route": "/research/",
+      "violations": []
+    }
+  ],
+  "errors": [],
+  "summary": {
+    "responsive": 90,
+    "failures": [],
+    "interactions": 8,
+    "axeViolations": 0,
+    "runtimeErrors": []
+  }
+}

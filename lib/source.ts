@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { canonicalPath } from "./routes";
 import { asset, sourceSite } from "./content";
 export type SourceBlock = {
   type: string;
@@ -88,7 +89,7 @@ export function sourceLink(href: string): string {
         u.searchParams.get("interest") === "research"
       )
         return href;
-      return `${u.pathname.replace(/\/$/, "")}/` + u.search + u.hash;
+      return canonicalPath(u.pathname) + u.search + u.hash;
     }
     return href;
   } catch {
@@ -113,7 +114,7 @@ export function catalogFor(prefix: string): CatalogItem[] {
   if (prefix === "/en/videos") return catalogFor("/videos");
   const index = getSourcePage(prefix);
   const metadata = getCatalogMetadata();
-  return sourcePages
+  const items = sourcePages
     .filter(
       (p) =>
         !p.error &&
@@ -127,7 +128,7 @@ export function catalogFor(prefix: string): CatalogItem[] {
       const image =
         card?.image || p.blocks.find((b) => b.type === "image")?.src || "";
       return {
-        path: p.path,
+        path: canonicalPath(p.path).replace(/\/$/, ""),
         title: p.title,
         description:
           p.description || card?.text?.replace(p.title, "").slice(0, 140) || "",
@@ -145,6 +146,7 @@ export function catalogFor(prefix: string): CatalogItem[] {
         venue: meta.venue || "",
       };
     });
+  return Array.from(new Map(items.map((item) => [item.path, item])).values());
 }
 function getCatalogMetadata(): Record<
   string,

@@ -2,159 +2,107 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Moon, Sun, Menu, X } from "lucide-react";
-import { useScroll, useMotionValueEvent } from "motion/react";
-import { RouteLoading } from "./loading";
+import { Moon, Sun, Menu, X, ArrowUpRight } from "lucide-react";
 import { BrandMark } from "./brand";
+import { company, navigation, phone, phoneHref, address } from "@/lib/content";
 import { englishRoutes } from "@/lib/languages";
-import { company, navigation } from "@/lib/content";
+import { languagePair } from "@/lib/routes";
+
 export function Navbar() {
   const path = usePathname();
+  const en = path.startsWith("/en");
   const [open, setOpen] = useState(false);
-  const [navigating, setNavigating] = useState(false);
-  const english = path.startsWith("/en");
-  const moreLinks = [
-    {
-      label: english ? "Experiences" : "体验与探索",
-      href: english ? "/en/experiences/" : "/experiences/",
-    },
-    {
-      label: english ? "Research" : "创新与研发",
-      href: english ? "/en/research/" : "/research/",
-    },
-    {
-      label: english ? "Collaboration" : "协作与共创",
-      href: english ? "/en/collaboration/" : "/collaboration/",
-    },
-    {
-      label: english ? "Films" : "视频中心",
-      href: english ? "/en/videos/" : "/videos/",
-    },
-    {
-      label: english ? "Insights" : "洞察与动态",
-      href: english ? "/en/insights/" : "/insights/",
-    },
-  ];
-  const enNav = [
-    { label: "Home", href: "/en/" },
-    { label: "Services", href: "/en/products/" },
-    { label: "Work", href: "/en/cases/" },
-    { label: "About", href: "/en/about/" },
-  ];
-  const primaryLinks = english ? enNav : navigation;
-  const zhPath = path.replace(/^\/en/, "") || "/";
-  const languageCandidate = english
-    ? `${zhPath.replace(/\/$/, "")}/`
-    : path === "/"
-      ? "/en/"
-      : (
-          {
-            "/services/": "/en/products/",
-            "/solutions/": "/en/products/",
-            "/work/": "/en/cases/",
-            "/technology/": "/en/research/",
-            "/careers/": "/en/contact/",
-            "/insights/kongwu-museum-store/": "/en/insights/",
-            "/insights/malanshan-exhibition/": "/en/insights/",
-            "/insights/culture-in-experience/": "/en/insights/",
-            "/work/liye-qin-slips/": "/en/cases/brochure-2026-liye-qin-slips/",
-            "/work/potala-snow-city/":
-              "/en/cases/brochure-2026-potala-snow-city/",
-            "/work/gaomiao/": "/en/cases/gaomiao/",
-          } as Record<string, string>
-        )[path] || `/en${path}`;
-  const languagePath = english
-    ? languageCandidate
-    : englishRoutes.has(languageCandidate)
-      ? languageCandidate
-      : englishRoutes.has(`/en/${path.split("/")[1]}/`)
-        ? `/en/${path.split("/")[1]}/`
-        : "/en/";
   const [dark, setDark] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
-  const menu = useRef<HTMLDivElement>(null);
+  const [scene, setScene] = useState("");
+  const [tone, setTone] = useState("light");
+  const dialog = useRef<HTMLDialogElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
-  const { scrollY } = useScroll();
-  const previous = useRef(0);
-  const navState = useRef({ scrolled: false, hidden: false });
-  useMotionValueEvent(scrollY, "change", (y) => {
-    const next = { scrolled: y > 24, hidden: y > 450 && y > previous.current };
-    if (next.scrolled !== navState.current.scrolled) setScrolled(next.scrolled);
-    if (next.hidden !== navState.current.hidden) setHidden(next.hidden);
-    navState.current = next;
-    previous.current = y;
-  });
+  const links = en
+    ? [
+        { label: "Expertise", href: "/en/services/" },
+        { label: "Work", href: "/en/cases/" },
+        { label: "Culture × AI", href: "/en/culture-ai/" },
+        { label: "Research", href: "/en/research/" },
+        { label: "About", href: "/en/about/" },
+      ]
+    : navigation;
+  const pair = languagePair(path);
+  const candidate = en ? pair.zh : pair.en;
+  const addedEn = [
+    "/en/services/",
+    "/en/solutions/",
+    "/en/culture-ai/",
+    "/en/research/",
+    "/en/research/technology/",
+  ];
+  const languageHref =
+    en || englishRoutes.has(candidate) || addedEn.includes(candidate)
+      ? candidate
+      : "/en/";
+  const more = en
+    ? [
+        ["Solutions", "/en/solutions/"],
+        ["Products", "/en/products/"],
+        ["Insights", "/en/insights/"],
+        ["Films", "/en/videos/"],
+        ["Experiences", "/en/experiences/"],
+        ["Collaboration", "/en/collaboration/"],
+      ]
+    : [
+        ["解决方案", "/solutions/"],
+        ["产品目录", "/products/"],
+        ["洞察与动态", "/insights/"],
+        ["视频中心", "/videos/"],
+        ["线上体验", "/experiences/"],
+        ["人才与协作", "/collaboration/"],
+      ];
   useEffect(() => {
     setDark(document.documentElement.dataset.theme === "dark");
   }, []);
   useEffect(() => {
     setOpen(false);
-    setNavigating(false);
-  }, [path]);
+    document.documentElement.lang = en ? "en" : "zh-CN";
+  }, [path, en]);
   useEffect(() => {
-    let timer: ReturnType<typeof setTimeout> | undefined;
-    const click = (e: MouseEvent) => {
-      const a = (e.target as Element).closest?.(
-        "a[href]",
-      ) as HTMLAnchorElement | null;
-      if (
-        !a ||
-        e.ctrlKey ||
-        e.metaKey ||
-        e.shiftKey ||
-        e.altKey ||
-        a.target === "_blank" ||
-        a.hasAttribute("download")
-      )
-        return;
-      const u = new URL(a.href, location.href);
-      if (u.origin !== location.origin || u.pathname === location.pathname)
-        return;
-      clearTimeout(timer);
-      timer = setTimeout(() => setNavigating(true), 250);
-    };
-    document.addEventListener("click", click);
+    if (!dialog.current) return;
+    if (open) dialog.current.showModal();
+    else dialog.current.close();
+    const previous = document.body.style.overflow;
+    if (open) document.body.style.overflow = "hidden";
     return () => {
-      clearTimeout(timer);
-      document.removeEventListener("click", click);
-    };
-  }, [path]);
-  useEffect(() => {
-    if (!open) return;
-    const old = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const focusTimer = setTimeout(
-      () => menu.current?.querySelector<HTMLElement>("a")?.focus(),
-      80,
-    );
-    const key = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setOpen(false);
-        toggle.current?.focus();
-      }
-      if (e.key === "Tab") {
-        const items = Array.from(
-          menu.current?.querySelectorAll<HTMLElement>("a,button") || [],
-        );
-        const first = items[0],
-          last = items.at(-1);
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last?.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first?.focus();
-        }
-      }
-    };
-    document.addEventListener("keydown", key);
-    return () => {
-      clearTimeout(focusTimer);
-      document.body.style.overflow = old;
-      document.removeEventListener("keydown", key);
+      document.body.style.overflow = previous;
     };
   }, [open]);
+  useEffect(() => {
+    let observer: IntersectionObserver;
+    const connect = () => {
+      observer?.disconnect();
+      const nodes = [...document.querySelectorAll<HTMLElement>("[data-scene]")];
+      const update = () => {
+        const current = nodes
+          .filter(
+            (n) =>
+              n.getBoundingClientRect().top <= 85 &&
+              n.getBoundingClientRect().bottom > 75,
+          )
+          .at(-1);
+        setScene(current?.dataset.scene || "");
+        setTone(current?.dataset.navTone || "light");
+      };
+      observer = new IntersectionObserver(update, {
+        rootMargin: `0px 0px -${Math.max(0, innerHeight - 86)}px 0px`,
+        threshold: 0,
+      });
+      nodes.forEach((n) => observer.observe(n));
+      update();
+    };
+    connect();
+    addEventListener("resize", connect);
+    return () => {
+      observer?.disconnect();
+      removeEventListener("resize", connect);
+    };
+  }, [path]);
   function theme() {
     const next = !dark;
     setDark(next);
@@ -163,224 +111,203 @@ export function Navbar() {
       localStorage.setItem("meichuang-theme", next ? "dark" : "light");
     } catch {}
   }
+  function close() {
+    setOpen(false);
+    toggle.current?.focus();
+  }
   return (
     <>
-      {navigating && <RouteLoading />}
-      <header
-        className={`navbar ${scrolled ? "scrolled" : ""} ${hidden && !open ? "nav-hidden" : ""}`}
-      >
+      <header className="navbar" data-tone={tone}>
         <div className="nav-inner container">
-          <Link className="brand" href="/" aria-label={`${company}，首页`}>
+          <Link
+            className="brand"
+            href={en ? "/en/" : "/"}
+            aria-label={`${company}，首页`}
+            prefetch={false}
+          >
             <BrandMark />
           </Link>
-          <nav className="desktop-nav" aria-label="主导航">
-            {primaryLinks.map((n) => (
+          <span className="nav-location" aria-hidden="true">
+            {scene}
+          </span>
+          <nav
+            className="desktop-nav"
+            aria-label={en ? "Main navigation" : "主导航"}
+          >
+            {links.map((n) => (
               <Link
                 key={n.href}
-                className={path === n.href ? "active" : ""}
                 href={n.href}
-                aria-current={path === n.href ? "page" : undefined}
+                prefetch={false}
+                className={path.startsWith(n.href) ? "active" : ""}
+                aria-current={path.startsWith(n.href) ? "page" : undefined}
               >
                 {n.label}
               </Link>
             ))}
-            <details className="nav-more">
-              <summary>{english ? "Explore" : "更多"}</summary>
-              <div>
-                {moreLinks.map((n) => (
-                  <Link
-                    key={n.href}
-                    href={n.href}
-                    onClick={(e) =>
-                      e.currentTarget
-                        .closest("details")
-                        ?.removeAttribute("open")
-                    }
-                  >
-                    {n.label}
-                  </Link>
-                ))}
-              </div>
-            </details>
           </nav>
           <div className="nav-actions">
             <Link
               className="language-switch"
-              href={languagePath}
-              aria-label={english ? "切换中文" : "Switch to English"}
+              href={languageHref}
+              prefetch={false}
+              aria-label={en ? "切换中文" : "Switch to English"}
             >
-              {english ? "中" : "EN"}
+              {en ? "中" : "EN"}
             </Link>
             <button
-              className="icon-button"
+              className="icon-button theme-toggle"
               onClick={theme}
               aria-label={dark ? "切换浅色主题" : "切换深色主题"}
             >
-              {dark ? (
-                <Sun size={19} aria-hidden="true" />
-              ) : (
-                <Moon size={19} aria-hidden="true" />
-              )}
+              {dark ? <Sun size={17} /> : <Moon size={17} />}
             </button>
             <Link
-              href={english ? "/en/contact/" : "/contact/"}
+              href={en ? "/en/contact/" : "/contact/"}
               className="nav-cta"
+              prefetch={false}
             >
-              {english ? "Let’s talk" : "商务合作"}{" "}
-              <span aria-hidden="true">↗</span>
+              {en ? "Contact" : "商务合作"}
+              <ArrowUpRight size={16} />
             </Link>
             <button
               ref={toggle}
               className="icon-button menu-toggle"
               onClick={() => setOpen(true)}
-              aria-label="打开导航菜单"
               aria-expanded={open}
               aria-controls="mobile-menu"
+              aria-label={en ? "Open navigation" : "打开导航菜单"}
             >
-              <Menu aria-hidden="true" />
+              <Menu size={24} />
             </button>
           </div>
         </div>
       </header>
-      <div
-        className={`mobile-menu ${open ? "open" : ""}`}
+      <dialog
+        className="mobile-menu"
+        ref={dialog}
         id="mobile-menu"
-        ref={menu}
-        role="dialog"
-        aria-modal={open ? true : undefined}
-        aria-label="网站导航"
-        inert={!open}
+        aria-label={en ? "Site navigation" : "网站导航"}
+        onCancel={() => {
+          setOpen(false);
+        }}
+        onClick={(e) => {
+          if (e.target === dialog.current) close();
+        }}
       >
         <div className="mobile-top">
-          <span>美创数字</span>
+          <BrandMark />
           <button
             className="icon-button"
-            aria-label="关闭导航菜单"
-            onClick={() => {
-              setOpen(false);
-              toggle.current?.focus();
-            }}
+            onClick={close}
+            aria-label={en ? "Close navigation" : "关闭导航菜单"}
           >
-            <X aria-hidden="true" />
+            <X size={24} />
           </button>
         </div>
-        <nav>
-          {[
-            ...primaryLinks,
-            ...moreLinks,
-            ...(!english
-              ? [
-                  { label: "技术能力", href: "/technology/" },
-                  { label: "加入我们", href: "/careers/" },
-                ]
-              : []),
-            {
-              label: english ? "Contact" : "联系我们",
-              href: english ? "/en/contact/" : "/contact/",
-            },
-          ].map((n, i) => (
-            <Link
-              href={n.href}
-              key={n.href}
-              style={{ transitionDelay: `${open ? i * 25 : 0}ms` }}
-            >
-              <span>{String(i + 1).padStart(2, "0")}</span>
+        <nav className="mobile-primary">
+          {links.map((n) => (
+            <Link href={n.href} key={n.href} onClick={close} prefetch={false}>
               {n.label}
+              <ArrowUpRight size={20} />
             </Link>
           ))}
         </nav>
-        <div className="mobile-bottom">CULTURE × CREATION</div>
-      </div>
+        <details className="mobile-secondary">
+          <summary>{en ? "More from MGC" : "更多探索"}</summary>
+          <div>
+            {more.map(([label, href]) => (
+              <Link href={href} key={href} onClick={close} prefetch={false}>
+                {label}
+              </Link>
+            ))}
+          </div>
+        </details>
+        <Link
+          className="button mobile-contact"
+          href={en ? "/en/contact/" : "/contact/"}
+          onClick={close}
+          prefetch={false}
+        >
+          {en ? "Contact" : "商务合作"}
+          <ArrowUpRight size={18} />
+        </Link>
+        <div className="mobile-bottom">
+          <Link href={languageHref} onClick={close}>
+            {en ? "简体中文" : "English"}
+          </Link>
+          <button onClick={theme}>
+            {dark
+              ? en
+                ? "Light mode"
+                : "浅色模式"
+              : en
+                ? "Dark mode"
+                : "深色模式"}
+          </button>
+        </div>
+      </dialog>
     </>
   );
 }
+
 export function Footer() {
-  const english = usePathname().startsWith("/en");
-  const groups = english
-    ? [
-        {
-          title: "Explore",
-          items: [
-            ["Products", "/en/products/"],
-            ["Projects", "/en/cases/"],
-            ["Films", "/en/videos/"],
-            ["Experiences", "/en/experiences/"],
-            ["Research", "/en/research/"],
-          ],
-        },
-        {
-          title: "MGC",
-          items: [
-            ["About", "/en/about/"],
-            ["Insights", "/en/insights/"],
-            ["Contact", "/en/contact/"],
-          ],
-        },
-        {
-          title: "Connect",
-          items: [
-            ["Collaboration", "/en/collaboration/"],
-            ["Brand workspace", "/admin/"],
-            ["Privacy", "/en/privacy/"],
-          ],
-        },
-      ]
-    : [
-        {
-          title: "探索",
-          items: [
-            ["服务能力", "/services/"],
-            ["产品目录", "/products/"],
-            ["完整案例库", "/cases/"],
-            ["视频中心", "/videos/"],
-            ["体验与探索", "/experiences/"],
-            ["创新与研发", "/research/"],
-          ],
-        },
-        {
-          title: "美创",
-          items: [
-            ["关于我们", "/about/"],
-            ["洞察与动态", "/insights/"],
-            ["加入我们", "/careers/"],
-            ["联系我们", "/contact/"],
-          ],
-        },
-        {
-          title: "合作",
-          items: [
-            ["生态合作伙伴", "/collaboration/"],
-            ["品牌工作台 ↗", "/admin/"],
-            ["隐私说明", "/privacy/"],
-          ],
-        },
-      ];
+  const en = usePathname().startsWith("/en");
+  const prefix = en ? "/en" : "";
+  const groups = [
+    {
+      title: en ? "Explore" : "体验与能力",
+      items: [
+        [en ? "Expertise" : "服务能力", `${prefix}/services/`],
+        [en ? "Solutions" : "解决方案", `${prefix}/solutions/`],
+        [en ? "Products" : "产品目录", `${prefix}/products/`],
+        [en ? "Work" : "项目案例", `${prefix}/cases/`],
+      ],
+    },
+    {
+      title: en ? "Culture × AI" : "文化与技术",
+      items: [
+        ["Culture × AI", `${prefix}/culture-ai/`],
+        [en ? "Research" : "创新与研发", `${prefix}/research/`],
+        [en ? "Films" : "视频中心", `${prefix}/videos/`],
+        [en ? "Experiences" : "线上体验", `${prefix}/experiences/`],
+      ],
+    },
+    {
+      title: en ? "MGC" : "关于美创",
+      items: [
+        [en ? "About" : "公司与团队", `${prefix}/about/`],
+        [en ? "Insights" : "洞察与动态", `${prefix}/insights/`],
+        [en ? "Collaboration" : "协作与共创", `${prefix}/collaboration/`],
+        [en ? "Contact" : "商务合作", `${prefix}/contact/`],
+      ],
+    },
+  ];
   return (
-    <footer className="footer">
+    <footer className="footer" data-scene={en ? "MGC" : "美创数字"}>
       <div className="container">
         <div className="footer-top">
-          <div>
+          <div className="footer-intro">
             <Link
-              href="/"
+              href={en ? "/en/" : "/"}
               className="brand footer-brand"
-              aria-label="美创数字，返回首页"
+              aria-label="美创数字，首页"
             >
               <BrandMark />
             </Link>
             <p>
-              {english ? (
-                <>
-                  Connecting culture and technology.
-                  <br />
-                  Creating meaningful experiences.
-                </>
-              ) : (
-                <>
-                  连接文化与科技，
-                  <br />
-                  让文化成为可感知的体验。
-                </>
-              )}
+              {en
+                ? "Culture, understood. Experience, reimagined."
+                : "文化的深度，AI 的新表达。"}
+            </p>
+            <a className="footer-phone" href={phoneHref}>
+              {phone}
+              <ArrowUpRight size={20} />
+            </a>
+            <p className="footer-address">
+              {en
+                ? "76 Meixihu Road, Building 2, Meixihu International R&D Center, Changsha, China"
+                : address}
             </p>
           </div>
           <div className="footer-links">
@@ -388,80 +315,79 @@ export function Footer() {
               <div key={g.title}>
                 <span>{g.title}</span>
                 {g.items.map(([label, href]) => (
-                  <Link key={href} href={href}>
+                  <Link key={href} href={href} prefetch={false}>
                     {label}
                   </Link>
                 ))}
-                {g === groups[2] && (
-                  <>
-                    <a href="tel:+8673189728572">0731-89728572</a>
-                    <button
-                      onClick={() =>
-                        window.scrollTo({
-                          top: 0,
-                          behavior: matchMedia(
-                            "(prefers-reduced-motion: reduce)",
-                          ).matches
-                            ? "instant"
-                            : "smooth",
-                        })
-                      }
-                    >
-                      {english ? "Back to top ↑" : "回到顶部 ↑"}
-                    </button>
-                  </>
-                )}
               </div>
             ))}
           </div>
         </div>
         <div className="footer-word" aria-hidden="true">
-          MGC DIGITAL
+          Culture × AI
         </div>
         <div className="footer-bottom">
           <span>
             © {new Date().getFullYear()} {company}
           </span>
-          <span>CULTURE × DESIGN × TECHNOLOGY</span>
+          <div>
+            <Link href={`${prefix}/privacy/`}>
+              {en ? "Privacy" : "隐私说明"}
+            </Link>
+            <Link href="/admin/">
+              {en ? "Brand workspace" : "品牌工作台"} ↗
+            </Link>
+            <button
+              onClick={() =>
+                window.scrollTo({
+                  top: 0,
+                  behavior: matchMedia("(prefers-reduced-motion: reduce)")
+                    .matches
+                    ? "instant"
+                    : "smooth",
+                })
+              }
+            >
+              {en ? "Back to top" : "回到顶部"} ↑
+            </button>
+          </div>
         </div>
       </div>
     </footer>
   );
 }
+
+/** Progressive reveal: server-rendered content stays visible until observers are ready. */
 export function MotionProvider({ children }: { children: React.ReactNode }) {
   const path = usePathname();
   const root = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const container = root.current;
-    if (!container) return;
-    const targets = new Map<Element, Set<Element>>();
-    const registered = new WeakSet<Element>();
-    // Observe the unclipped parent: a fully clipped element has no intersection.
+    if (!container || matchMedia("(prefers-reduced-motion: reduce)").matches)
+      return;
     const observer = new IntersectionObserver(
-      (entries) => {
+      (entries) =>
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          targets
-            .get(entry.target)
-            ?.forEach((element) => element.classList.add("is-visible"));
-          observer.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.04 },
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        }),
+      { threshold: 0.05 },
     );
-    const register = () => {
-      container.querySelectorAll("[data-reveal]").forEach((element) => {
-        if (registered.has(element)) return;
-        registered.add(element);
-        const parent = element.parentElement;
-        if (!parent) return;
-        const items = targets.get(parent) || new Set<Element>();
-        items.add(element);
-        targets.set(parent, items);
-        element.classList.add("reveal-ready");
-        observer.observe(parent);
+    const seen = new WeakSet<Element>();
+    const register = () =>
+      container.querySelectorAll("[data-reveal]").forEach((el) => {
+        if (seen.has(el)) return;
+        seen.add(el);
+        const rect = el.getBoundingClientRect();
+        if (rect.top < innerHeight) {
+          el.classList.add("is-visible");
+          return;
+        }
+        el.classList.add("reveal-ready");
+        observer.observe(el);
       });
-    };
     register();
     const mutation = new MutationObserver(register);
     mutation.observe(container, { childList: true, subtree: true });

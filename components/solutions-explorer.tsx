@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { asset } from "@/lib/content";
 import { Button } from "./ui";
 const solutions = [
   {
@@ -84,17 +85,20 @@ export function SolutionsExplorer() {
         key={active}
       >
         <div className="solution-visual" aria-hidden="true">
-          <div className="solution-core">
-            {["文博", "展示", "文创", "运营"][active]}
-          </div>
-          {s.labels.map((l, i) => (
-            <span className={`solution-node node-${i}`} key={l}>
-              {l}
-            </span>
-          ))}
-          <svg viewBox="0 0 400 360">
-            <path d="M200 180 L70 90 M200 180 L330 90 M200 180 L200 310" />
-          </svg>
+          <img
+            src={asset(
+              [
+                "/brand/liye-details.webp",
+                "/brand/gaomiao.webp",
+                "/brand/creative.webp",
+                "/brand/operations.webp",
+              ][active],
+            )}
+            alt={`${s.name}文化场景参考`}
+            width={1080}
+            height={650}
+            loading="lazy"
+          />
         </div>
         <div>
           <h2>{s.title}</h2>
@@ -112,7 +116,7 @@ export function SolutionsExplorer() {
               <dd>{s.outcome}</dd>
             </div>
           </dl>
-          <Button href="/contact/">讨论你的需求</Button>
+          <Button href="/contact/">商务合作</Button>
         </div>
       </div>
     </div>

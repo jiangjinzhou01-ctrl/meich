@@ -4,11 +4,11 @@ export const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 export const asset = (path: string) => `${basePath}${path}`;
 export const navigation = [
-  { label: "首页", href: "/" },
-  { label: "产品与服务", href: "/products/" },
-  { label: "解决方案", href: "/solutions/" },
+  { label: "能力", href: "/services/" },
   { label: "案例", href: "/cases/" },
-  { label: "关于我们", href: "/about/" },
+  { label: "Culture × AI", href: "/culture-ai/" },
+  { label: "研发", href: "/research/" },
+  { label: "关于", href: "/about/" },
 ];
 export const phone = "0731-89728572";
 export const phoneHref = "tel:+8673189728572";

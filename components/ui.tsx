@@ -15,6 +15,7 @@ export function Button({
   return (
     <Link
       href={href}
+      prefetch={false}
       className={`button ${secondary ? "secondary" : ""} ${className}`}
     >
       {children}
@@ -54,10 +55,10 @@ export function PageHero({
       {
         我们的能力: "/services/",
         解决方案: "/solutions/",
-        项目探索: "/work/",
-        精选项目: "/work/",
+        项目探索: "/cases/",
+        精选项目: "/cases/",
         关于美创数字: "/about/",
-        技术体系: "/technology/",
+        技术体系: "/research/technology/",
         观点与思考: "/insights/",
         洞察与动态: "/insights/",
         一起创造: "/careers/",
@@ -65,6 +66,7 @@ export function PageHero({
         隐私说明: "/privacy/",
       } as Record<string, string>
     )[label];
+  const english = route?.startsWith("/en/");
   return (
     <section className="page-hero container">
       {route && (
@@ -78,8 +80,8 @@ export function PageHero({
                 {
                   "@type": "ListItem",
                   position: 1,
-                  name: "首页",
-                  item: siteUrl,
+                  name: english ? "Home" : "首页",
+                  item: english ? `${siteUrl}/en/` : siteUrl,
                 },
                 {
                   "@type": "ListItem",
@@ -103,10 +105,13 @@ export function PageHero({
 }
 export function ContactCTA({ english = false }: { english?: boolean } = {}) {
   return (
-    <section className="contact-cta">
+    <section
+      className="contact-cta"
+      data-scene={english ? "Contact" : "商务合作"}
+    >
       <div className="container cta-inner">
         <div>
-          <SectionLabel>LET’S MAKE IT REAL</SectionLabel>
+          <p className="cta-kicker">Culture × Technology × AI × Experience</p>
           <h2>
             {english ? (
               <>
@@ -115,15 +120,15 @@ export function ContactCTA({ english = false }: { english?: boolean } = {}) {
               </>
             ) : (
               <>
-                下一段文化体验，
+                让下一个想法，
                 <br />
-                从一次对话开始。
+                成为真实的体验。
               </>
             )}
           </h2>
         </div>
         <Button href={english ? "/en/contact/" : "/contact/"}>
-          {english ? "Tell us your project" : "聊聊你的项目"}
+          {english ? "Contact" : "商务合作"}
         </Button>
       </div>
     </section>

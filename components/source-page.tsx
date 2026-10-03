@@ -1,4 +1,8 @@
 import Link from "next/link";
+import { CaseFilm } from "./case-film";
+import { SearchJourney } from "./search-journey";
+import { searchIndex } from "@/lib/search";
+import { canonicalPath } from "@/lib/routes";
 import { PageHero, ContactCTA } from "./ui";
 import { EnglishHome } from "./english-home";
 import { Catalog } from "./catalog";
@@ -19,7 +23,7 @@ const indexes = [
   "/insights",
 ];
 const names: Record<string, string> = {
-  products: "产品与服务",
+  products: "产品目录",
   cases: "案例与作品",
   videos: "美创影像",
   experiences: "体验与探索",
@@ -32,17 +36,28 @@ export function SourcePageView({ page }: { page: SourcePage }) {
   const path = page.path;
   const prefix = path.replace(/^\/en/, "") || "/";
   if (en && prefix === "/") return <EnglishHome />;
+  const featured: Record<string, string> = {
+    "/cases/brochure-2026-liye-qin-slips": "liye-qin-slips",
+    "/cases/potala-snow-city": "potala-snow-city",
+    "/cases/gaomiao": "gaomiao",
+  };
+  if (en && featured[prefix])
+    return <CaseFilm slug={featured[prefix]} english />;
   const family = prefix.split("/")[1];
   const index = indexes.includes(prefix);
   const label = en
     ? `${family.toUpperCase() || "MGC"} · MGC DIGITAL`
     : names[family] || "美创数字";
   const title =
-    prefix === "/videos"
+    prefix === "/products"
       ? en
-        ? "Stories, in motion."
-        : "让文化故事，在影像中发生。"
-      : page.title;
+        ? "Products for cultural experiences."
+        : "文化体验的产品与系统。"
+      : prefix === "/videos"
+        ? en
+          ? "Stories, in motion."
+          : "让文化故事，在影像中发生。"
+        : page.title;
   let blocks = page.blocks;
   // Related card sections get their own list instead of duplicated long text links.
   const relatedStart = blocks.findIndex(
@@ -81,7 +96,16 @@ export function SourcePageView({ page }: { page: SourcePage }) {
         )}
       </PageHero>
       {index ? (
-        <section className="container catalog-section">
+        <section
+          className="container catalog-section"
+          id={
+            family === "products"
+              ? "product-library"
+              : family === "videos"
+                ? "library"
+                : undefined
+          }
+        >
           {family === "products" && (
             <nav
               className="catalog-area-links"
@@ -125,11 +149,20 @@ export function SourcePageView({ page }: { page: SourcePage }) {
               />
             </details>
           )}
-          <Catalog
-            items={catalogFor(path)}
-            filters={catalogFilters(path)}
-            english={en}
-          />
+          {family === "products" ? (
+            <SearchJourney
+              items={searchIndex(en)}
+              english={en}
+              initialKind="product"
+              filters={catalogFilters(path)}
+            />
+          ) : (
+            <Catalog
+              items={catalogFor(path)}
+              filters={catalogFilters(path)}
+              english={en}
+            />
+          )}
           {family === "insights" && (
             <SourceContent
               page={page}
@@ -168,7 +201,19 @@ export function SourcePageView({ page }: { page: SourcePage }) {
                 ))}
             </aside>
             <div>
-              <SourceContent page={page} blocks={blocks} />
+              <SourceContent
+                page={page}
+                blocks={blocks}
+                excludeIds={
+                  prefix === "/collaboration"
+                    ? ["partner-apply"]
+                    : prefix === "/contact"
+                      ? ["cooperate"]
+                      : research
+                        ? ["participate"]
+                        : []
+                }
+              />
               {(prefix === "/collaboration" ||
                 prefix === "/contact" ||
                 research) && (
@@ -188,7 +233,11 @@ export function SourcePageView({ page }: { page: SourcePage }) {
           <h2>{en ? "Keep exploring" : "继续探索"}</h2>
           <div className="catalog-grid">
             {page.cards.slice(0, 3).map((c) => (
-              <Link className="catalog-card" key={c.path} href={`${c.path}/`}>
+              <Link
+                className="catalog-card"
+                key={c.path}
+                href={canonicalPath(c.path)}
+              >
                 {c.image && (
                   <div className="catalog-image">
                     <img
@@ -206,6 +255,21 @@ export function SourcePageView({ page }: { page: SourcePage }) {
           </div>
         </section>
       )}
+      {en &&
+        prefix === "/cases/gaomiao" &&
+        getSourcePage("/en/cases/brochure-2026-gaomiao-museum") && (
+          <section className="container case-archive">
+            <details>
+              <summary>
+                Complete project material from the published brochure
+              </summary>
+              <SourceContent
+                page={getSourcePage("/en/cases/brochure-2026-gaomiao-museum")!}
+                idPrefix="brochure-archive-"
+              />
+            </details>
+          </section>
+        )}
       <ContactCTA english={en} />
     </div>
   );

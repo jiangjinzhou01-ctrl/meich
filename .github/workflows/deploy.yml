@@ -41,6 +41,7 @@ jobs:
           NEXT_PUBLIC_BASE_PATH: /meich
           NEXT_PUBLIC_SITE_URL: https://jiangjinzhou01-ctrl.github.io/meich
           NEXT_PUBLIC_CONTACT_ENDPOINT: ${{ vars.CONTACT_ENDPOINT }}
+      - run: npm run check:export
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out

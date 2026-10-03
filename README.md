@@ -2,20 +2,24 @@
 湖南美创数字科技有限公司现有生产官网的旗舰重构，保留正式品牌、真实项目和完整原始公开内容快照。
 
 Next.js 15.5 / React 19 / TypeScript / Static Export。
-\n## 运行
-\n```bash
+
+## 运行
+
+```bash
 npm ci
 npm run dev
 ```
-\n## GitHub Pages 构建
-\n```bash
+
+## GitHub Pages 构建
+
+```bash
 npm run typecheck
 NEXT_PUBLIC_BASE_PATH=/meich NEXT_PUBLIC_SITE_URL=https://jiangjinzhou01-ctrl.github.io/meich npm run build
 npm run check:export
 NEXT_PUBLIC_BASE_PATH=/meich npm start
 ```
 打开 http://localhost:3000/meich/。根域部署不设置 base path；改变路径或域名必须重新构建。
-推送 main 后 .github/workflows/deploy.yml 自动检查并发布 out/。仓库 Settings → Pages 使用 GitHub Actions。本轮远程发布尚受连接器写入超时阻塞，不能把现有线上旧版当成本次发布。
+推送 main 后 .github/workflows/deploy.yml 自动检查并发布 out/。仓库 Settings → Pages 使用 GitHub Actions。部署地址：https://jiangjinzhou01-ctrl.github.io/meich/。
 
 ## 文档
 - [完整 A–P 交付说明](docs/DELIVERY.md)
