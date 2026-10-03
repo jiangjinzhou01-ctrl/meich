@@ -143,6 +143,14 @@ a {
   color: var(--accent-ink);
   border-color: var(--accent);
 }
+.text-link svg,
+.scene-link svg {
+  transition: transform var(--fast) var(--ease);
+}
+.text-link:is(:hover, :focus-visible) svg,
+.scene-link:is(:hover, :focus-visible) svg {
+  transform: translate(3px, -3px);
+}
 .button {
   display: inline-flex;
   align-items: center;
@@ -225,6 +233,24 @@ a {
     opacity var(--slow) var(--ease),
     transform var(--slow) var(--ease);
 }
+.reveal-ready[data-reveal="blur"] {
+  filter: blur(7px);
+  transform: translateY(14px);
+  transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease), filter var(--slow) var(--ease);
+}
+.reveal-ready[data-reveal="blur"].is-visible {
+  filter: blur(0);
+}
+.page-title-motion {
+  animation: text-clarify 850ms var(--ease) both;
+}
+.page-hero-bottom > p {
+  animation: text-clarify 750ms 100ms var(--ease) both;
+}
+@keyframes text-clarify {
+  from { opacity: 0; filter: blur(7px); transform: translateY(12px); }
+  to { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
 .reveal-ready.is-visible {
   opacity: 1;
   transform: none;
@@ -273,5 +299,6 @@ a {
   .reveal-ready {
     opacity: 1;
     transform: none;
+    filter: none !important;
   }
 }

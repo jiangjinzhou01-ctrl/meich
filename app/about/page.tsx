@@ -43,7 +43,7 @@ export default function About() {
           <i>in experience.</i>
         </span>
         <div>
-          <h2>创造，有文化的根。</h2>
+          <h2 data-reveal="blur">创造，有文化的根。</h2>
           <p>
             美创的行业探索始于2008年，湖南美创数字科技有限公司于2015年2月9日正式成立。文化研究、内容策划、空间设计、数字多媒体与软件开发，在同一个项目中相互连接。
           </p>
@@ -54,7 +54,7 @@ export default function About() {
       </section>
       <section className="section about-principles">
         <div className="container">
-          <h2>
+          <h2 data-reveal="blur">
             不同的能力，
             <br />
             共同完成一段体验。
@@ -88,7 +88,7 @@ export default function About() {
       </section>
       <section className="section container about-culture">
         <div>
-          <h2>
+          <h2 data-reveal="blur">
             在真实的场景里，
             <br />
             继续学习与创造。

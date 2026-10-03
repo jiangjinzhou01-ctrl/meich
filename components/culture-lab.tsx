@@ -69,7 +69,7 @@ export function CultureLab({
     >
       <div className="container installation-title">
         <p>Culture × AI</p>
-        <h2>
+        <h2 data-reveal="blur">
           {en ? "Another way\ninto culture." : "重新理解，\n才能重新表达。"}
         </h2>
       </div>

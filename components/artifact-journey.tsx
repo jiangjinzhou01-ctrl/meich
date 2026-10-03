@@ -55,24 +55,40 @@ export function ArtifactJourney({
   const steps = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const mobile = window.matchMedia("(max-width: 767px)");
-    let observer: IntersectionObserver;
+    let observer: IntersectionObserver | undefined;
+    const rail = steps.current;
+    // The visible chapter is the source of truth for taps, swipes and snap settling.
+    // Observer entries can still be intersecting while exiting a ratio threshold.
+    const syncChapter = () => {
+      if (!rail || !rail.clientWidth) return;
+      const index = Math.max(0, Math.min(phases.length - 1, Math.round(rail.scrollLeft / rail.clientWidth)));
+      setActive((current) => current === index ? current : index);
+    };
     const observe = () => {
       observer?.disconnect();
+      rail?.removeEventListener("scroll", syncChapter);
+      rail?.removeEventListener("scrollend", syncChapter);
+      if (mobile.matches) {
+        rail?.addEventListener("scroll", syncChapter, { passive: true });
+        rail?.addEventListener("scrollend", syncChapter);
+        syncChapter();
+        return;
+      }
       observer = new IntersectionObserver(
         (entries) => entries.forEach((entry) => {
           if (entry.isIntersecting)
             setActive(Number((entry.target as HTMLElement).dataset.phase));
         }),
-        mobile.matches
-          ? { root: steps.current, threshold: 0.6 }
-          : { rootMargin: "-30% 0px -35% 0px" },
+        { rootMargin: "-30% 0px -35% 0px" },
       );
-      root.current?.querySelectorAll("[data-phase]").forEach((e) => observer.observe(e));
+      root.current?.querySelectorAll("[data-phase]").forEach((e) => observer?.observe(e));
     };
     observe();
     mobile.addEventListener("change", observe);
     return () => {
-      observer.disconnect();
+      observer?.disconnect();
+      rail?.removeEventListener("scroll", syncChapter);
+      rail?.removeEventListener("scrollend", syncChapter);
       mobile.removeEventListener("change", observe);
     };
   }, []);
@@ -94,7 +110,7 @@ export function ArtifactJourney({
     >
       <div className="container artifact-heading">
         <p>From Artifact to Experience</p>
-        <h2>
+        <h2 data-reveal="blur">
           {en
             ? "A cultural resource.\nA new experience."
             : "一件文化资源，\n如何成为一段体验。"}

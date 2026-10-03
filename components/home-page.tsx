@@ -27,12 +27,12 @@ export function HomePage({ english: en = false }: { english?: boolean }) {
           loading="lazy"
         />
         <div className="container">
-          <p className="manifesto-lead" data-reveal>
+          <p className="manifesto-lead" data-reveal="blur">
             {en
               ? "Technology does not replace culture."
               : "技术不是文化的替代。"}
           </p>
-          <h2 data-reveal>
+          <h2 data-reveal="blur">
             {en
               ? "It gives culture\nnew ways to speak."
               : "它让文化，\n拥有新的表达方式。"}
@@ -57,7 +57,7 @@ export function HomePage({ english: en = false }: { english?: boolean }) {
         />
         <div className="scene-shade" />
         <div className="container reel-scene-content">
-          <h2>{en ? "Culture,\nall around you." : "文化，\n不止于观看。"}</h2>
+          <h2 data-reveal="blur">{en ? "Culture,\nall around you." : "文化，\n不止于观看。"}</h2>
           <FilmDialog english={en} />
         </div>
       </section>
@@ -67,7 +67,7 @@ export function HomePage({ english: en = false }: { english?: boolean }) {
         data-scene={en ? "Selected work" : "精选案例"}
       >
         <div className="container work-introduction">
-          <h2>
+          <h2 data-reveal="blur">
             {en ? "Culture, made tangible." : "文化的深度，成为真实的体验。"}
           </h2>
           <Link className="text-link" href={pre + "/cases/"}>
@@ -96,7 +96,7 @@ export function HomePage({ english: en = false }: { english?: boolean }) {
         </div>
         <div className="container research-preview-content">
           <p className="research-label">Research & Development</p>
-          <h2>
+          <h2 data-reveal="blur">
             {en
               ? "A question today.\nAn experience tomorrow."
               : "今天的研究，\n成为明天的体验。"}
@@ -116,7 +116,7 @@ export function HomePage({ english: en = false }: { english?: boolean }) {
         className="container section home-evidence"
         data-scene="Evidence"
       >
-        <h2>{en ? "Evidence, in the open." : "能力，有公开的来处。"}</h2>
+        <h2 data-reveal="blur">{en ? "Evidence, in the open." : "能力，有公开的来处。"}</h2>
         <EvidenceList english={en} compact />
         <Link href={pre + "/research/#evidence"} className="text-link">
           {en ? "Read public records" : "查看公开记录"}
@@ -128,7 +128,7 @@ export function HomePage({ english: en = false }: { english?: boolean }) {
         data-scene={en ? "About MGC" : "关于美创"}
       >
         <div className="home-about-title">
-          <h2>
+          <h2 data-reveal="blur">
             {en
               ? "A continuing\ncultural practice."
               : "从文化出发，\n持续创造。"}

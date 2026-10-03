@@ -95,7 +95,7 @@ export function PageHero({
         />
       )}
       <SectionLabel>{label}</SectionLabel>
-      <h1>{title}</h1>
+      <h1 className="page-title-motion">{title}</h1>
       <div className="page-hero-bottom">
         <p>{description}</p>
         {children}
@@ -112,7 +112,7 @@ export function ContactCTA({ english = false }: { english?: boolean } = {}) {
       <div className="container cta-inner">
         <div>
           <p className="cta-kicker">Culture × Technology × AI × Experience</p>
-          <h2>
+          <h2 data-reveal="blur">
             {english ? (
               <>
                 A meaningful experience.

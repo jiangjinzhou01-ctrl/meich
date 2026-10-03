@@ -43,7 +43,7 @@ export function ResearchPage({ english: en = false }: { english?: boolean }) {
         <div className="container research-lab-grid">
           <div>
             <p className="research-label">Cultural Digitization</p>
-            <h2>
+            <h2 data-reveal="blur">
               {en
                 ? "An object.\nA digital life."
                 : "保留形与迹，\n打开新的理解。"}
@@ -66,7 +66,7 @@ export function ResearchPage({ english: en = false }: { english?: boolean }) {
         id="evidence"
         data-scene="Evidence"
       >
-        <h2>
+        <h2 data-reveal="blur">
           {en
             ? "Public records.\nSpecific capabilities."
             : "公开记录，\n对应具体能力。"}
@@ -83,7 +83,7 @@ export function ResearchPage({ english: en = false }: { english?: boolean }) {
         id="directions"
         data-scene={en ? "Research directions" : "研究方向"}
       >
-        <h2>{en ? "Questions we are exploring." : "持续探索的方向。"}</h2>
+        <h2 data-reveal="blur">{en ? "Questions we are exploring." : "持续探索的方向。"}</h2>
         <p className="catalog-intro">
           {en
             ? "Research directions, separate from corporate news."
@@ -103,7 +103,7 @@ export function ResearchPage({ english: en = false }: { english?: boolean }) {
         id="projects"
         data-scene={en ? "Research projects" : "研究项目"}
       >
-        <h2>{en ? "Research projects." : "研究项目与实验。"}</h2>
+        <h2 data-reveal="blur">{en ? "Research projects." : "研究项目与实验。"}</h2>
         <p className="catalog-intro">
           {en
             ? "Published experiments and collaborative projects."

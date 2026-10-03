@@ -729,7 +729,7 @@
     border-top: 1px solid var(--border);
     color: var(--muted);
     font-size: 12px;
-    transition: border-color var(--fast), color var(--fast);
+    transition: color var(--fast);
   }
   .artifact-mobile-index a > span {
     display: block;
@@ -740,10 +740,6 @@
   .artifact-mobile-index a[aria-current="step"] {
     border-color: var(--accent);
     color: var(--accent-ink);
-  }
-  .artifact-mobile-index a:hover {
-    color: var(--accent-ink);
-    border-color: var(--accent);
   }
   html[lang="en"] .artifact-mobile-index a {
     font-size: 10px;
@@ -950,6 +946,12 @@
   }
   .cta-kicker {
     max-width: 28ch;
+  }
+}
+@media (max-width: 767px) and (hover: hover) and (pointer: fine) {
+  .artifact-mobile-index a:not([aria-current]):hover {
+    color: var(--ink);
+    border-color: var(--muted);
   }
 }
 @keyframes artifact-copy-enter {

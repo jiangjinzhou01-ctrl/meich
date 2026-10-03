@@ -12,11 +12,13 @@ export function Navbar() {
   const path = usePathname();
   const en = path.startsWith("/en");
   const [open, setOpen] = useState(false);
+  const [closing, setClosing] = useState(false);
   const [dark, setDark] = useState(false);
   const [scene, setScene] = useState("");
   const [tone, setTone] = useState("light");
   const dialog = useRef<HTMLDialogElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
+  const closeTimer = useRef<number | null>(null);
   const links = en
     ? [
         { label: "Expertise", href: "/en/services/" },
@@ -60,9 +62,14 @@ export function Navbar() {
     setDark(document.documentElement.dataset.theme === "dark");
   }, []);
   useEffect(() => {
+    if (closeTimer.current !== null) window.clearTimeout(closeTimer.current);
+    setClosing(false);
     setOpen(false);
     document.documentElement.lang = en ? "en" : "zh-CN";
   }, [path, en]);
+  useEffect(() => () => {
+    if (closeTimer.current !== null) window.clearTimeout(closeTimer.current);
+  }, []);
   useEffect(() => {
     if (!dialog.current) return;
     if (open) dialog.current.showModal();
@@ -111,9 +118,35 @@ export function Navbar() {
       localStorage.setItem("meichuang-theme", next ? "dark" : "light");
     } catch {}
   }
-  function close() {
+  function finishClose() {
+    if (closeTimer.current !== null) window.clearTimeout(closeTimer.current);
+    closeTimer.current = null;
+    dialog.current?.close();
+    setClosing(false);
     setOpen(false);
     toggle.current?.focus();
+  }
+  function close() {
+    if (closing) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      finishClose();
+      return;
+    }
+    setClosing(true);
+    closeTimer.current = window.setTimeout(finishClose, 400);
+  }
+  function openMenu() {
+    const rect = toggle.current?.getBoundingClientRect();
+    if (!rect || !dialog.current) return;
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y)) + 4;
+    dialog.current.style.setProperty("--menu-x", `${x}px`);
+    dialog.current.style.setProperty("--menu-y", `${y}px`);
+    dialog.current.style.setProperty("--menu-radius", `${radius}px`);
+    if (closeTimer.current !== null) window.clearTimeout(closeTimer.current);
+    setClosing(false);
+    setOpen(true);
   }
   return (
     <>
@@ -173,7 +206,7 @@ export function Navbar() {
             <button
               ref={toggle}
               className="icon-button menu-toggle"
-              onClick={() => setOpen(true)}
+              onClick={openMenu}
               aria-expanded={open}
               aria-controls="mobile-menu"
               aria-label={en ? "Open navigation" : "打开导航菜单"}
@@ -187,9 +220,14 @@ export function Navbar() {
         className="mobile-menu"
         ref={dialog}
         id="mobile-menu"
+        data-closing={closing}
         aria-label={en ? "Site navigation" : "网站导航"}
-        onCancel={() => {
-          setOpen(false);
+        onCancel={(event) => {
+          event.preventDefault();
+          close();
+        }}
+        onAnimationEnd={(event) => {
+          if (event.target === event.currentTarget && closing) finishClose();
         }}
         onClick={(e) => {
           if (e.target === dialog.current) close();

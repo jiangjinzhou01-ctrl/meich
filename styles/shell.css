@@ -130,11 +130,12 @@
 }
 .mobile-menu {
   border: 0;
-  margin: 0 0 0 auto;
+  margin: 0;
+  inset: 0;
   padding: 22px 24px 30px;
   background: var(--bg);
   color: var(--ink);
-  width: min(480px, 100%);
+  width: 100%;
   max-width: 100%;
   height: 100dvh;
   max-height: 100dvh;
@@ -142,10 +143,25 @@
   overscroll-behavior: contain;
 }
 .mobile-menu::backdrop {
-  background: rgba(25, 22, 18, 0.5);
+  background: transparent;
 }
 .mobile-menu[open] {
-  animation: menu-enter 0.4s var(--ease);
+  animation: menu-expand 560ms var(--ease-out-expo) both;
+}
+.mobile-menu[open][data-closing="true"] {
+  animation: menu-contract 320ms var(--ease-soft) both;
+  pointer-events: none;
+}
+.mobile-menu[open] .mobile-primary a {
+  animation: text-clarify 600ms var(--ease) both;
+  animation-delay: 110ms;
+}
+.mobile-menu[open] .mobile-primary a:nth-child(2) { animation-delay: 150ms; }
+.mobile-menu[open] .mobile-primary a:nth-child(3) { animation-delay: 190ms; }
+.mobile-menu[open] .mobile-primary a:nth-child(4) { animation-delay: 230ms; }
+.mobile-menu[open] .mobile-primary a:nth-child(5) { animation-delay: 270ms; }
+.mobile-menu[open][data-closing="true"] .mobile-primary a {
+  animation: none;
 }
 .mobile-top {
   display: flex;
@@ -280,14 +296,20 @@
   display: flex;
   align-items: center;
 }
-@keyframes menu-enter {
+@keyframes menu-expand {
   from {
-    transform: translateX(30px);
-    opacity: 0.5;
+    clip-path: circle(0px at var(--menu-x, 90vw) var(--menu-y, 33px));
   }
   to {
-    transform: none;
-    opacity: 1;
+    clip-path: circle(var(--menu-radius, 150vmax) at var(--menu-x, 90vw) var(--menu-y, 33px));
+  }
+}
+@keyframes menu-contract {
+  from {
+    clip-path: circle(var(--menu-radius, 150vmax) at var(--menu-x, 90vw) var(--menu-y, 33px));
+  }
+  to {
+    clip-path: circle(0px at var(--menu-x, 90vw) var(--menu-y, 33px));
   }
 }
 @media (max-width: 1100px) {

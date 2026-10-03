@@ -1,0 +1,40 @@
+{
+  "touch": [
+    {
+      "path": "/",
+      "tapThenForwardAndReverseSwipe": true,
+      "exactlyOneRedIndicator": true,
+      "reverseJump": true
+    },
+    {
+      "path": "/services/",
+      "tapThenForwardAndReverseSwipe": true,
+      "exactlyOneRedIndicator": true,
+      "reverseJump": true
+    },
+    {
+      "path": "/en/",
+      "tapThenForwardAndReverseSwipe": true,
+      "exactlyOneRedIndicator": true,
+      "reverseJump": true
+    },
+    {
+      "path": "/en/services/",
+      "tapThenForwardAndReverseSwipe": true,
+      "exactlyOneRedIndicator": true,
+      "reverseJump": true
+    }
+  ],
+  "menu": [
+    "Circular expansion originates at hamburger center; full viewport; reverse close restores focus and scroll",
+    "Escape uses reverse close",
+    "320px short viewport remains scrollable; theme action works",
+    "Reduced motion opens and closes immediately"
+  ],
+  "motion": [
+    "Below-fold research heading blurs in and settles fully clear",
+    "Service change uses blur transition and remains clear after settling",
+    "Reduced motion disables both page title and below-fold blur"
+  ],
+  "errors": []
+}

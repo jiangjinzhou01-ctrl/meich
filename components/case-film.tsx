@@ -93,7 +93,7 @@ export function CaseFilm({
           id={i === 0 ? "case-context" : "case-chapter-" + i}
           key={i}
         >
-          <div className="container case-chapter-copy" data-reveal>
+          <div className="container case-chapter-copy" data-reveal="blur">
             <span>{chapters[i]}</span>
             <h2>{en ? projectEnglish[slug].sections[i].title : s.title}</h2>
             <p>{en ? projectEnglish[slug].sections[i].text : s.text}</p>
