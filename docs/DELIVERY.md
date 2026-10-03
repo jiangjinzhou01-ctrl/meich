@@ -57,10 +57,12 @@
 正式 Research 包含图片采样研究、原有研究方向、研发项目与五条公开证据。Canvas 仅基于实际图片做采样和网格，明确“非实测三维点云、非交付扫描系统”。首页只取三条克制入口，完整来源和日期在 Research。专利展示文献编号与申请人记录，未宣称现行法律状态；标准只写参与研讨，未写主导标准。未制作奖项 Logo 墙或没有数据依据的项目地图。
 
 ## K. Mobile
+2026-10-03 手机端专项重制：From Artifact to Experience 改为五章原生横向滑动叙事，索引可点击并支持方向键、Home、End；真实照片通过定向渐变融入标题与解释。移除重复的黑色标签及长红线，保留桌面滚动叙事。章节文本使用 650ms 轻微模糊、淡入与 8px 位移，减少动态设置下全部取消。无 JavaScript 时锚点和原生滑动仍可阅读全部内容。中英文首页与服务页在五种手机宽度测试通过，详见 docs/qa/mobile-artifact-regression.json。
+
 实测 320、360、390、412、430、768、1024、1280、1440、1920px，共 90 个主要页面/宽度组合，无横向溢出、失效已加载图片、重复 ID 或多 H1。手机首屏文字进入画面底部、服务索引先选择再阅读、案例全宽媒体与窄正文交替、AI 控件支持触控。菜单主次分层、短屏可滚动；搜索输入不依赖 hover，类型筛选横向可触达。保留完整内容与项目图片。
 
 ## L. 性能
-响应式图片使用真实存在的 640/960 WebP 与 AVIF；手机 Hero 使用真实照片的 640×959 竖构图（约 30KB），明确尺寸、首屏 high priority、次屏 lazy。中文系统字体，本地英文 Latin 子集；Logo 独立缓存。品牌完整影片约 97MB，仅打开弹层后请求 metadata，不在首屏自动下载。首页构建 First Load JS 113kB。本地 Lighthouse 移动模拟：Performance 97 / Accessibility 100 / Best Practices 100 / SEO 100；LCP 2.7s、CLS 0、TBT 30ms、传输约 520KiB。分数是本地模拟，不代表线上所有网络设备；线上复查后的搜索修正另有构建与回归记录。
+响应式图片使用真实存在的 640/960 WebP 与 AVIF；手机 Hero 使用真实照片的 640×959 竖构图（约 30KB），明确尺寸、首屏 high priority、次屏 lazy。中文系统字体，本地英文 Latin 子集；Logo 独立缓存。品牌完整影片约 97MB，仅打开弹层后请求 metadata，不在首屏自动下载。本次手机模块更新后，首页构建 First Load JS 114kB。本地 Lighthouse 移动模拟：Performance 97 / Accessibility 100 / Best Practices 100 / SEO 100；LCP 2.7s、CLS 0、TBT 30ms、传输约 520KiB。分数是本地模拟，不代表线上所有网络设备；线上复查后的搜索修正另有构建与回归记录。
 
 ## M. SEO
 主路径 title、description、canonical、OpenGraph、Twitter、favicon、robots、sitemap；Organization、WebSite、BreadcrumbList；图片 alt、单 H1、语义章节、中英文 lang 与有效对应页 hreflang。569 个导出页面已检查站内目标和媒体 srcset，旧路由 canonical 化。404 错误页不设置内容 canonical。GitHub Pages 子路径资源与 /meich 域名信息在构建时同步。

@@ -1,0 +1,137 @@
+{
+  "responsive": [
+    {
+      "url": "/",
+      "width": 320,
+      "overflow": false,
+      "chaptersSelectable": true
+    },
+    {
+      "url": "/",
+      "width": 360,
+      "overflow": false,
+      "chaptersSelectable": true
+    },
+    {
+      "url": "/",
+      "width": 390,
+      "overflow": false,
+      "chaptersSelectable": true
+    },
+    {
+      "url": "/",
+      "width": 412,
+      "overflow": false,
+      "chaptersSelectable": true
+    },
+    {
+      "url": "/",
+      "width": 430,
+      "overflow": false,
+      "chaptersSelectable": true
+    },
+    {
+      "url": "/services/",
+      "width": 320,
+      "overflow": false,
+      "chaptersSelectable": true
+    },
+    {
+      "url": "/services/",
+      "width": 360,
+      "overflow": false,
+      "chaptersSelectable": true
+    },
+    {
+      "url": "/services/",
+      "width": 390,
+      "overflow": false,
+      "chaptersSelectable": true
+    },
+    {
+      "url": "/services/",
+      "width": 412,
+      "overflow": false,
+      "chaptersSelectable": true
+    },
+    {
+      "url": "/services/",
+      "width": 430,
+      "overflow": false,
+      "chaptersSelectable": true
+    },
+    {
+      "url": "/en/",
+      "width": 320,
+      "overflow": false,
+      "chaptersSelectable": true
+    },
+    {
+      "url": "/en/",
+      "width": 360,
+      "overflow": false,
+      "chaptersSelectable": true
+    },
+    {
+      "url": "/en/",
+      "width": 390,
+      "overflow": false,
+      "chaptersSelectable": true
+    },
+    {
+      "url": "/en/",
+      "width": 412,
+      "overflow": false,
+      "chaptersSelectable": true
+    },
+    {
+      "url": "/en/",
+      "width": 430,
+      "overflow": false,
+      "chaptersSelectable": true
+    },
+    {
+      "url": "/en/services/",
+      "width": 320,
+      "overflow": false,
+      "chaptersSelectable": true
+    },
+    {
+      "url": "/en/services/",
+      "width": 360,
+      "overflow": false,
+      "chaptersSelectable": true
+    },
+    {
+      "url": "/en/services/",
+      "width": 390,
+      "overflow": false,
+      "chaptersSelectable": true
+    },
+    {
+      "url": "/en/services/",
+      "width": 412,
+      "overflow": false,
+      "chaptersSelectable": true
+    },
+    {
+      "url": "/en/services/",
+      "width": 430,
+      "overflow": false,
+      "chaptersSelectable": true
+    },
+    {
+      "url": "/",
+      "width": 1440,
+      "desktopNarrativePreserved": true
+    }
+  ],
+  "interaction": [
+    "Keyboard End selects final chapter; real case CTA navigates",
+    "Native horizontal scroll updates chapter index",
+    "Reduced motion disables blur/translation",
+    "Normal motion smooth chapter transition",
+    "All five chapters remain in HTML and native scroll without JavaScript"
+  ],
+  "errors": []
+}

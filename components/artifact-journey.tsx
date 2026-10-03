@@ -8,7 +8,7 @@ const phases = [
     title: "文化资源",
     en: "Cultural source",
     image: "liye-details",
-    text: "从秦简、文物、历史资料与文化空间，找到内容的起点。",
+    text: "从秦简、文物、历史资料与文化空间，找到文化叙事的起点。",
     enText:
       "Begin with manuscripts, objects, historical records and cultural spaces.",
   },
@@ -52,18 +52,39 @@ export function ArtifactJourney({
 }) {
   const [active, setActive] = useState(0);
   const root = useRef<HTMLElement>(null);
+  const steps = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const o = new IntersectionObserver(
-      (es) =>
-        es.forEach((e) => {
-          if (e.isIntersecting)
-            setActive(Number((e.target as HTMLElement).dataset.phase));
+    const mobile = window.matchMedia("(max-width: 767px)");
+    let observer: IntersectionObserver;
+    const observe = () => {
+      observer?.disconnect();
+      observer = new IntersectionObserver(
+        (entries) => entries.forEach((entry) => {
+          if (entry.isIntersecting)
+            setActive(Number((entry.target as HTMLElement).dataset.phase));
         }),
-      { rootMargin: "-30% 0px -35% 0px" },
-    );
-    root.current?.querySelectorAll("[data-phase]").forEach((e) => o.observe(e));
-    return () => o.disconnect();
+        mobile.matches
+          ? { root: steps.current, threshold: 0.6 }
+          : { rootMargin: "-30% 0px -35% 0px" },
+      );
+      root.current?.querySelectorAll("[data-phase]").forEach((e) => observer.observe(e));
+    };
+    observe();
+    mobile.addEventListener("change", observe);
+    return () => {
+      observer.disconnect();
+      mobile.removeEventListener("change", observe);
+    };
   }, []);
+  const selectPhase = (index: number) => {
+    const rail = steps.current;
+    const chapter = rail?.children[index] as HTMLElement | undefined;
+    if (!rail || !chapter) return;
+    rail.scrollTo({
+      left: chapter.offsetLeft - rail.offsetLeft,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+    });
+  };
   return (
     <section
       ref={root}
@@ -79,6 +100,31 @@ export function ArtifactJourney({
             : "一件文化资源，\n如何成为一段体验。"}
         </h2>
       </div>
+      <nav className="artifact-mobile-index" aria-label={en ? "From source to experience, select a chapter" : "从文化资源到体验，选择章节"}>
+        {phases.map((p, i) => (
+          <a
+            href={`#artifact-phase-${i}`}
+            key={p.en}
+            aria-label={`${i + 1}. ${en ? p.en : p.title}`}
+            aria-current={active === i ? "step" : undefined}
+            aria-controls={`artifact-phase-${i}`}
+            onClick={(event) => { event.preventDefault(); selectPhase(i); }}
+            onKeyDown={(event) => {
+              const next = event.key === "ArrowRight" ? (i + 1) % phases.length
+                : event.key === "ArrowLeft" ? (i + phases.length - 1) % phases.length
+                : event.key === "Home" ? 0 : event.key === "End" ? phases.length - 1 : null;
+              if (next === null) return;
+              event.preventDefault();
+              (event.currentTarget.parentElement?.children[next] as HTMLAnchorElement)?.focus();
+              selectPhase(next);
+            }}
+          >
+            <span>0{i + 1}</span>
+            {en ? ["Source", "Digitize", "Study", "Design", "Experience"][i] : ["资源", "采集", "理解", "设计", "体验"][i]}
+          </a>
+        ))}
+      </nav>
+      <p className="artifact-mobile-hint">{en ? "Swipe to follow the transformation" : "左右滑动，看文化走向体验"}<span aria-hidden="true">↔</span></p>
       <div className="artifact-body">
         <div className="artifact-stage" aria-hidden="true">
           {phases.map((p, i) => (
@@ -97,25 +143,31 @@ export function ArtifactJourney({
             {en ? phases[active].en : phases[active].title}
           </span>
         </div>
-        <div className="artifact-steps">
+        <div className="artifact-steps" ref={steps}>
           {phases.map((p, i) => (
             <article
               key={i}
+              id={`artifact-phase-${i}`}
               data-phase={i}
               className={active === i ? "active" : ""}
             >
-              <span className="journey-index">0{i + 1}</span>
-              <h3>{en ? p.en : p.title}</h3>
-              <p>{en ? p.enText : p.text}</p>
-              {i === 4 && (
-                <Link
-                  className="text-link"
-                  href={en ? "/en/cases/" : "/cases/"}
-                >
-                  {en ? "Explore the work" : "查看真实项目"}
-                  <ArrowUpRight size={18} />
-                </Link>
-              )}
+              <div className="artifact-mobile-media" aria-hidden="true">
+                <ResponsiveImage name={p.image} alt="" sizes="(max-width:767px) 100vw,1px" />
+              </div>
+              <div className="artifact-copy">
+                <span className="journey-index">0{i + 1}<span className="artifact-total"> / 05</span></span>
+                <h3>{en ? p.en : p.title}</h3>
+                <p>{en ? p.enText : p.text}</p>
+                {i === 4 && (
+                  <Link
+                    className="text-link"
+                    href={en ? "/en/cases/" : "/cases/"}
+                  >
+                    {en ? "Explore the work" : "查看真实项目"}
+                    <ArrowUpRight size={18} />
+                  </Link>
+                )}
+              </div>
             </article>
           ))}
         </div>
