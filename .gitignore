@@ -5,3 +5,8 @@ out/
 !.env.example
 *.tsbuildinfo
 qa-results/
+/qa/
+docs/qa/*.png
+docs/qa/previous-snapshot/
+node_modules
+docs/qa/*-progress.json
