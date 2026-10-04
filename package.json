@@ -5,6 +5,9 @@
   "scripts": {
     "dev": "next dev --hostname 0.0.0.0",
     "build": "next build && node scripts/finalize-export.mjs",
+    "build:server": "node scripts/server-mode.mjs build",
+    "start:server": "node scripts/server-mode.mjs start --hostname 0.0.0.0",
+    "package:server": "node scripts/package-server.mjs",
     "start": "node scripts/serve.mjs",
     "typecheck": "tsc --noEmit",
     "check:export": "node scripts/check-export.mjs",

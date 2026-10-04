@@ -1,0 +1,14 @@
+services:
+  website:
+    build:
+      context: ./source
+      args:
+        NEXT_PUBLIC_SITE_URL: https://www.mgcdigi.com
+        NEXT_PUBLIC_CONTACT_ENDPOINT: ""
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      HOSTNAME: "0.0.0.0"
+    restart: unless-stopped

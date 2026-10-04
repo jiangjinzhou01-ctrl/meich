@@ -20,13 +20,11 @@ export default function Admin() {
             都积累品牌的力量。
           </>
         }
-        description="品牌管理部的内容、素材与发布工作台。现有账号、内容管理与发布流程继续由正式后台承接。"
+        description="项目与新闻的内容编辑、草稿和品牌预览。正式账号、审核与发布流程由后续后台承接。"
       />
       <section className="container admin-portal">
-        <a className="button" href="https://www.mgcdigi.com/admin">
-          进入品牌工作台 <span aria-hidden="true">↗</span>
-        </a>
-        <p>使用品牌负责人分配的账号，在原工作台完成登录。</p>
+        <Button href="/admin/content/">编辑项目与新闻</Button>
+        <p>当前支持浏览器草稿与页面预览；保存草稿不会发布到官网。</p>
         <Button href="/" secondary>
           返回网站
         </Button>

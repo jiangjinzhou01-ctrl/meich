@@ -1,0 +1,66 @@
+{
+  "target": "Packaged Next.js standalone, Linux x64, Node v24.19.0",
+  "checks": [
+    "Production root routes, canonical, static assets and client navigation",
+    "Preview validation restores visible required fields without runtime error",
+    "Project edit, sections, local save and reload persistence",
+    "JSON export/import roundtrip and project/news templates",
+    "Gaussian title/section preview settles clear; reduced motion disables animation",
+    "Editor layout at narrow/desktop widths, draft deletion, invalid import feedback",
+    "Packaged production mobile circular menu still works"
+  ],
+  "viewports": [
+    {
+      "width": 320,
+      "previewOverflow": false,
+      "lightAndDark": true
+    },
+    {
+      "width": 360,
+      "previewOverflow": false,
+      "lightAndDark": true
+    },
+    {
+      "width": 390,
+      "previewOverflow": false,
+      "lightAndDark": true
+    },
+    {
+      "width": 412,
+      "previewOverflow": false,
+      "lightAndDark": true
+    },
+    {
+      "width": 430,
+      "previewOverflow": false,
+      "lightAndDark": true
+    },
+    {
+      "width": 768,
+      "previewOverflow": false,
+      "lightAndDark": true
+    },
+    {
+      "width": 1024,
+      "previewOverflow": false,
+      "lightAndDark": true
+    },
+    {
+      "width": 1280,
+      "previewOverflow": false,
+      "lightAndDark": true
+    },
+    {
+      "width": 1440,
+      "previewOverflow": false,
+      "lightAndDark": true
+    },
+    {
+      "width": 1920,
+      "previewOverflow": false,
+      "lightAndDark": true
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

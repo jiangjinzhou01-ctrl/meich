@@ -20,6 +20,8 @@ const reserved = new Set([
   "/cases",
   "/culture-ai",
   "/research",
+  "/admin",
+  "/admin/content",
   "/en/research",
   "/research/technology",
   "/en/cases",

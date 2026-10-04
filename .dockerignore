@@ -1,0 +1,9 @@
+.git
+.next
+out
+node_modules
+.env*
+!.env.example
+qa
+qa-results
+docs/qa/*.png
