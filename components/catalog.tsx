@@ -175,7 +175,7 @@ export function Catalog({
       </div>
       <div className="catalog-grid">
         {results.slice(0, limit).map((i) => (
-          <Link className="catalog-card" href={`${i.path}/`} key={i.path}>
+          <Link data-reveal-group className="catalog-card" href={`${i.path}/`} key={i.path}>
             {i.image && (
               <div className="catalog-image">
                 <img
@@ -188,21 +188,21 @@ export function Catalog({
                 />
               </div>
             )}
-            <span className="catalog-category">
+            <span className="catalog-category" data-reveal="content" data-reveal-order="0">
               {i.domain}
               {i.format ? ` · ${i.format}` : ""}
             </span>
-            <h2>
+            <h2 data-reveal="content" data-reveal-order="1">
               {i.title}
               <span aria-hidden="true">↗</span>
             </h2>
-            <p>{i.description}</p>
+            <p data-reveal="content">{i.description}</p>
           </Link>
         ))}
       </div>
       {!results.length && (
         <div className="catalog-empty">
-          <h2>{english ? "No matching content" : "没有找到匹配内容"}</h2>
+          <h2 data-reveal="content" data-reveal-order="1">{english ? "No matching content" : "没有找到匹配内容"}</h2>
           <p>
             {english
               ? "Try another keyword or clear filters."

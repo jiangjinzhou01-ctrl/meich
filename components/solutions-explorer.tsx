@@ -78,6 +78,7 @@ export function SolutionsExplorer() {
       </div>
       <div
         className="solution-panel"
+        data-motion-scope="interaction"
         role="tabpanel"
         id={`panel-${active}`}
         aria-labelledby={`tab-${active}`}

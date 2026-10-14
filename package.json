@@ -11,7 +11,8 @@
     "start": "node scripts/serve.mjs",
     "typecheck": "tsc --noEmit",
     "check:export": "node scripts/check-export.mjs",
-    "check:search": "node scripts/check-search.mjs"
+    "check:search": "node scripts/check-search.mjs",
+    "check:motion": "node scripts/check-motion.mjs"
   },
   "dependencies": {
     "geist": "^1.7.2",

@@ -59,7 +59,7 @@ export function TechnologySystem() {
           </button>
         ))}
       </div>
-      <div className="tech-description" aria-live="polite">
+      <div className="tech-description" aria-live="polite" key={active} data-motion-scope="interaction">
         <span>能力连接</span>
         <h2>{nodes[active].name}</h2>
         <p>{nodes[active].text}</p>

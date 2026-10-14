@@ -67,9 +67,9 @@ export function CultureLab({
       data-nav-tone="dark"
       data-scene="Culture × AI"
     >
-      <div className="container installation-title">
-        <p>Culture × AI</p>
-        <h2 data-reveal="blur">
+      <div className="container installation-title" data-reveal-group>
+        <p data-reveal="content" data-reveal-order="0">Culture × AI</p>
+        <h2 data-reveal="editorial">
           {en ? "Another way\ninto culture." : "重新理解，\n才能重新表达。"}
         </h2>
       </div>
@@ -115,6 +115,7 @@ export function CultureLab({
           </div>
           <div
             className="installation-reading"
+            data-motion-scope="interaction"
             role="tabpanel"
             id={id + "-panel"}
             aria-labelledby={id + "-tab-" + active}
@@ -177,8 +178,8 @@ export function CultureLab({
           </div>
         </div>
       </div>
-      <div className="installation-footer container">
-        <p>
+      <div className="installation-footer container" data-reveal-group>
+        <p data-reveal="content">
           {en
             ? "Historical knowledge is reviewed. Generative expression is clearly identified."
             : "文化知识经过校对，生成表达标明来处。"}
@@ -190,6 +191,7 @@ export function CultureLab({
               : "/cases/liye-qin-slips/"
           }
           className="scene-link"
+          data-reveal="interaction"
         >
           {en ? "Read the project" : "阅读项目"}
           <ArrowUpRight size={18} />

@@ -18,7 +18,7 @@ export function ProjectVisual({
   large?: boolean;
 }) {
   return (
-    <div className="project-visual">
+    <div className="project-visual" data-reveal="media" data-reveal-order="0">
       <ResponsiveImage
         name={p.kind}
         alt={p.imageAlt}
@@ -44,6 +44,7 @@ export function ProjectCard({
     <Link
       href={href}
       prefetch={false}
+      data-reveal-group
       data-nav-tone="dark"
       data-scene={`${index + 1} / 03 · ${en ? projectNames[p.slug] : p.title}`}
       className={
@@ -53,17 +54,17 @@ export function ProjectCard({
       <ProjectVisual project={p} />
       <div className="project-scrim" />
       <div className="project-film-copy">
-        <div className="project-meta">
+        <div className="project-meta" data-reveal="content" data-reveal-order="0">
           <span>0{index + 1}</span>
           <span>{en ? "Selected work" : p.type}</span>
           <span>{p.year || ""}</span>
         </div>
-        <h3>
+        <h3 data-reveal="editorial">
           {en ? projectNames[p.slug] : p.title}
           <ArrowUpRight size={28} />
         </h3>
-        <p>{en ? projectEnglish[p.slug].description : p.description}</p>
-        <span className="project-role">
+        <p data-reveal="content">{en ? projectEnglish[p.slug].description : p.description}</p>
+        <span className="project-role" data-reveal="content">
           {en
             ? "MGC / " + projectEnglish[p.slug].role
             : "美创职责 / " + p.service}

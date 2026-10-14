@@ -108,9 +108,9 @@ export function ArtifactJourney({
       id="artifact"
       data-scene="From Artifact to Experience"
     >
-      <div className="container artifact-heading">
-        <p>From Artifact to Experience</p>
-        <h2 data-reveal="blur">
+      <div className="container artifact-heading" data-reveal-group>
+        <p data-reveal="content" data-reveal-order="0">From Artifact to Experience</p>
+        <h2 data-reveal="editorial">
           {en
             ? "A cultural resource.\nA new experience."
             : "一件文化资源，\n如何成为一段体验。"}

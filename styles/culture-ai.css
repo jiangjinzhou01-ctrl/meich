@@ -82,7 +82,6 @@
 }
 .installation-reading {
   max-width: 39ch;
-  animation: text-clarify 600ms var(--ease) both;
   margin-top: 50px;
 }
 .installation-reading h3 {

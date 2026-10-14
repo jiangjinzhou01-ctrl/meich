@@ -37,13 +37,13 @@ export default function Page() {
           ],
         ].map(([t, d]) => (
           <article key={t}>
-            <h2>{t}</h2>
-            <p>{d}</p>
+            <h2 data-reveal="editorial">{t}</h2>
+            <p data-reveal="content">{d}</p>
           </article>
         ))}
       </section>
       <section className="container source-related">
-        <h2>Research and applications</h2>
+        <h2 data-reveal="editorial">Research and applications</h2>
         <Link href="/en/research/" className="text-link">
           Explore research ↗
         </Link>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { siteUrl } from "@/lib/content";
+import { RevealText } from "./reveal";
 export function Button({
   href,
   children,
@@ -15,6 +16,7 @@ export function Button({
   return (
     <Link
       href={href}
+      data-reveal="interaction"
       prefetch={false}
       className={`button ${secondary ? "secondary" : ""} ${className}`}
     >
@@ -26,12 +28,14 @@ export function Button({
 export function SectionLabel({
   number,
   children,
+  immediate = false,
 }: {
   number?: string;
   children: ReactNode;
+  immediate?: boolean;
 }) {
   return (
-    <div className="section-label">
+    <div className="section-label" data-reveal="content" data-reveal-order="0" data-motion-role="eyebrow" data-motion-enter={immediate ? "" : undefined}>
       <span>{children}</span>
     </div>
   );
@@ -68,7 +72,7 @@ export function PageHero({
     )[label];
   const english = route?.startsWith("/en/");
   return (
-    <section className="page-hero container">
+    <section className="page-hero container" data-reveal-group>
       {route && (
         <script
           type="application/ld+json"
@@ -94,10 +98,10 @@ export function PageHero({
           }}
         />
       )}
-      <SectionLabel>{label}</SectionLabel>
-      <h1 className="page-title-motion">{title}</h1>
+      <SectionLabel immediate>{label}</SectionLabel>
+      <RevealText as="h1" level="cinematic" immediate delay={90}>{title}</RevealText>
       <div className="page-hero-bottom">
-        <p>{description}</p>
+        <RevealText immediate delay={180}>{description}</RevealText>
         {children}
       </div>
     </section>
@@ -109,10 +113,10 @@ export function ContactCTA({ english = false }: { english?: boolean } = {}) {
       className="contact-cta"
       data-scene={english ? "Contact" : "商务合作"}
     >
-      <div className="container cta-inner">
+      <div className="container cta-inner" data-reveal-group>
         <div>
-          <p className="cta-kicker">Culture × Technology × AI × Experience</p>
-          <h2 data-reveal="blur">
+          <p className="cta-kicker" data-reveal="content" data-reveal-order="0">Culture × Technology × AI × Experience</p>
+          <h2 data-reveal="editorial">
             {english ? (
               <>
                 A meaningful experience.

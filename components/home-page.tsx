@@ -26,18 +26,18 @@ export function HomePage({ english: en = false }: { english?: boolean }) {
           height={764}
           loading="lazy"
         />
-        <div className="container">
-          <p className="manifesto-lead" data-reveal="blur">
+        <div className="container" data-reveal-group>
+          <p className="manifesto-lead" data-reveal="editorial" data-reveal-order="0">
             {en
               ? "Technology does not replace culture."
               : "技术不是文化的替代。"}
           </p>
-          <h2 data-reveal="blur">
+          <h2 data-reveal="cinematic">
             {en
               ? "It gives culture\nnew ways to speak."
               : "它让文化，\n拥有新的表达方式。"}
           </h2>
-          <p className="manifesto-body">
+          <p className="manifesto-body" data-reveal="content">
             {en
               ? "We begin with content, connecting cultural research, creative design, digital production and implementation."
               : "我们从内容出发，连接文化研究、创意设计、数字生产与工程实施。让历史被理解，让体验真正发生。"}
@@ -56,8 +56,8 @@ export function HomePage({ english: en = false }: { english?: boolean }) {
           className="scene-media"
         />
         <div className="scene-shade" />
-        <div className="container reel-scene-content">
-          <h2 data-reveal="blur">{en ? "Culture,\nall around you." : "文化，\n不止于观看。"}</h2>
+        <div className="container reel-scene-content" data-reveal-group>
+          <h2 data-reveal="editorial">{en ? "Culture,\nall around you." : "文化，\n不止于观看。"}</h2>
           <FilmDialog english={en} />
         </div>
       </section>
@@ -66,11 +66,11 @@ export function HomePage({ english: en = false }: { english?: boolean }) {
         className="selected-work"
         data-scene={en ? "Selected work" : "精选案例"}
       >
-        <div className="container work-introduction">
-          <h2 data-reveal="blur">
+        <div className="container work-introduction" data-reveal-group>
+          <h2 data-reveal="editorial">
             {en ? "Culture, made tangible." : "文化的深度，成为真实的体验。"}
           </h2>
-          <Link className="text-link" href={pre + "/cases/"}>
+          <Link className="text-link" data-reveal="interaction" href={pre + "/cases/"}>
             {en ? "All work" : "全部案例"}
             <ArrowUpRight size={18} />
           </Link>
@@ -94,19 +94,19 @@ export function HomePage({ english: en = false }: { english?: boolean }) {
             sizes="100vw"
           />
         </div>
-        <div className="container research-preview-content">
-          <p className="research-label">Research & Development</p>
-          <h2 data-reveal="blur">
+        <div className="container research-preview-content" data-reveal-group>
+          <p className="research-label" data-reveal="content" data-reveal-order="0">Research & Development</p>
+          <h2 data-reveal="editorial">
             {en
               ? "A question today.\nAn experience tomorrow."
               : "今天的研究，\n成为明天的体验。"}
           </h2>
-          <p>
+          <p data-reveal="content">
             {en
               ? "3D digitization, museum software and interactive systems. Research grounded in cultural questions."
               : "文物三维数字化、智慧软件与互动系统。从文化现场的问题出发，把研究连接到应用。"}
           </p>
-          <Link className="scene-link" href={pre + "/research/"}>
+          <Link className="scene-link" data-reveal="interaction" href={pre + "/research/"}>
             {en ? "Explore research" : "走进研发"}
             <ArrowUpRight size={20} />
           </Link>
@@ -116,9 +116,9 @@ export function HomePage({ english: en = false }: { english?: boolean }) {
         className="container section home-evidence"
         data-scene="Evidence"
       >
-        <h2 data-reveal="blur">{en ? "Evidence, in the open." : "能力，有公开的来处。"}</h2>
+        <h2 data-reveal="editorial">{en ? "Evidence, in the open." : "能力，有公开的来处。"}</h2>
         <EvidenceList english={en} compact />
-        <Link href={pre + "/research/#evidence"} className="text-link">
+        <Link href={pre + "/research/#evidence"} className="text-link" data-reveal="interaction">
           {en ? "Read public records" : "查看公开记录"}
           <ArrowUpRight size={18} />
         </Link>
@@ -127,18 +127,18 @@ export function HomePage({ english: en = false }: { english?: boolean }) {
         className="container section home-about"
         data-scene={en ? "About MGC" : "关于美创"}
       >
-        <div className="home-about-title">
-          <h2 data-reveal="blur">
+        <div className="home-about-title" data-reveal-group>
+          <h2 data-reveal="editorial">
             {en
               ? "A continuing\ncultural practice."
               : "从文化出发，\n持续创造。"}
           </h2>
-          <p>
+          <p data-reveal="content">
             {en
               ? "Based in Changsha. Connecting research, creativity, digital production and engineering."
               : "立足长沙，连接文化研究、创意设计、数字生产与工程交付。"}
           </p>
-          <Link className="text-link" href={pre + "/about/"}>
+          <Link className="text-link" data-reveal="interaction" href={pre + "/about/"}>
             {en ? "Meet MGC" : "认识美创"}
             <ArrowUpRight size={18} />
           </Link>
@@ -149,7 +149,7 @@ export function HomePage({ english: en = false }: { english?: boolean }) {
             alt={en ? "MGC office reception" : "美创数字长沙办公空间"}
             sizes="(max-width:767px) 100vw,50vw"
           />
-          <dl>
+          <dl data-reveal="content">
             <div>
               <dt>2008</dt>
               <dd>{en ? "Brand practice begins" : "品牌实践起点"}</dd>

@@ -1,7 +1,11 @@
 // Cross-platform launcher: export remains the default for the existing Pages workflow.
 import { spawnSync } from "node:child_process";
 const result = spawnSync(process.execPath, ["node_modules/next/dist/bin/next", ...process.argv.slice(2)], {
-  env: { ...process.env, MGC_DEPLOY_TARGET: "server" },
+  env: {
+    ...process.env,
+    MGC_DEPLOY_TARGET: "server",
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || "https://www.mgcdigi.com",
+  },
   stdio: "inherit",
 });
 if (result.error) throw result.error;

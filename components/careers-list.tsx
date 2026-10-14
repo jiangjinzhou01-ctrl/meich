@@ -36,7 +36,7 @@ export function CareersList() {
     <>
       <div className="careers-heading">
         <div>
-          <h2>找到你的方向。</h2>
+          <h2 data-reveal="editorial">找到你的方向。</h2>
           <p>
             以下为人才交流方向，非正式在招岗位。招聘职位、地点与要求待确认。
           </p>
@@ -64,7 +64,7 @@ export function CareersList() {
               onClick={() => setSelected(d)}
             >
               <span>人才交流方向</span>
-              <h3>{d.name}</h3>
+              <h3 data-reveal="editorial">{d.name}</h3>
               <p>{d.text}</p>
               <div>
                 地点待确认<span aria-hidden="true">↗</span>

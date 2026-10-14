@@ -88,6 +88,7 @@ export function ServiceIndex({ english: en = false }: { english?: boolean }) {
         </div>
         <div
           className="service-index-panel"
+          data-motion-scope="interaction"
           role="tabpanel"
           id={id + "-panel"}
           aria-labelledby={s.id}

@@ -152,17 +152,6 @@
   animation: menu-contract 320ms var(--ease-soft) both;
   pointer-events: none;
 }
-.mobile-menu[open] .mobile-primary a {
-  animation: text-clarify 600ms var(--ease) both;
-  animation-delay: 110ms;
-}
-.mobile-menu[open] .mobile-primary a:nth-child(2) { animation-delay: 150ms; }
-.mobile-menu[open] .mobile-primary a:nth-child(3) { animation-delay: 190ms; }
-.mobile-menu[open] .mobile-primary a:nth-child(4) { animation-delay: 230ms; }
-.mobile-menu[open] .mobile-primary a:nth-child(5) { animation-delay: 270ms; }
-.mobile-menu[open][data-closing="true"] .mobile-primary a {
-  animation: none;
-}
 .mobile-top {
   display: flex;
   justify-content: space-between;
@@ -306,7 +295,7 @@
 }
 @keyframes menu-contract {
   from {
-    clip-path: circle(var(--menu-radius, 150vmax) at var(--menu-x, 90vw) var(--menu-y, 33px));
+    clip-path: var(--menu-exit-clip, circle(var(--menu-radius, 150vmax) at var(--menu-x, 90vw) var(--menu-y, 33px)));
   }
   to {
     clip-path: circle(0px at var(--menu-x, 90vw) var(--menu-y, 33px));

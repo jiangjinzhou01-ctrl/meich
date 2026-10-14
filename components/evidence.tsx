@@ -12,16 +12,16 @@ export function EvidenceList({
       {evidence.slice(0, compact ? 3 : 5).map((e) => (
         <a
           key={e.id}
-          className="evidence-entry"
+          className="evidence-entry" data-reveal-group
           href={e.url}
           target="_blank"
           rel="noreferrer"
         >
-          <span className="evidence-kind">{e.kind}</span>
+          <span className="evidence-kind" data-reveal="content" data-reveal-order="0">{e.kind}</span>
           <div>
-            <h3>{en ? e.en : e.title}</h3>
-            <p>{en ? e.enText : e.text}</p>
-            <small>
+            <h3 data-reveal="content" data-reveal-order="1">{en ? e.en : e.title}</h3>
+            <p data-reveal="content">{en ? e.enText : e.text}</p>
+            <small data-reveal="content">
               {e.source} / {e.date}
             </small>
           </div>

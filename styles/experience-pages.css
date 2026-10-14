@@ -78,9 +78,7 @@
   opacity: 1;
   transform: translate(3px, -3px);
 }
-.service-index-panel {
-  animation: panel-in 360ms var(--ease-soft);
-}
+
 .service-index-panel > span {
   font-size: 12px;
   letter-spacing: 0.12em;
@@ -497,18 +495,6 @@
 .research-archive summary {
   padding-block: 25px;
 }
-@keyframes panel-in {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-    filter: blur(4px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-    filter: blur(0);
-  }
-}
 [data-theme="dark"] .case-film {
   --case-paper: #1d1d1b;
   color: #f1eee6;
@@ -698,9 +684,7 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .service-index-panel {
-    animation: none;
-  }
+  
   .case-next:hover img {
     transform: none;
   }

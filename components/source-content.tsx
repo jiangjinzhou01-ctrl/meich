@@ -31,24 +31,24 @@ export function SourceContent({
         const key = `${b.type}-${i}`;
         if (b.type === "h2")
           return (
-            <h2 key={key} id={headingId(b.id)}>
+            <h2 data-reveal="editorial" key={key} id={headingId(b.id)}>
               {b.text}
             </h2>
           );
         if (b.type === "h3")
           return (
-            <h3 key={key} id={headingId(b.id)}>
+            <h3 data-reveal="editorial" key={key} id={headingId(b.id)}>
               {b.text}
             </h3>
           );
         if (b.type === "p")
           return b.text === page.description ||
             cardTitles.has(b.text || "") ? null : (
-            <p key={key}>{b.text}</p>
+            <p data-reveal="content" key={key}>{b.text}</p>
           );
         if (b.type === "image" && b.src)
           return (
-            <figure key={key}>
+            <figure data-reveal="media" key={key}>
               <a
                 href={b.src}
                 target="_blank"
@@ -67,7 +67,7 @@ export function SourceContent({
           );
         if (b.type === "video" && b.src)
           return (
-            <figure key={key}>
+            <figure data-reveal="media" key={key}>
               <video
                 controls
                 playsInline
@@ -113,7 +113,7 @@ export function SourceContent({
         if (b.type === "ul" || b.type === "ol" || b.type === "facts") {
           const Tag = b.type === "ol" ? "ol" : "ul";
           return (
-            <Tag key={key}>
+            <Tag data-reveal="content" key={key}>
               {b.items?.map((x, j) => (
                 <li key={j}>{x}</li>
               ))}
@@ -124,7 +124,7 @@ export function SourceContent({
           return (
             <details key={key}>
               <summary>{b.title}</summary>
-              <p>{b.text}</p>
+              <p data-reveal="content">{b.text}</p>
             </details>
           );
         if (b.type === "table")
@@ -153,7 +153,7 @@ export function SourceContent({
           }
           const external = /^https?:/.test(href);
           return (
-            <p key={key}>
+            <p data-reveal="content" key={key}>
               {external ? (
                 <a
                   className="text-link source-action"
@@ -196,23 +196,23 @@ export function OriginalSubmission({
 }) {
   return (
     <section
-      className="submission-portal"
+      className="submission-portal" data-reveal-group
       id={research ? "participate" : contact ? "cooperate" : "partner-apply"}
     >
-      <h2>
+      <h2 data-reveal="editorial">
         {english
           ? "Start a conversation"
           : research
             ? "参与这项探索。"
             : "向我们介绍你。"}
       </h2>
-      <p>
+      <p data-reveal="content">
         {english
           ? "Use MGC’s existing secure submission service. Your application remains connected to the current team workflow."
           : "通过美创现有正式收件服务提交资料，申请与后续跟进继续进入品牌工作台。"}
       </p>
       <a
-        className="button"
+        className="button" data-reveal="interaction"
         href={`${sourceSite}${path}${research ? "#participate" : contact ? "#cooperate" : "#partner-apply"}`}
         target="_blank"
         rel="noreferrer"

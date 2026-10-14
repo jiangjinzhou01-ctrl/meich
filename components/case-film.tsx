@@ -41,14 +41,14 @@ export function CaseFilm({
           className="scene-media"
         />
         <div className="scene-shade" />
-        <div className="container case-film-heading">
-          <Link className="scene-link" href={en ? "/en/cases/" : "/cases/"}>
+        <div className="container case-film-heading" data-reveal-group>
+          <Link className="scene-link" href={en ? "/en/cases/" : "/cases/"} data-reveal="content" data-motion-enter>
             {en ? "All work" : "全部案例"}
             <ArrowUpRight size={16} />
           </Link>
-          <h1>{en ? projectNames[slug] : p.title}</h1>
-          <p>{en ? projectEnglish[slug].description : p.description}</p>
-          <a className="scene-link" href="#case-context">
+          <h1 data-reveal="cinematic" data-motion-enter style={{ "--motion-delay": "90ms" } as React.CSSProperties}>{en ? projectNames[slug] : p.title}</h1>
+          <p data-reveal="content" data-motion-enter style={{ "--motion-delay": "180ms" } as React.CSSProperties}>{en ? projectEnglish[slug].description : p.description}</p>
+          <a className="scene-link" href="#case-context" data-reveal="interaction" data-motion-enter style={{ "--motion-delay": "270ms" } as React.CSSProperties}>
             {en ? "Read the story" : "进入项目叙事"}
             <ArrowUpRight size={19} />
           </a>
@@ -58,18 +58,18 @@ export function CaseFilm({
         className="container case-film-facts"
         data-scene={en ? "Project story" : "项目叙事"}
       >
-        <div>
+        <div data-reveal="content">
           <span>{en ? "MGC role" : "美创职责"}</span>
           <strong>{en ? projectEnglish[slug].role : p.service}</strong>
         </div>
-        <div>
+        <div data-reveal="content">
           <span>{en ? "Type / Year" : "类型 / 年份"}</span>
           <strong>
             {en ? "Cultural exhibition" : p.type} /{" "}
             {p.year || (en ? "Not published" : "未公开")}
           </strong>
         </div>
-        <div>
+        <div data-reveal="content">
           <span>{en ? "Source" : "项目资料"}</span>
           <a href={sourceSite + p.source} target="_blank" rel="noreferrer">
             {en ? "Original project" : "查看原始资料"}
@@ -93,15 +93,15 @@ export function CaseFilm({
           id={i === 0 ? "case-context" : "case-chapter-" + i}
           key={i}
         >
-          <div className="container case-chapter-copy" data-reveal="blur">
-            <span>{chapters[i]}</span>
-            <h2>{en ? projectEnglish[slug].sections[i].title : s.title}</h2>
-            <p>{en ? projectEnglish[slug].sections[i].text : s.text}</p>
+          <div className="container case-chapter-copy" data-reveal-group>
+            <span data-reveal="content" data-reveal-order="0">{chapters[i]}</span>
+            <h2 data-reveal="editorial">{en ? projectEnglish[slug].sections[i].title : s.title}</h2>
+            <p data-reveal="content">{en ? projectEnglish[slug].sections[i].text : s.text}</p>
           </div>
           {slug === "liye-qin-slips" && i === 2 ? (
             <CaseReader english={en} />
           ) : slug === "liye-qin-slips" && i === 0 ? (
-            <div className="case-archive-media">
+            <div className="case-archive-media" data-reveal="media">
               <ResponsiveImage
                 name="liye-details"
                 alt={
@@ -113,7 +113,7 @@ export function CaseFilm({
               />
             </div>
           ) : i === 1 && p.gallery.length ? (
-            <figure className="case-full-media">
+            <figure className="case-full-media" data-reveal="media">
               <img
                 src={asset(p.gallery[p.gallery.length - 1].image)}
                 alt={p.gallery[p.gallery.length - 1].alt}
@@ -128,11 +128,11 @@ export function CaseFilm({
           ) : null}
         </section>
       ))}
-      <section className="container case-film-result">
-        <h2>
+      <section className="container case-film-result" data-reveal-group>
+        <h2 data-reveal="editorial">
           {en ? "From interpretation to experience." : "让文化，进入真实体验。"}
         </h2>
-        <p>
+        <p data-reveal="content">
           {en
             ? "The original archive preserves the published project materials and images."
             : "项目的真实资料与完整图集继续保留。更多研究、设计与实施细节，可在原始项目档案中阅读。"}
@@ -170,9 +170,9 @@ export function CaseFilm({
         }
       >
         <ResponsiveImage name={next.kind} alt={next.imageAlt} sizes="100vw" />
-        <div className="container case-next-copy">
-          <span>{en ? "Next project" : "下一个项目"}</span>
-          <h2>
+        <div className="container case-next-copy" data-reveal-group>
+          <span data-reveal="content" data-reveal-order="0">{en ? "Next project" : "下一个项目"}</span>
+          <h2 data-reveal="editorial">
             {en ? projectNames[next.slug] : next.title}
             <ArrowUpRight size={27} />
           </h2>

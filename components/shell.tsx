@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react";
 import { Moon, Sun, Menu, X, ArrowUpRight } from "lucide-react";
 import { BrandMark } from "./brand";
 import { company, navigation, phone, phoneHref, address } from "@/lib/content";
@@ -10,6 +10,7 @@ import { languagePair } from "@/lib/routes";
 
 export function Navbar() {
   const path = usePathname();
+  const router = useRouter();
   const en = path.startsWith("/en");
   const [open, setOpen] = useState(false);
   const [closing, setClosing] = useState(false);
@@ -19,6 +20,7 @@ export function Navbar() {
   const dialog = useRef<HTMLDialogElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
   const closeTimer = useRef<number | null>(null);
+  const pendingHref = useRef<string | null>(null);
   const links = en
     ? [
         { label: "Expertise", href: "/en/services/" },
@@ -65,6 +67,7 @@ export function Navbar() {
     if (closeTimer.current !== null) window.clearTimeout(closeTimer.current);
     setClosing(false);
     setOpen(false);
+    pendingHref.current = null;
     document.documentElement.lang = en ? "en" : "zh-CN";
   }, [path, en]);
   useEffect(() => () => {
@@ -125,12 +128,25 @@ export function Navbar() {
     setClosing(false);
     setOpen(false);
     toggle.current?.focus();
+    const href = pendingHref.current;
+    pendingHref.current = null;
+    if (href) router.push(href);
   }
   function close() {
     if (closing) return;
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
       finishClose();
       return;
+    }
+    // Interrupt an unfinished entrance from its current frame, never from full opacity/radius.
+    const menu = dialog.current;
+    if (menu) {
+      menu.style.setProperty("--menu-exit-clip", getComputedStyle(menu).clipPath);
+      menu.querySelectorAll<HTMLElement>(".mobile-primary a,.mobile-secondary,.mobile-contact,.mobile-bottom").forEach((item) => {
+        const current = getComputedStyle(item);
+        item.style.setProperty("--menu-exit-opacity", current.opacity);
+        item.style.setProperty("--menu-exit-transform", current.transform);
+      });
     }
     setClosing(true);
     closeTimer.current = window.setTimeout(finishClose, 400);
@@ -147,6 +163,12 @@ export function Navbar() {
     if (closeTimer.current !== null) window.clearTimeout(closeTimer.current);
     setClosing(false);
     setOpen(true);
+  }
+  function navigateMenu(event: MouseEvent<HTMLAnchorElement>, href: string) {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    pendingHref.current = href;
+    close();
   }
   return (
     <>
@@ -244,8 +266,10 @@ export function Navbar() {
           </button>
         </div>
         <nav className="mobile-primary">
-          {links.map((n) => (
-            <Link href={n.href} key={n.href} onClick={close} prefetch={false}>
+          {links.map((n, i) => (
+            <Link href={n.href} key={n.href} onClick={(event) => navigateMenu(event, n.href)} prefetch={false}
+              style={{ "--menu-order": i } as CSSProperties}
+              aria-current={path.startsWith(n.href) ? "page" : undefined}>
               {n.label}
               <ArrowUpRight size={20} />
             </Link>
@@ -255,7 +279,7 @@ export function Navbar() {
           <summary>{en ? "More from MGC" : "更多探索"}</summary>
           <div>
             {more.map(([label, href]) => (
-              <Link href={href} key={href} onClick={close} prefetch={false}>
+              <Link href={href} key={href} onClick={(event) => navigateMenu(event, href)} prefetch={false}>
                 {label}
               </Link>
             ))}
@@ -264,14 +288,14 @@ export function Navbar() {
         <Link
           className="button mobile-contact"
           href={en ? "/en/contact/" : "/contact/"}
-          onClick={close}
+          onClick={(event) => navigateMenu(event, en ? "/en/contact/" : "/contact/")}
           prefetch={false}
         >
           {en ? "Contact" : "商务合作"}
           <ArrowUpRight size={18} />
         </Link>
         <div className="mobile-bottom">
-          <Link href={languageHref} onClick={close}>
+          <Link href={languageHref} onClick={(event) => navigateMenu(event, languageHref)}>
             {en ? "简体中文" : "English"}
           </Link>
           <button onClick={theme}>
@@ -325,7 +349,7 @@ export function Footer() {
     <footer className="footer" data-scene={en ? "MGC" : "美创数字"}>
       <div className="container">
         <div className="footer-top">
-          <div className="footer-intro">
+          <div className="footer-intro" data-reveal-group>
             <Link
               href={en ? "/en/" : "/"}
               className="brand footer-brand"
@@ -333,16 +357,16 @@ export function Footer() {
             >
               <BrandMark />
             </Link>
-            <p>
+            <p data-reveal="editorial">
               {en
                 ? "Culture, understood. Experience, reimagined."
                 : "文化的深度，AI 的新表达。"}
             </p>
-            <a className="footer-phone" href={phoneHref}>
+            <a data-reveal="content" className="footer-phone" href={phoneHref}>
               {phone}
               <ArrowUpRight size={20} />
             </a>
-            <p className="footer-address">
+            <p className="footer-address" data-reveal="content">
               {en
                 ? "76 Meixihu Road, Building 2, Meixihu International R&D Center, Changsha, China"
                 : address}
@@ -361,7 +385,7 @@ export function Footer() {
             ))}
           </div>
         </div>
-        <div className="footer-word" aria-hidden="true">
+        <div className="footer-word" aria-hidden="true" data-reveal="content">
           Culture × AI
         </div>
         <div className="footer-bottom">
@@ -395,48 +419,4 @@ export function Footer() {
   );
 }
 
-/** Progressive reveal: server-rendered content stays visible until observers are ready. */
-export function MotionProvider({ children }: { children: React.ReactNode }) {
-  const path = usePathname();
-  const root = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const container = root.current;
-    if (!container || matchMedia("(prefers-reduced-motion: reduce)").matches)
-      return;
-    const observer = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
-        }),
-      { threshold: 0.05 },
-    );
-    const seen = new WeakSet<Element>();
-    const register = () =>
-      container.querySelectorAll("[data-reveal]").forEach((el) => {
-        if (seen.has(el)) return;
-        seen.add(el);
-        const rect = el.getBoundingClientRect();
-        if (rect.top < innerHeight) {
-          el.classList.add("is-visible");
-          return;
-        }
-        el.classList.add("reveal-ready");
-        observer.observe(el);
-      });
-    register();
-    const mutation = new MutationObserver(register);
-    mutation.observe(container, { childList: true, subtree: true });
-    return () => {
-      observer.disconnect();
-      mutation.disconnect();
-    };
-  }, [path]);
-  return (
-    <div ref={root} className="route-content" key={path}>
-      {children}
-    </div>
-  );
-}
+export { MotionProvider } from "./motion";

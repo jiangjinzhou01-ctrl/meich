@@ -33,3 +33,7 @@ NEXT_PUBLIC_BASE_PATH=/meich npm start
 
 维护位置：lib/content.ts 真实业务/案例；lib/source-pages.json 原始内容；lib/search.ts 搜索；lib/evidence.ts 外部公开证据；components/ 页面模块；styles/ 职责分层 CSS。Core 页面都有 /en/ 对应版。旧路径静态兼容跳转。
 联系接口为 NEXT_PUBLIC_CONTACT_ENDPOINT；未配置时需求只整理在本机，使用原站正式联系渠道。Culture × AI 是预置概念，Research Canvas 是图片采样示意，没有伪装实时 AI 或真实三维扫描。
+
+## 全站动效升级
+
+本轮实现见 [docs/MOTION-SYSTEM.md](docs/MOTION-SYSTEM.md)，验收见 `docs/qa/motion-regression.json`。原有服务器部署、内容工作台和联系功能保留。

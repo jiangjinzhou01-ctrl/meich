@@ -46,16 +46,16 @@ export default function RootLayout({
       </head>
       <body>
         <noscript>
-          <style>{`[data-reveal]{opacity:1!important;transform:none!important;clip-path:none!important}`}</style>
+          <style>{`[data-reveal]{opacity:1!important;transform:none!important;clip-path:none!important;filter:none!important;animation:none!important}`}</style>
         </noscript>
         <a href="#main" className="skip-link">
           跳至正文
         </a>
-        <Navbar />
-        <main id="main">
-          <MotionProvider>{children}</MotionProvider>
-        </main>
-        <Footer />
+        <MotionProvider>
+          <Navbar />
+          <main id="main">{children}</main>
+          <Footer />
+        </MotionProvider>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

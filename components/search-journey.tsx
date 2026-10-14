@@ -149,9 +149,9 @@ export function SearchJourney({
       data-scene={en ? "Search" : "探索内容"}
     >
       <div className="search-sticky">
-        <div className="search-heading">
-          <h2>{en ? "Follow your curiosity." : "从一个关键词，找到可能。"}</h2>
-          <p>
+        <div className="search-heading" data-reveal-group>
+          <h2 data-reveal="editorial">{en ? "Follow your curiosity." : "从一个关键词，找到可能。"}</h2>
+          <p data-reveal="content">
             {en
               ? "Explore projects, services, products and research."
               : "连接案例、服务、产品与研究。"}
@@ -310,7 +310,7 @@ export function SearchJourney({
               className={"journey-result result-" + i.kind}
               style={
                 {
-                  "--result-delay": Math.min(n, 6) * 60 + "ms",
+                  "--result-delay": Math.min(n, 4) * 30 + "ms",
                 } as React.CSSProperties
               }
             >

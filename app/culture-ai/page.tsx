@@ -22,19 +22,19 @@ export default function Page() {
       />
       <CultureLab standalone />
       <section className="container section lab-principles">
-        <h2>让新的表达，有可靠的来处。</h2>
+        <h2 data-reveal="editorial">让新的表达，有可靠的来处。</h2>
         <div className="principles-grid">
           <article>
-            <h3>内容有依据</h3>
-            <p>历史与文物知识从资料出发，经过文化内容校对，再进入互动体验。</p>
+            <h3 data-reveal="editorial">内容有依据</h3>
+            <p data-reveal="content">历史与文物知识从资料出发，经过文化内容校对，再进入互动体验。</p>
           </article>
           <article>
-            <h3>体验有边界</h3>
-            <p>明确生成内容、项目应用与研发探索，按具体场景验证使用方式。</p>
+            <h3 data-reveal="editorial">体验有边界</h3>
+            <p data-reveal="content">明确生成内容、项目应用与研发探索，按具体场景验证使用方式。</p>
           </article>
           <article>
-            <h3>技术有评估</h3>
-            <p>把生成质量、响应时间、成本和个人影像处理一起纳入项目评估。</p>
+            <h3 data-reveal="editorial">技术有评估</h3>
+            <p data-reveal="content">把生成质量、响应时间、成本和个人影像处理一起纳入项目评估。</p>
           </article>
         </div>
       </section>

@@ -34,7 +34,7 @@ export default function Careers() {
         </div>
       </div>
       <section className="section container careers-culture">
-        <h2>
+        <h2 data-reveal="editorial">
           好的工作，
           <br />
           也需要好的方式。
@@ -59,8 +59,8 @@ export default function Careers() {
             },
           ].map((c) => (
             <article key={c.title}>
-              <h3>{c.title}</h3>
-              <p>{c.text}</p>
+              <h3 data-reveal="editorial">{c.title}</h3>
+              <p data-reveal="content">{c.text}</p>
             </article>
           ))}
         </div>

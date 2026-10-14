@@ -177,7 +177,7 @@ export function SourcePageView({ page }: { page: SourcePage }) {
       ) : (
         <>
           {hero && family !== "experiences" && (
-            <figure className="container source-hero-image">
+            <figure className="container source-hero-image" data-reveal="media">
               <img
                 src={sourceImage(hero.src!)}
                 alt={hero.alt || page.title}

@@ -25,7 +25,7 @@ export default function About() {
         }
         description={`${company}（MGC美创数字），专注文化与科技融合。立足长沙，服务文博、文旅与文创领域。`}
       />
-      <figure className="container company-photo" data-reveal="scale">
+      <figure className="container company-photo" data-reveal="media">
         <Image
           src={asset("/brand/reception.webp")}
           alt="美创数字真实办公空间：接待前厅与官方品牌标识"
@@ -43,18 +43,18 @@ export default function About() {
           <i>in experience.</i>
         </span>
         <div>
-          <h2 data-reveal="blur">创造，有文化的根。</h2>
-          <p>
+          <h2 data-reveal="editorial">创造，有文化的根。</h2>
+          <p data-reveal="content">
             美创的行业探索始于2008年，湖南美创数字科技有限公司于2015年2月9日正式成立。文化研究、内容策划、空间设计、数字多媒体与软件开发，在同一个项目中相互连接。
           </p>
-          <p>
+          <p data-reveal="content">
             从一件文物到一段历史，从一个空间到日常之物，我们希望让文化被理解，也让体验留下记忆。
           </p>
         </div>
       </section>
       <section className="section about-principles">
         <div className="container">
-          <h2 data-reveal="blur">
+          <h2 data-reveal="editorial">
             不同的能力，
             <br />
             共同完成一段体验。
@@ -78,9 +78,9 @@ export default function About() {
                 text: "让文化研究、创意和技术共同面对问题，以 AI 支撑新的文化场景研发探索。",
               },
             ].map((v) => (
-              <article key={v.title} data-reveal="line">
-                <h3>{v.title}</h3>
-                <p>{v.text}</p>
+              <article key={v.title} data-reveal-group>
+                <h3 data-reveal="editorial">{v.title}</h3>
+                <p data-reveal="content">{v.text}</p>
               </article>
             ))}
           </div>
@@ -88,7 +88,7 @@ export default function About() {
       </section>
       <section className="section container about-culture">
         <div>
-          <h2 data-reveal="blur">
+          <h2 data-reveal="editorial">
             在真实的场景里，
             <br />
             继续学习与创造。
@@ -104,10 +104,10 @@ export default function About() {
           />
         </div>
         <div>
-          <p>
+          <p data-reveal="content">
             以AI为支撑，连接创意设计、数字生产与智慧软件。线上数字博物馆、文化场景数字孪生与多模态虚实交互，是美创持续探索的方向。
           </p>
-          <p className="about-research-note">
+          <p data-reveal="content" className="about-research-note">
             尊重内容的来处，关注技术的适用性，在开放协作中找到新的表达。
           </p>
           <Button href="/research/technology/" secondary>

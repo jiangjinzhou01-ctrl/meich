@@ -27,7 +27,7 @@ export default function Technology() {
         <TechnologySystem />
       </section>
       <section className="container section technology-products">
-        <h2>让技术，回应真实场景。</h2>
+        <h2 data-reveal="editorial">让技术，回应真实场景。</h2>
         <div className="technology-product-grid">
           {[
             {
@@ -50,14 +50,14 @@ export default function Technology() {
                 sizes="(max-width: 600px) 90vw, 45vw"
                 loading="lazy"
               />
-              <h3>{p.title}</h3>
-              <p>{p.text}</p>
+              <h3 data-reveal="editorial">{p.title}</h3>
+              <p data-reveal="content">{p.text}</p>
             </article>
           ))}
         </div>
       </section>
       <section className="container section quality-section">
-        <h2>可靠，来自每一个环节。</h2>
+        <h2 data-reveal="editorial">可靠，来自每一个环节。</h2>
         <div className="quality-grid">
           {[
             {
@@ -74,8 +74,8 @@ export default function Technology() {
             },
           ].map((q) => (
             <div key={q.title}>
-              <h3>{q.title}</h3>
-              <p>{q.text}</p>
+              <h3 data-reveal="editorial">{q.title}</h3>
+              <p data-reveal="content">{q.text}</p>
             </div>
           ))}
         </div>

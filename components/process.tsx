@@ -5,7 +5,7 @@ export function Process() {
     <section className="section container process-section">
       <div className="section-heading">
         <div>
-          <h2>
+          <h2 data-reveal="editorial">
             好的合作，
             <br />
             从清晰开始。
@@ -14,14 +14,14 @@ export function Process() {
       </div>
       <ol className="process-grid">
         {steps.map((s, i) => (
-          <li key={s.title} data-reveal="line">
+          <li key={s.title} data-reveal-group>
             <span className="process-number">0{i + 1}</span>
             <div className="process-node" />
-            <h3>
+            <h3 data-reveal="editorial">
               {s.title}
               <small>{s.en}</small>
             </h3>
-            <p>{s.text}</p>
+            <p data-reveal="content">{s.text}</p>
           </li>
         ))}
       </ol>

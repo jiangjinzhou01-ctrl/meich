@@ -41,19 +41,19 @@ export function ResearchPage({ english: en = false }: { english?: boolean }) {
         data-scene="Research"
       >
         <div className="container research-lab-grid">
-          <div>
-            <p className="research-label">Cultural Digitization</p>
-            <h2 data-reveal="blur">
+          <div data-reveal-group>
+            <p className="research-label" data-reveal="content" data-reveal-order="0">Cultural Digitization</p>
+            <h2 data-reveal="editorial">
               {en
                 ? "An object.\nA digital life."
                 : "保留形与迹，\n打开新的理解。"}
             </h2>
-            <p>
+            <p data-reveal="content">
               {en
                 ? "Capture, structure and interpret cultural material. The digital resource serves preservation, research and experience."
                 : "文化资源从采集、建模与资料整理出发，形成用于保护、研究与展示的数字底本。技术的选择，始终回应内容的需要。"}
             </p>
-            <Link className="scene-link" href={pre + "/research/technology/"}>
+            <Link className="scene-link" data-reveal="interaction" href={pre + "/research/technology/"}>
               {en ? "Explore technology" : "了解技术体系"}
               <ArrowUpRight size={20} />
             </Link>
@@ -66,13 +66,13 @@ export function ResearchPage({ english: en = false }: { english?: boolean }) {
         id="evidence"
         data-scene="Evidence"
       >
-        <h2 data-reveal="blur">
+        <h2 data-reveal="editorial">
           {en
             ? "Public records.\nSpecific capabilities."
             : "公开记录，\n对应具体能力。"}
         </h2>
         <EvidenceList english={en} />
-        <p className="content-note">
+        <p className="content-note" data-reveal="content">
           {en
             ? "Patent entries identify published documents. Current legal status and applications require the company's latest certificates."
             : "专利条目展示公开文献与申请人记录。现行权属、法律状态与项目应用范围，以企业最新证书及项目资料核验。"}
@@ -83,8 +83,8 @@ export function ResearchPage({ english: en = false }: { english?: boolean }) {
         id="directions"
         data-scene={en ? "Research directions" : "研究方向"}
       >
-        <h2 data-reveal="blur">{en ? "Questions we are exploring." : "持续探索的方向。"}</h2>
-        <p className="catalog-intro">
+        <h2 data-reveal="editorial">{en ? "Questions we are exploring." : "持续探索的方向。"}</h2>
+        <p className="catalog-intro" data-reveal="content">
           {en
             ? "Research directions, separate from corporate news."
             : "围绕文化内容与现场需求展开，独立于企业动态。"}
@@ -103,8 +103,8 @@ export function ResearchPage({ english: en = false }: { english?: boolean }) {
         id="projects"
         data-scene={en ? "Research projects" : "研究项目"}
       >
-        <h2 data-reveal="blur">{en ? "Research projects." : "研究项目与实验。"}</h2>
-        <p className="catalog-intro">
+        <h2 data-reveal="editorial">{en ? "Research projects." : "研究项目与实验。"}</h2>
+        <p className="catalog-intro" data-reveal="content">
           {en
             ? "Published experiments and collaborative projects."
             : "保留公开研发项目，按具体主题与协作内容展开。"}

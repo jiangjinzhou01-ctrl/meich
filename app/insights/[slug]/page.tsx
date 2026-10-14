@@ -87,10 +87,10 @@ export default async function Article({
           />
         )}
         {a.paragraphs.map((p) => (
-          <p key={p}>{p}</p>
+          <p data-reveal="content" key={p}>{p}</p>
         ))}
         {a.source && (
-          <p className="article-source">
+          <p data-reveal="content" className="article-source">
             <a
               className="text-link"
               href={`${sourceSite}${a.source}`}

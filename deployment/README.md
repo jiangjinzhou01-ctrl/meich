@@ -69,4 +69,8 @@ NEXT_PUBLIC_SITE_URL=https://你的正式域名 npm run package:server
 
 ## 验收与更新
 
-构建版本见 `BUILD-INFO.json`。交付前会验证服务端启动、根目录资源、页面与客户端导航、内容编辑/草稿/导入下载/预览，以及手机布局、动效和减少动态支持。源码内 `docs/qa/enterprise-server-regression.json` 保存验收记录。
+构建版本见 `BUILD-INFO.json`。交付前会验证服务端启动、根目录资源、页面与客户端导航、内容编辑/草稿/导入下载/预览，以及手机布局、动效和减少动态支持。本轮验收见 `source/docs/qa/motion-regression.json`；原 `enterprise-server-regression.json` 为上一轮历史记录。
+
+## Motion Design System 更新
+
+本轮重新构建前端与 standalone 程序。实现见 `source/docs/MOTION-SYSTEM.md`，实际验收见 `source/docs/qa/motion-regression.json`。实体手机、Safari 与企业生产环境仍需部署后验证。

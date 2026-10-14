@@ -1,0 +1,193 @@
+/* MGC focus system. One observer for scroll; CSS owns all visual properties. */
+:root {
+  --motion-ease: cubic-bezier(.16, 1, .3, 1);
+  --motion-exit-ease: cubic-bezier(.4, 0, .8, .2);
+  --motion-cinematic-duration: 980ms;
+  --motion-cinematic-blur: 7px;
+  --motion-cinematic-y: 18px;
+  --motion-editorial-duration: 720ms;
+  --motion-editorial-blur: 4px;
+  --motion-editorial-y: 12px;
+  --motion-content-duration: 480ms;
+  --motion-content-blur: 0px;
+  --motion-content-y: 6px;
+  --motion-interaction-duration: 240ms;
+  --motion-interaction-y: 4px;
+  --motion-media-duration: 800ms;
+  --motion-menu-duration: 560ms;
+  --motion-menu-exit: 320ms;
+  --motion-stagger: 90ms;
+  /* Existing hover/feedback rules inherit the same language. */
+  --ease: var(--motion-ease);
+  --ease-soft: var(--motion-ease);
+  --fast: 180ms;
+  --normal: var(--motion-interaction-duration);
+  --slow: var(--motion-editorial-duration);
+}
+[data-reveal] {
+  --motion-duration: var(--motion-content-duration);
+  --motion-blur: var(--motion-content-blur);
+  --motion-y: var(--motion-content-y);
+  --motion-scale: 1;
+  --motion-delay: 0ms;
+}
+[data-reveal="cinematic"] {
+  --motion-duration: var(--motion-cinematic-duration);
+  --motion-blur: var(--motion-cinematic-blur);
+  --motion-y: var(--motion-cinematic-y);
+}
+[data-reveal="editorial"], [data-reveal="blur"] {
+  --motion-duration: var(--motion-editorial-duration);
+  --motion-blur: var(--motion-editorial-blur);
+  --motion-y: var(--motion-editorial-y);
+}
+[data-reveal="line"] {
+  --motion-duration: var(--motion-editorial-duration);
+  --motion-y: 10px;
+  --motion-blur: 0px;
+}
+[data-reveal="media"], [data-reveal="scale"] {
+  --motion-duration: var(--motion-media-duration);
+  --motion-blur: 0px;
+  --motion-y: 0px;
+  --motion-scale: 1;
+  overflow: hidden;
+}
+[data-reveal="interaction"] {
+  --motion-duration: var(--motion-interaction-duration);
+  --motion-blur: 0px;
+  --motion-y: var(--motion-interaction-y);
+}
+.motion-line { display: block; }
+.motion-root { min-width: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-ready[data-reveal] {
+    opacity: 0;
+    filter: blur(var(--motion-blur));
+    transform: translate3d(0, var(--motion-y), 0) scale(var(--motion-scale));
+    transition-property: opacity, transform, filter, clip-path;
+    transition-duration: var(--motion-duration);
+    transition-timing-function: var(--motion-ease);
+    transition-delay: var(--motion-delay);
+  }
+  .reveal-ready[data-reveal="line"] { clip-path: inset(0 0 18% 0); }
+  [data-reveal="media"] > :is(picture,img), [data-reveal="scale"] > :is(picture,img) {
+    transform: none;
+    transition: transform var(--motion-media-duration) var(--motion-ease) var(--motion-delay);
+  }
+  .reveal-ready:is([data-reveal="media"],[data-reveal="scale"]) > :is(picture,img) { transform: scale(1.025); }
+  .reveal-ready.is-visible:is([data-reveal="media"],[data-reveal="scale"]) > :is(picture,img) { transform: none; }
+  .reveal-ready[data-reveal].is-visible {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+    clip-path: inset(0);
+  }
+  [data-motion-enter][data-reveal] {
+    animation: motion-focus var(--motion-duration) var(--motion-ease) var(--motion-delay) backwards;
+  }
+  /* Keyed tab content changes immediately. Only its individual text layers move. */
+  [data-motion-scope="interaction"] > :is(span,h2,h3,p,ul,dl,.service-index-links),
+  [data-motion-scope="interaction"] > div > :is(h2,p,dl,.button) {
+    --motion-y: var(--motion-interaction-y);
+    --motion-blur: 0px;
+    --motion-scale: 1;
+    animation: motion-focus var(--motion-interaction-duration) var(--motion-ease) backwards;
+  }
+  [data-motion-scope="interaction"] > :is(p,ul,dl),
+  [data-motion-scope="interaction"] > div > dl { animation-delay: 40ms; }
+  [data-motion-scope="interaction"] > .service-index-links { animation-delay: 70ms; }
+  .journey-result {
+    --motion-y: var(--motion-interaction-y);
+    --motion-blur: 0px;
+    --motion-scale: 1;
+    animation: motion-focus var(--motion-interaction-duration) var(--motion-ease) var(--result-delay, 0ms) backwards;
+  }
+  .journey-empty { animation: motion-opacity var(--motion-interaction-duration) var(--motion-ease); }
+  .form-feedback, .error-summary {
+    --motion-y: var(--motion-interaction-y);
+    --motion-blur: 0px;
+    --motion-scale: 1;
+    animation: motion-focus var(--motion-interaction-duration) var(--motion-ease);
+  }
+  /* Existing staged manuscript story keeps its active-state source of truth. */
+  .artifact-steps article.active .artifact-copy > :is(span,h3,p,.text-link) {
+    --motion-blur: 0px;
+    --motion-y: var(--motion-content-y);
+    --motion-scale: 1;
+    animation: motion-focus var(--motion-content-duration) var(--motion-ease) backwards;
+  }
+  .artifact-steps article.active .artifact-copy > h3 { animation-delay: 60ms; }
+  .artifact-steps article.active .artifact-copy > p { animation-delay: 120ms; }
+  .artifact-steps article.active .artifact-copy > .text-link { animation-delay: 180ms; }
+  .motion-root[data-navigation="restore"] [data-motion-enter],
+  .motion-root[data-navigation="restore"] .artifact-copy > * { animation: none; }
+  .cinematic-hero .scene-media, .case-film-hero .scene-media {
+    animation: motion-scene var(--motion-cinematic-duration) var(--motion-ease) backwards;
+  }
+  .motion-root[data-navigation="restore"] :is(.cinematic-hero,.case-film-hero) .scene-media { animation: none; }
+  .content-preview-hero h2, .content-preview-body h3 {
+    --motion-blur: var(--motion-editorial-blur);
+    --motion-y: var(--motion-editorial-y);
+    --motion-scale: 1;
+    animation: motion-focus var(--motion-editorial-duration) var(--motion-ease) backwards;
+  }
+  .content-preview-hero p {
+    --motion-blur: 0px;
+    --motion-y: var(--motion-content-y);
+    --motion-scale: 1;
+    animation: motion-focus var(--motion-content-duration) var(--motion-ease) 90ms backwards;
+  }
+}
+@keyframes motion-focus {
+  from { opacity: 0; filter: blur(var(--motion-blur, 0px)); transform: translate3d(0,var(--motion-y, 6px),0) scale(var(--motion-scale, 1)); }
+  to { opacity: 1; filter: blur(0); transform: none; }
+}
+@keyframes motion-opacity { from { opacity: 0; } to { opacity: 1; } }
+@keyframes motion-scene { from { transform: scale(1.02); } to { transform: none; } }
+@keyframes motion-menu-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes motion-menu-out { from { opacity: var(--menu-exit-opacity, 1); transform: var(--menu-exit-transform, none); } to { opacity: 0; transform: translateY(-4px); } }
+.mobile-menu[open] { animation-duration: var(--motion-menu-duration); animation-timing-function: var(--motion-ease); }
+.mobile-menu[open] .mobile-primary a {
+  animation: motion-menu-in 280ms var(--motion-ease) calc(80ms + var(--menu-order, 0) * 45ms) backwards;
+}
+.mobile-menu[open] :is(.mobile-secondary,.mobile-contact,.mobile-bottom) {
+  animation: motion-menu-in 240ms var(--motion-ease) 200ms backwards;
+}
+.mobile-menu[open][data-closing="true"] { animation-duration: var(--motion-menu-exit); animation-timing-function: var(--motion-exit-ease); }
+.mobile-menu[open][data-closing="true"] :is(.mobile-primary a,.mobile-secondary,.mobile-contact,.mobile-bottom) {
+  animation: motion-menu-out 180ms var(--motion-exit-ease) forwards;
+}
+.service-index-media, .installation-media { transition: opacity var(--motion-interaction-duration) var(--motion-ease); }
+.artifact-layer { transition: opacity var(--motion-content-duration) var(--motion-ease); }
+.mobile-primary a[aria-current="page"] { color: var(--accent-ink); }
+.research-laboratory [data-reveal="editorial"],
+.research-directions [data-reveal="editorial"] { --motion-blur: 2px; --motion-y: 8px; }
+@media (max-width: 767px) {
+  :root {
+    --motion-cinematic-duration: 880ms;
+    --motion-cinematic-blur: 4px;
+    --motion-cinematic-y: 12px;
+    --motion-editorial-duration: 650ms;
+    --motion-editorial-blur: 2px;
+    --motion-editorial-y: 8px;
+    --motion-content-duration: 420ms;
+    --motion-content-y: 4px;
+    --motion-interaction-duration: 200ms;
+    --motion-media-duration: 650ms;
+    --motion-menu-duration: 460ms;
+    --motion-stagger: 60ms;
+  }
+  .hero-opening [data-reveal="cinematic"] { --motion-blur: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal], .reveal-ready[data-reveal], [data-motion-enter],
+  [data-motion-scope="interaction"] > *, .mobile-menu[open], .mobile-menu[open] :is(a,div,details) {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+}

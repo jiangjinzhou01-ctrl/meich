@@ -112,33 +112,6 @@
   gap: 14px;
   min-height: 44px;
 }
-@media (prefers-reduced-motion: no-preference) {
-  .hero-opening h1 span {
-    animation: opening 1.15s var(--ease) both;
-  }
-  .hero-opening h1 span:nth-child(2) {
-    animation-delay: 0.2s;
-  }
-  .hero-signature {
-    animation: opening 0.9s 0.5s var(--ease) both;
-  }
-  .hero-intro,
-  .hero-opening > .scene-link {
-    animation: opening 0.8s 0.65s var(--ease) both;
-  }
-}
-@keyframes opening {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
-    filter: blur(5px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-    filter: blur(0);
-  }
-}
 .quiet-manifesto {
   position: relative;
   overflow: hidden;
@@ -801,15 +774,9 @@
   .artifact-total {
     display: inline;
   }
-  .artifact-steps article.active .artifact-copy > * {
-    animation: artifact-copy-enter 650ms var(--ease) both;
-  }
-  .artifact-steps article.active .artifact-copy > h3 {
-    animation-delay: 40ms;
-  }
-  .artifact-steps article.active .artifact-copy > p {
-    animation-delay: 80ms;
-  }
+
+
+
   .artifact-steps h3 {
     font-size: 30px;
     margin-bottom: 14px;
@@ -953,10 +920,6 @@
     color: var(--ink);
     border-color: var(--muted);
   }
-}
-@keyframes artifact-copy-enter {
-  from { opacity: 0; filter: blur(5px); transform: translateY(8px); }
-  to { opacity: 1; filter: blur(0); transform: translateY(0); }
 }
 @media (prefers-reduced-motion: reduce) {
   .artifact-stage {

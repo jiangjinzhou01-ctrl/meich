@@ -47,8 +47,8 @@ export function CasesPage({ english: en = false }: { english?: boolean }) {
         </div>
       </section>
       <section className="container case-catalog section" id="case-results">
-        <h2 data-reveal="blur">{en ? "Explore the complete archive." : "继续探索完整案例库。"}</h2>
-        <p className="catalog-intro">
+        <h2 data-reveal="editorial">{en ? "Explore the complete archive." : "继续探索完整案例库。"}</h2>
+        <p data-reveal="content" className="catalog-intro">
           {en
             ? "Search by project, cultural subject, venue or capability."
             : "按项目、文化主题、场馆和能力查找作品。"}
