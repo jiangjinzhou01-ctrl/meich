@@ -1,0 +1,25 @@
+{
+  "createdAt": "2026-11-01T05:49:53.198Z",
+  "browser": "Chromium emulation; not physical Android / Safari",
+  "tests": [
+    {
+      "name": "Browser/runtime setup",
+      "result": "failed",
+      "error": "spawn /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node ENOENT"
+    }
+  ],
+  "widths": [
+    320,
+    375,
+    390,
+    430,
+    768,
+    1024,
+    1440,
+    1920
+  ],
+  "errors": [],
+  "screenshots": [],
+  "passed": 0,
+  "failed": 1
+}

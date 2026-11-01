@@ -1,0 +1,77 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> meichuang-digital@2.5.0 build
+> next build && node scripts/finalize-export.mjs
+
+   ▲ Next.js 15.5.27
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 9.7s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/574) ...
+   Generating static pages (143/574)
+   Generating static pages (286/574)
+   Generating static pages (430/574)
+ ✓ Generating static pages (574/574)
+   Finalizing page optimization ...
+   Collecting build traces ...
+   Exporting (0/2) ...
+ ✓ Exporting (2/2)
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                      190 B         115 kB
+├ ○ /_not-found                            131 B         103 kB
+├ ● /[...path]                           3.04 kB         121 kB
+├   ├ /collaboration
+├   ├ /en
+├   ├ /en/about
+├   └ [+392 more paths]
+├ ○ /about                                 172 B         112 kB
+├ ○ /admin                                 168 B         106 kB
+├ ○ /admin/content                       6.48 kB         113 kB
+├ ○ /careers                             3.21 kB         109 kB
+├ ○ /cases                               2.63 kB         109 kB
+├ ● /cases/[slug]                        3.04 kB         121 kB
+├   ├ /cases/liye-qin-slips
+├   ├ /cases/potala-snow-city
+├   ├ /cases/gaomiao
+├   └ [+115 more paths]
+├ ○ /contact                               124 B         112 kB
+├ ○ /culture-ai                            124 B         112 kB
+├ ○ /en/cases                            2.63 kB         109 kB
+├ ○ /en/contact                            124 B         112 kB
+├ ○ /en/culture-ai                         124 B         112 kB
+├ ○ /en/research                           124 B         111 kB
+├ ○ /en/research/technology                165 B         106 kB
+├ ○ /en/services                         1.81 kB         116 kB
+├ ○ /en/solutions                          165 B         106 kB
+├ ○ /insights                            2.63 kB         114 kB
+├ ● /insights/[slug]                     3.04 kB         127 kB
+├   ├ /insights/kongwu-museum-store
+├   ├ /insights/malanshan-exhibition
+├   ├ /insights/culture-in-experience
+├   └ [+27 more paths]
+├ ○ /privacy                               168 B         106 kB
+├ ○ /research                              124 B         111 kB
+├ ○ /research/technology                 1.45 kB         113 kB
+├ ○ /robots.txt                            131 B         103 kB
+├ ○ /services                            1.81 kB         116 kB
+├ ○ /sitemap.xml                           131 B         103 kB
+├ ○ /solutions                           2.95 kB         109 kB
+├ ○ /technology                          1.59 kB         108 kB
+├ ○ /work                                1.59 kB         108 kB
+└ ● /work/[slug]                         1.59 kB         108 kB
+    ├ /work/liye-qin-slips
+    ├ /work/potala-snow-city
+    └ /work/gaomiao
++ First Load JS shared by all             103 kB
+  ├ chunks/255-d9ab44d4700f7329.js       46.7 kB
+  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  └ other shared chunks (total)          1.94 kB
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+Static export finalised: English document language and GitHub Pages assets.

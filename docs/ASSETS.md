@@ -14,7 +14,7 @@
 
 ## 生成图
 
-`public/brand/cultural-study.webp`、对应响应版本与 AVIF 为图像模型生成的「简牍文化视觉研究」，用于演示生成表达。页面明确标注，未作为真实文物、客户案例或现场产品输出。完整提示词见 `GENERATED-ASSET.md`。
+`public/brand/cultural-study.webp`、对应响应版本与 AVIF 为图像模型生成的「简牍文化视觉研究」，为既有生成表达研究资产。V2.5 文化装置改用真实里耶项目资料，不再展示此图；文件与来源记录保留，未作为真实文物、客户案例或现场产品输出。完整提示词见 `GENERATED-ASSET.md`。
 
 ## 优先补充的真实素材
 
