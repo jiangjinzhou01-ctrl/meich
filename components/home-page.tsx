@@ -15,6 +15,35 @@ export function HomePage({ english: en = false }: { english?: boolean }) {
     <>
       <HeroExperience english={en} />
       <section
+        className="selected-work"
+        id="selected-work"
+        data-scene={en ? "Selected work" : "精选案例"}
+      >
+        <div className="container work-introduction" data-reveal-group>
+          <p className="section-label">
+            {en
+              ? "01 / Selected cultural experiences"
+              : "01 / 文化，落到真实现场"}
+          </p>
+          <h2 data-reveal="editorial">
+            {en ? "Culture, made tangible." : "让作品，讲述美创。"}
+          </h2>
+          <Link
+            className="text-link"
+            data-reveal="interaction"
+            href={pre + "/cases/"}
+          >
+            {en ? "All work" : "全部案例"}
+            <ArrowUpRight size={18} />
+          </Link>
+        </div>
+        <div className="selected-work-grid">
+          {projects.map((p, i) => (
+            <ProjectCard key={p.slug} project={p} index={i} english={en} />
+          ))}
+        </div>
+      </section>
+      <section
         className="quiet-manifesto"
         data-scene={en ? "Cultural understanding" : "理解文化"}
       >
@@ -27,7 +56,11 @@ export function HomePage({ english: en = false }: { english?: boolean }) {
           loading="lazy"
         />
         <div className="container" data-reveal-group>
-          <p className="manifesto-lead" data-reveal="editorial" data-reveal-order="0">
+          <p
+            className="manifesto-lead"
+            data-reveal="editorial"
+            data-reveal-order="0"
+          >
             {en
               ? "Technology does not replace culture."
               : "技术不是文化的替代。"}
@@ -42,45 +75,10 @@ export function HomePage({ english: en = false }: { english?: boolean }) {
               ? "We begin with content, connecting cultural research, creative design, digital production and implementation."
               : "我们从内容出发，连接文化研究、创意设计、数字生产与工程实施。让历史被理解，让体验真正发生。"}
           </p>
-        </div>
-      </section>
-      <section
-        className="reel-scene"
-        data-nav-tone="dark"
-        data-scene={en ? "Culture in space" : "文化进入空间"}
-      >
-        <ResponsiveImage
-          name="liye-cinema"
-          alt={en ? "Actual Liye museum cinema" : "里耶古城秦简博物馆碗幕影院"}
-          sizes="100vw"
-          className="scene-media"
-        />
-        <div className="scene-shade" />
-        <div className="container reel-scene-content" data-reveal-group>
-          <h2 data-reveal="editorial">{en ? "Culture,\nall around you." : "文化，\n不止于观看。"}</h2>
           <FilmDialog english={en} />
         </div>
       </section>
       <ArtifactJourney english={en} />
-      <section
-        className="selected-work"
-        data-scene={en ? "Selected work" : "精选案例"}
-      >
-        <div className="container work-introduction" data-reveal-group>
-          <h2 data-reveal="editorial">
-            {en ? "Culture, made tangible." : "文化的深度，成为真实的体验。"}
-          </h2>
-          <Link className="text-link" data-reveal="interaction" href={pre + "/cases/"}>
-            {en ? "All work" : "全部案例"}
-            <ArrowUpRight size={18} />
-          </Link>
-        </div>
-        <div className="selected-work-grid">
-          {projects.map((p, i) => (
-            <ProjectCard key={p.slug} project={p} index={i} english={en} />
-          ))}
-        </div>
-      </section>
       <CultureLab english={en} />
       <section
         className="research-preview"
@@ -95,7 +93,13 @@ export function HomePage({ english: en = false }: { english?: boolean }) {
           />
         </div>
         <div className="container research-preview-content" data-reveal-group>
-          <p className="research-label" data-reveal="content" data-reveal-order="0">Research & Development</p>
+          <p
+            className="research-label"
+            data-reveal="content"
+            data-reveal-order="0"
+          >
+            Research & Development
+          </p>
           <h2 data-reveal="editorial">
             {en
               ? "A question today.\nAn experience tomorrow."
@@ -106,7 +110,11 @@ export function HomePage({ english: en = false }: { english?: boolean }) {
               ? "3D digitization, museum software and interactive systems. Research grounded in cultural questions."
               : "文物三维数字化、智慧软件与互动系统。从文化现场的问题出发，把研究连接到应用。"}
           </p>
-          <Link className="scene-link" data-reveal="interaction" href={pre + "/research/"}>
+          <Link
+            className="scene-link"
+            data-reveal="interaction"
+            href={pre + "/research/"}
+          >
             {en ? "Explore research" : "走进研发"}
             <ArrowUpRight size={20} />
           </Link>
@@ -116,9 +124,15 @@ export function HomePage({ english: en = false }: { english?: boolean }) {
         className="container section home-evidence"
         data-scene="Evidence"
       >
-        <h2 data-reveal="editorial">{en ? "Evidence, in the open." : "能力，有公开的来处。"}</h2>
+        <h2 data-reveal="editorial">
+          {en ? "Evidence, in the open." : "能力，有公开的来处。"}
+        </h2>
         <EvidenceList english={en} compact />
-        <Link href={pre + "/research/#evidence"} className="text-link" data-reveal="interaction">
+        <Link
+          href={pre + "/research/#evidence"}
+          className="text-link"
+          data-reveal="interaction"
+        >
           {en ? "Read public records" : "查看公开记录"}
           <ArrowUpRight size={18} />
         </Link>
@@ -138,7 +152,11 @@ export function HomePage({ english: en = false }: { english?: boolean }) {
               ? "Based in Changsha. Connecting research, creativity, digital production and engineering."
               : "立足长沙，连接文化研究、创意设计、数字生产与工程交付。"}
           </p>
-          <Link className="text-link" data-reveal="interaction" href={pre + "/about/"}>
+          <Link
+            className="text-link"
+            data-reveal="interaction"
+            href={pre + "/about/"}
+          >
             {en ? "Meet MGC" : "认识美创"}
             <ArrowUpRight size={18} />
           </Link>

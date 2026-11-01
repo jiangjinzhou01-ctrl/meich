@@ -10,6 +10,7 @@ const reserved = new Set([
   "/",
   "/about",
   "/contact",
+  "/en/contact",
   "/privacy",
   "/insights",
   "/services",

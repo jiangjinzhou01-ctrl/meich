@@ -224,6 +224,45 @@
 .contact-info > .text-link {
   font-size: 12px;
 }
+.form-mode {
+  border-top: 2px solid var(--accent);
+  padding-top: 18px;
+  margin-bottom: 32px;
+}
+.form-mode > span {
+  color: var(--accent-ink);
+  font-size: 12px;
+}
+.form-mode p {
+  font-size: 15px;
+  margin-top: 10px;
+  color: var(--muted);
+}
+.contact-fields {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  min-width: 0;
+}
+.contact-fields:disabled {
+  opacity: 0.65;
+}
+.brief-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  margin-top: 14px;
+}
+.contact-form input,
+.contact-form textarea,
+.contact-form select {
+  scroll-margin-block: calc(var(--nav-height) + 24px);
+}
+.form-feedback:focus {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 6px;
+}
+
 .contact-form {
   padding: 35px;
   background: var(--surface);
@@ -314,7 +353,7 @@
   font-size: 12px;
   margin-block: 12px 20px;
 }
-.contact-form > .button {
+.contact-fields > .button {
   margin-top: 22px;
 }
 .form-feedback {
@@ -709,7 +748,7 @@
   .form-field textarea {
     font-size: 16px;
   }
-  .contact-form > .button {
+  .contact-fields > .button {
     width: 100%;
   }
   .form-field > label {

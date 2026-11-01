@@ -19,27 +19,40 @@ export function HeroExperience({ english: en = false }: { english?: boolean }) {
         priority
         sizes="100vw"
         className="scene-media"
+        cover
       />
       <div className="scene-shade" />
       <div className="container hero-opening">
-        <RevealText as="h1" level="cinematic" immediate lines={[
-          en ? "Cultural depth." : "文化的深度，",
-          en ? "New AI expression." : "AI 的新表达。",
-        ]} />
-        <RevealText level="editorial" immediate delay={230} className="hero-signature">Culture × AI</RevealText>
+        <p className="hero-eyebrow">
+          MGC DIGITAL <span aria-hidden="true">/</span>{" "}
+          {en ? "Culture, made into experience" : "美创数字 · 文化体验创造者"}
+        </p>
+        <RevealText
+          as="h1"
+          level="cinematic"
+          immediate
+          lines={[
+            en ? "Cultural depth." : "文化的深度，",
+            en ? "New AI expression." : "AI 的新表达。",
+          ]}
+        />
+        <p className="hero-signature">Culture × AI</p>
         <RevealText immediate delay={340} className="hero-intro">
           {en
             ? "Cultural research, design and technology. Made into experience."
             : "以文化为起点，连接设计、技术与空间体验。"}
         </RevealText>
-        <Link href={en ? "/en/cases/" : "/cases/"} className="scene-link" data-reveal="interaction" data-motion-enter style={{ "--motion-delay": "450ms" } as React.CSSProperties}>
+        <Link
+          href={en ? "/en/cases/" : "/cases/"}
+          className="scene-link hero-action"
+        >
           {en ? "Explore work" : "查看案例"}
           <ArrowUpRight size={21} />
         </Link>
       </div>
       <div className="hero-bottom container">
-        <a href="#artifact">
-          {en ? "Discover" : "向下探索"}
+        <a href="#selected-work">
+          {en ? "Selected work" : "探索精选项目"}
           <ArrowDown size={16} />
         </a>
         <Link href={en ? "/en/cases/gaomiao/" : "/cases/gaomiao/"}>

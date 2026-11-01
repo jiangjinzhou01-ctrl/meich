@@ -3,6 +3,32 @@ import Link from "next/link";
 import { useId, useState } from "react";
 import { ArrowUpRight, RotateCcw } from "lucide-react";
 import { ResponsiveImage } from "./responsive-image";
+const lenses = [
+  {
+    title: "简牍实物",
+    en: "Object",
+    text: "先观察简牍的形制与文字痕迹。此处展示的是公开释读版面，并非文物原件的数字扫描。",
+    enText:
+      "Observe the manuscript form and marks. This is a published interpretation layout, not a digital scan of the object.",
+    position: "25%",
+  },
+  {
+    title: "现代转写",
+    en: "Transcription",
+    text: "现代汉字转写降低阅读门槛。对照版面中的古今文字，理解展览如何帮助观众阅读。",
+    enText:
+      "Modern transcription makes the writing accessible. Compare the historical marks and modern text in the published layout.",
+    position: "50%",
+  },
+  {
+    title: "重点解读",
+    en: "Context",
+    text: "转写之外，重点解读连接人物、政务与日常。三重释义是该项目公开介绍的展陈方法。",
+    enText:
+      "Commentary connects writing with people, administration and daily life. This three-layer approach is described in the published project.",
+    position: "75%",
+  },
+];
 const stages = [
   {
     title: "识别",
@@ -31,7 +57,7 @@ const stages = [
     text: "文字、转写与重点解读连接图示和影像。AI 可以辅助表达，文化内容仍需校对。",
     enText:
       "Connect reviewed knowledge with visual expression. AI supports creation; cultural content requires review.",
-    image: "cultural-study",
+    image: "liye",
   },
   {
     title: "空间化",
@@ -52,6 +78,7 @@ export function CultureLab({
   standalone?: boolean;
 }) {
   const [active, setActive] = useState(0);
+  const [detail, setDetail] = useState(0);
   const id = useId(),
     s = stages[active];
   function move(i: number) {
@@ -68,46 +95,52 @@ export function CultureLab({
       data-scene="Culture × AI"
     >
       <div className="container installation-title" data-reveal-group>
-        <p data-reveal="content" data-reveal-order="0">Culture × AI</p>
+        <p data-reveal="content" data-reveal-order="0">
+          Culture × AI
+        </p>
         <h2 data-reveal="editorial">
           {en ? "Another way\ninto culture." : "重新理解，\n才能重新表达。"}
         </h2>
       </div>
-      <div className={"installation-scene installation-" + active}>
+      <div
+        className={"installation-scene installation-" + active}
+        data-detail={detail}
+        style={
+          {
+            "--detail-position": lenses[detail].position,
+          } as React.CSSProperties
+        }
+      >
         {stages.map((s, i) => (
           <div
             key={i}
             className={"installation-media " + (active === i ? "active" : "")}
+            aria-hidden={active !== i}
           >
             <ResponsiveImage
               name={s.image}
               alt={
-                i === 2
+                i <= 1
                   ? en
-                    ? "Generated manuscript study, not an actual artifact"
-                    : "生成简牍视觉研究，非真实文物"
-                  : en
-                    ? "Published Liye museum project material"
-                    : "里耶秦简博物馆公开项目素材"
+                    ? "Published Liye manuscript interpretation layout"
+                    : "里耶秦简公开释读版面"
+                  : i === 2
+                    ? en
+                      ? "Liye exhibition design, actual project"
+                      : "里耶博物馆真实展陈设计"
+                    : en
+                      ? "Liye immersive cinema, actual project"
+                      : "里耶博物馆真实碗幕影院"
               }
               sizes="100vw"
             />
           </div>
         ))}
         <div className="installation-shade" />
-        {active === 0 && (
-          <div className="recognition-brackets" aria-hidden="true">
-            <span>文字</span>
-            <span>转写</span>
-          </div>
-        )}
-        {active === 1 && (
-          <div className="interpretation-words" aria-hidden="true">
-            <span>{en ? "Administration" : "县政"}</span>
-            <span>{en ? "Everyday life" : "日常"}</span>
-            <span>{en ? "Historical context" : "时代"}</span>
-          </div>
-        )}
+        <div className="installation-plate-label">
+          {en ? "PROJECT RECORD / LIYE" : "项目资料 / 里耶秦简"}{" "}
+          <span>0{active + 1} / 04</span>
+        </div>
         <div className="container installation-content">
           <div className="installation-object">
             <span>{en ? "Cultural source" : "文化对象"}</span>
@@ -124,14 +157,43 @@ export function CultureLab({
           >
             <h3>{en ? s.enHeading : s.heading}</h3>
             <p>{en ? s.enText : s.text}</p>
+            {active <= 1 && (
+              <div className="installation-lenses">
+                <p className="lens-label">
+                  {en
+                    ? "Explore the three layers of interpretation"
+                    : "选择一个视角，对照释读资料"}
+                </p>
+                <div
+                  className="lens-controls"
+                  role="group"
+                  aria-label={en ? "Reading lenses" : "释读视角"}
+                >
+                  {lenses.map((lens, i) => (
+                    <button
+                      key={lens.en}
+                      type="button"
+                      aria-pressed={detail === i}
+                      aria-controls={id + "-lens-note"}
+                      onClick={() => setDetail(i)}
+                    >
+                      {en ? lens.en : lens.title}
+                    </button>
+                  ))}
+                </div>
+                <p
+                  id={id + "-lens-note"}
+                  className="lens-explanation"
+                  aria-live="polite"
+                >
+                  {en ? lenses[detail].enText : lenses[detail].text}
+                </p>
+              </div>
+            )}
             <span className="installation-note">
-              {active === 2
-                ? en
-                  ? "Generated visual study / not a real artifact"
-                  : "生成视觉研究 / 非真实文物"
-                : en
-                  ? "Curated concept / no live AI connection"
-                  : "预置概念演示 / 未连接实时 AI"}
+              {en
+                ? "Curated project records / no live AI connection"
+                : "公开项目资料导览 / 未连接实时 AI"}
             </span>
           </div>
           <div className="installation-controls">
@@ -170,7 +232,10 @@ export function CultureLab({
             </div>
             <button
               className="installation-reset"
-              onClick={() => move(0)}
+              onClick={() => {
+                setDetail(0);
+                move(0);
+              }}
               aria-label={en ? "Reset interpretation" : "重置演示"}
             >
               <RotateCcw size={18} />
@@ -181,8 +246,8 @@ export function CultureLab({
       <div className="installation-footer container" data-reveal-group>
         <p data-reveal="content">
           {en
-            ? "Historical knowledge is reviewed. Generative expression is clearly identified."
-            : "文化知识经过校对，生成表达标明来处。"}
+            ? "Based on published project materials. No live recognition, generation or scanning."
+            : "依据公开项目资料组织，不提供实时识别、生成或扫描。"}
         </p>
         <Link
           href={

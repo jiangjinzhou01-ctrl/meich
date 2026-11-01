@@ -13,9 +13,11 @@ export const projectNames: Record<string, string> = {
 export function ProjectVisual({
   project: p,
   large = false,
+  sizes = "100vw",
 }: {
   project: Project;
   large?: boolean;
+  sizes?: string;
 }) {
   return (
     <div className="project-visual" data-reveal="media" data-reveal-order="0">
@@ -23,7 +25,7 @@ export function ProjectVisual({
         name={p.kind}
         alt={p.imageAlt}
         priority={large}
-        sizes="100vw"
+        sizes={sizes}
       />
     </div>
   );
@@ -51,10 +53,17 @@ export function ProjectCard({
         "project-card selected-project-" + index + " climate-" + p.kind
       }
     >
-      <ProjectVisual project={p} />
+      <ProjectVisual
+        project={p}
+        sizes={index === 0 ? "100vw" : "(max-width:1023px) 100vw,50vw"}
+      />
       <div className="project-scrim" />
       <div className="project-film-copy">
-        <div className="project-meta" data-reveal="content" data-reveal-order="0">
+        <div
+          className="project-meta"
+          data-reveal="content"
+          data-reveal-order="0"
+        >
           <span>0{index + 1}</span>
           <span>{en ? "Selected work" : p.type}</span>
           <span>{p.year || ""}</span>
@@ -63,7 +72,9 @@ export function ProjectCard({
           {en ? projectNames[p.slug] : p.title}
           <ArrowUpRight size={28} />
         </h3>
-        <p data-reveal="content">{en ? projectEnglish[p.slug].description : p.description}</p>
+        <p data-reveal="content">
+          {en ? projectEnglish[p.slug].description : p.description}
+        </p>
         <span className="project-role" data-reveal="content">
           {en
             ? "MGC / " + projectEnglish[p.slug].role

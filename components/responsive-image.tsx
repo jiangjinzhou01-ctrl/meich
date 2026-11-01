@@ -17,12 +17,14 @@ export function ResponsiveImage({
   priority = false,
   sizes = "(max-width:767px) 100vw,65vw",
   className = "",
+  cover = false,
 }: {
   name: string;
   alt: string;
   priority?: boolean;
   sizes?: string;
   className?: string;
+  cover?: boolean;
 }) {
   const v = variants[name];
   return (
@@ -55,7 +57,7 @@ export function ResponsiveImage({
             : undefined
         }
         sizes={
-          sizes === "100vw" && v
+          cover && v
             ? `(max-width:767px) ${Math.ceil((v.width / v.height) * 100)}svh, 100vw`
             : sizes
         }

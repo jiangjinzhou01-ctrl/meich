@@ -19,14 +19,14 @@
 .installation-scene {
   position: relative;
   isolation: isolate;
-  min-height: 650px;
-  height: 80svh;
+  min-height: 780px;
+  height: auto;
   overflow: hidden;
-  background: #bbae94;
+  background: #1d1d1b;
 }
 .installation-media {
   position: absolute;
-  inset: 0;
+  inset: 0 0 0 48%;
   z-index: -2;
   opacity: 0;
   transition: opacity 0.65s var(--ease);
@@ -42,29 +42,23 @@
 }
 .installation-0 .installation-media img,
 .installation-1 .installation-media img {
-  object-fit: contain;
+  object-fit: cover;
+  object-position: var(--detail-position) center;
   background: #ddd1b8;
 }
 .installation-shade {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(16, 16, 16, 0.92),
-      rgba(16, 16, 16, 0.77) 30%,
-      rgba(16, 16, 16, 0.1) 75%
-    ),
-    linear-gradient(0deg, rgba(16, 16, 16, 0.6), transparent 35%);
+  background: linear-gradient(90deg, #1d1d1b 40%, rgba(29, 29, 27, 0.1) 65%);
 }
 .installation-content {
-  height: 100%;
+  min-height: 780px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   position: relative;
-  padding-block: 45px;
+  padding-block: 40px;
 }
 .installation-object {
   font-size: 13px;
@@ -81,17 +75,17 @@
   font-size: 15px;
 }
 .installation-reading {
-  max-width: 39ch;
-  margin-top: 50px;
+  max-width: min(43%, 480px);
+  margin-top: 40px;
 }
 .installation-reading h3 {
-  font-size: clamp(27px, 2.3vw, 38px);
+  font-size: clamp(26px, 2.1vw, 36px);
   line-height: 1.5;
 }
 .installation-reading p {
   font-size: 16px;
   color: #e2dcd0;
-  margin-top: 20px;
+  margin-top: 14px;
   line-height: 1.9;
 }
 .installation-note {
@@ -109,7 +103,7 @@
 .installation-tabs {
   display: flex;
   gap: 0;
-  max-width: 600px;
+  max-width: 540px;
   width: 100%;
   border-top: 1px solid rgba(255, 255, 255, 0.35);
 }
@@ -157,35 +151,70 @@
   font-size: 14px;
   color: #bcb7ac;
 }
-.recognition-brackets {
+.installation-plate-label {
   position: absolute;
-  inset: 0 5% 0 55%;
-  pointer-events: none;
+  left: 55%;
+  right: 4%;
+  top: 28px;
+  z-index: 1;
   display: flex;
-  align-items: center;
-  gap: 5%;
-  opacity: 0.6;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  background: #f6f5f1;
+  color: #242421;
+  font-size: 11px;
+  letter-spacing: 0.04em;
 }
-.recognition-brackets span {
-  border: 1px solid #302b20;
-  min-height: 42%;
-  width: 43%;
-  padding: 14px;
+.installation-lenses {
+  margin-top: 24px;
+  border-top: 1px solid #59564e;
+  padding-top: 16px;
+}
+.installation-reading .lens-label {
+  font-size: 12px;
+  color: #bbb9b2;
+  margin: 0 0 10px;
+}
+.lens-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.lens-controls button {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid #77736a;
+  color: #e2dcd0;
   font-size: 13px;
-  color: #302b20;
+  transition:
+    color var(--fast),
+    background var(--fast);
 }
-.interpretation-words {
-  position: absolute;
-  right: 9%;
-  top: 26%;
-  display: flex;
-  gap: 30px;
-  writing-mode: vertical-rl;
-  font-size: clamp(30px, 4vw, 62px);
-  letter-spacing: 0.2em;
-  color: #302b20;
-  opacity: 0.7;
-  pointer-events: none;
+.lens-controls button[aria-pressed="true"] {
+  background: #f6f5f1;
+  color: #242421;
+  border-color: #f6f5f1;
+}
+.installation-reading .lens-explanation {
+  font-size: 13px;
+  line-height: 1.85;
+  min-height: 7.4em;
+  margin-top: 14px;
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .installation-reading {
+    max-width: 48%;
+  }
+  .installation-media {
+    left: 48%;
+  }
+  .installation-tabs {
+    max-width: 460px;
+  }
+  .installation-shade {
+    background: linear-gradient(90deg, #1d1d1b 43%, transparent 72%);
+  }
 }
 @media (max-width: 767px) {
   .installation-title {
@@ -196,19 +225,24 @@
   }
   .installation-scene {
     height: auto;
-    min-height: 740px;
+    min-height: 0;
   }
   .installation-content {
-    min-height: 740px;
+    min-height: 0;
     padding-block: 30px;
   }
   .installation-shade {
-    background: linear-gradient(
-      0deg,
-      rgba(16, 16, 16, 0.96),
-      rgba(16, 16, 16, 0.9) 46%,
-      rgba(16, 16, 16, 0.04) 90%
-    );
+    background: linear-gradient(0deg, #1d1d1b, transparent 28%);
+  }
+  .installation-media {
+    inset: 0 0 auto;
+    height: 300px;
+  }
+  .installation-plate-label {
+    left: var(--gutter);
+    right: var(--gutter);
+    top: 18px;
+    font-size: 10px;
   }
   .installation-media img {
     object-position: 65% top;
@@ -216,17 +250,19 @@
   .installation-0 .installation-media img,
   .installation-1 .installation-media img {
     object-fit: cover;
-    object-position: 70% 0%;
-    height: 55%;
+    object-position: var(--detail-position) center;
+    height: 100%;
   }
   .installation-object {
-    margin-bottom: auto;
+    margin-top: 280px;
+    margin-bottom: 0;
     padding-top: 0;
     text-shadow: 0 1px 8px #161616;
   }
   .installation-reading {
+    min-height: 480px;
     max-width: none;
-    margin-top: 200px;
+    margin-top: 26px;
   }
   .installation-reading h3 {
     font-size: 27px;
@@ -244,15 +280,8 @@
   .installation-footer .scene-link {
     margin-top: 18px;
   }
-  .recognition-brackets {
-    inset: 65px 5% auto 35%;
-    height: 230px;
-  }
-  .interpretation-words {
-    top: 80px;
-    right: 15%;
-    font-size: 34px;
-    gap: 20px;
+  .installation-reading .lens-explanation {
+    min-height: 7.4em;
   }
 }
 @media (prefers-reduced-motion: reduce) {
