@@ -117,6 +117,10 @@ export function MotionProvider({ children }: { children: React.ReactNode }) {
       });
     };
     const register = () => {
+      // Read geometry as one batch before adding classes or inline styles. Alternating
+      // reads/writes here forced a layout for every reveal node during hydration.
+      const measurements: { el: HTMLElement; rect: DOMRect; group: HTMLElement | null; bounds: DOMRect }[] = [];
+      const groupBounds = new Map<HTMLElement, DOMRect>();
       container.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => {
         if (seen.has(el)) return;
         seen.add(el);
@@ -125,12 +129,16 @@ export function MotionProvider({ children }: { children: React.ReactNode }) {
         if (el.closest("details:not([open])")) { seen.delete(el); return; }
         const rect = el.getBoundingClientRect();
         if (!rect.width || !rect.height) { seen.delete(el); return; }
+        const group = el.closest<HTMLElement>("[data-reveal-group]");
+        if (group && !groupBounds.has(group)) groupBounds.set(group, group.getBoundingClientRect());
+        measurements.push({ el, rect, group, bounds: group ? groupBounds.get(group)! : rect });
+      });
+      measurements.forEach(({ el, rect, group, bounds }) => {
         if (preference.matches || !observer || rect.bottom <= 0 || (restoring && rect.top < innerHeight)) {
           settle(el); return;
         }
         // Completed footer / shared-shell nodes survive client navigation without replay.
         if (el.classList.contains("is-visible")) return;
-        const group = el.closest<HTMLElement>("[data-reveal-group]");
         const target = group || el;
         const order = el.dataset.revealOrder === undefined
           ? el.matches(".section-label, .research-label, [data-motion-role='eyebrow']") ? 0
@@ -146,7 +154,6 @@ export function MotionProvider({ children }: { children: React.ReactNode }) {
         targets.set(target, items);
         observer.observe(target);
         // New content inside an already visible group should not wait for a new IO crossing.
-        const bounds = group ? group.getBoundingClientRect() : rect;
         if (bounds.top < innerHeight * .95 && bounds.bottom > 0)
           nextFrame(() => reveal(target));
       });

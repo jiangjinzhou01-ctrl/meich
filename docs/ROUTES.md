@@ -25,3 +25,5 @@ GitHub Pages 不能在 Next.js 静态导出中执行服务器重定向，因此�
 精选案例仍可展开查看完整原始项目内容与图集，原始快照完整保留。文章同样保留完整报道入口与内容。对重复的锚点采用命名空间，避免导览定位失效。
 
 SEO：逐页 title、description、canonical、OpenGraph、Twitter Card；Organization、WebSite、BreadcrumbList；favicon、robots、sitemap；有对应内容的中英文页面设置 hreflang。导出的英文 HTML 使用 `lang=en`，不依赖客户端修改才能识别语言。
+
+V3 英文里耶和雪城继续保留 `/en/cases/brochure-2026-liye-qin-slips/`、`/en/cases/brochure-2026-potala-snow-city/`，进入与中文相同的旗舰叙事组件。生成双语案例链接时使用 `languagePair`，不要拼接不存在的英文简写路径。案例商务入口的 `?project=<slug>` 仅接受现有三个项目的 slug，作为可编辑的本地需求上下文。

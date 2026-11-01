@@ -5,7 +5,7 @@
 | 导航与语言 | 对应稳定路由，当前页标注 |
 | 移动菜单 | 原生 dialog；关闭、Esc、焦点隔离与滚动恢复 |
 | 主题 | localStorage 持久化；系统偏好作为初始值 |
-| Hero CTA | 进入案例；Scroll 进入文化转化过程 |
+| Hero CTA | 进入案例；Scroll 进入精选项目 |
 | 影片 | 用户打开弹层后才加载；播放/关闭/原文件入口 |
 | 服务索引 | 点击、触控、hover 与键盘切换；链接产品领域与相关案例 |
 | 搜索 | 本地四类型索引；提交引导、URL、计数、分类、空态、重置、加载更多 |
@@ -19,3 +19,12 @@
 | 页脚 | 合法页面、回顶、品牌工作台 |
 
 链接用于导航，按钮用于状态与动作。没有 href="#"、空地址或假送达操作。原站外部系统的后台不包含在上传源码中。
+
+## V3.0 additions
+
+- Hero: photography/typography are separate; the case CTA is immediately available. Explicit mobile art direction, no automatic video.
+- ProjectStudy: real Gaomiao photograph crops, three Liye interpretation views, two Potala source plates. Visible touch controls and truthful captions.
+- ImageInspector: native dialog, original-size/fit switch, two-axis scrolling, Escape/close, background scroll lock and return focus. The anchor still opens the source image without JavaScript.
+- CaseNavigation: current chapter and previous/next links follow actual scroll. A new click cancels the previous smooth scroll before moving to its target. Native href remains the no-JS fallback.
+- Culture: four stages remain; sticky stage controls, three reading lenses, source-image inspection, project chapter and research paths. No live AI endpoint.
+- Services/contact: published role evidence links and editable `?project=<known-slug>` enquiry context. Unknown values are ignored. No configured endpoint still means local preparation only.

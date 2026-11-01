@@ -51,3 +51,27 @@ sites-preview start "$PWD/qa-results/preview"
 ```
 
 打开返回地址的 `/qa.html` 可切换十二个页面与十个屏宽。普通本机仍可按前述 `NEXT_PUBLIC_BASE_PATH=/meich npm start` 预览。
+
+## MGC Digital V3.0
+
+V3.0 在 V2.5 上增量升级首屏摄影构图、三旗舰案例叙事、文化资料探索与商务路径。原始档案、双语路由、正式品牌、搜索及两种部署方式继续保留。
+
+- [基线审计与实施决策](docs/V3.0-AUDIT.md)
+- [交付、素材与维护说明](docs/V3.0-DELIVERY.md)
+- [测试环境与实际结果](docs/V3.0-QA.md)
+- 截图：`docs/qa/v3.0/`；浏览器报告：`docs/qa/v3.0-browser.json`
+
+可选浏览器验收（测试工具放在仓库外，无新增生产依赖）：
+
+```bash
+npm install --prefix /tmp/mgc-qa --no-package-lock playwright@1.56.1
+/tmp/mgc-qa/node_modules/.bin/playwright install chromium
+# 先按上文构建 /meich 静态导出。脚本自行启动静态预览：
+MGC_PLAYWRIGHT_MODULE=/tmp/mgc-qa/node_modules/playwright npm run check:v3
+# 再顺序构建并打包服务器，不能与静态构建并行：
+npm run build:server
+npm run package:server
+MGC_PLAYWRIGHT_MODULE=/tmp/mgc-qa/node_modules/playwright MGC_QA_REPORT=v3.0-motion.json npm run check:motion
+```
+
+已有 Chromium 时可设置 `MGC_CHROMIUM_PATH`；容器可按需要设置 `MGC_CHROMIUM_ARGS='["--no-sandbox"]'`。PR 工作流自动运行这两组浏览器检查并上传证据，只有 main 的既有发布工作流会部署正式站。

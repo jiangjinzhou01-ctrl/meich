@@ -7,6 +7,8 @@ import { languagePair } from "@/lib/routes";
 import { ResponsiveImage } from "./responsive-image";
 import { SourceContent } from "./source-content";
 import { CaseReader } from "./case-reader";
+import { CaseNavigation } from "./case-navigation";
+import { ProjectStudy } from "./project-study";
 import { projectNames } from "./project-card";
 import { ContactCTA } from "./ui";
 export function CaseFilm({
@@ -54,7 +56,15 @@ export function CaseFilm({
       >
         <ResponsiveImage
           name={p.kind}
-          alt={p.imageAlt}
+          alt={
+            en
+              ? slug === "potala-snow-city"
+                ? "Potala Palace exterior, published project context photograph"
+                : projectNames[slug] + ", actual project photography"
+              : slug === "potala-snow-city"
+                ? "布达拉宫建筑外景，公开项目资料配图"
+                : p.imageAlt
+          }
           priority
           sizes="100vw"
           className="scene-media"
@@ -85,13 +95,7 @@ export function CaseFilm({
           >
             {en ? projectEnglish[slug].description : p.description}
           </p>
-          <a
-            className="scene-link"
-            href="#case-context"
-            data-reveal="interaction"
-            data-motion-enter
-            style={{ "--motion-delay": "270ms" } as React.CSSProperties}
-          >
+          <a className="scene-link" href="#case-context">
             {en ? "Read the story" : "进入项目叙事"}
             <ArrowUpRight size={19} />
           </a>
@@ -120,16 +124,7 @@ export function CaseFilm({
           </a>
         </div>
       </div>
-      <nav
-        className="container case-story-nav"
-        aria-label={en ? "Story chapters" : "项目章节"}
-      >
-        {p.sections.map((s, i) => (
-          <a key={i} href={i === 0 ? "#case-context" : "#case-chapter-" + i}>
-            {en ? projectEnglish[slug].sections[i].title : s.title}
-          </a>
-        ))}
-      </nav>
+      <CaseNavigation key={slug} chapters={chapters} english={en} />
       {p.sections.map((s, i) => (
         <section
           className="case-chapter"
@@ -147,34 +142,57 @@ export function CaseFilm({
               {en ? projectEnglish[slug].sections[i].text : s.text}
             </p>
           </div>
-          {slug === "liye-qin-slips" && i === 2 ? (
-            <CaseReader english={en} />
-          ) : slug === "liye-qin-slips" && i === 0 ? (
-            <div className="case-archive-media" data-reveal="media">
-              <ResponsiveImage
-                name="liye-details"
-                alt={
-                  en
-                    ? "Liye manuscript interpretation"
-                    : "里耶秦简文字释读与重点标注"
-                }
-                sizes="100vw"
-              />
+          {i === 0 && (
+            <ProjectStudy
+              kind={p.kind as "liye" | "potala" | "gaomiao"}
+              english={en}
+            />
+          )}
+          {slug === "liye-qin-slips" && i === 3 && <CaseReader english={en} />}
+          {slug === "gaomiao" && i === 1 && (
+            <div className="container case-field-records">
+              <div className="case-field-record-heading">
+                <h3>
+                  {en ? "Further into the exhibition." : "沿着动线，走进展厅。"}
+                </h3>
+                <p>
+                  {en
+                    ? "Four original plates from the published project archive. These small records retain their available resolution."
+                    : "四幅公开项目图版，补充入口之外的空间记录。保留现有资料的原始清晰度。"}
+                </p>
+              </div>
+              {[2, 3, 4, 5].map((n, j) => (
+                <figure key={n}>
+                  <img
+                    src={asset(`/brand/gaomiao-gallery-0${n}.webp`)}
+                    width={n === 2 || n === 3 ? 673 : 671}
+                    height={504}
+                    alt={
+                      en
+                        ? [
+                            "Gaomiao exhibition circulation and wall displays",
+                            "Gaomiao central display cases",
+                            "Gaomiao earthen-texture exhibition setting",
+                            "Gaomiao display cases and overhead moving-image surface",
+                          ][j]
+                        : [
+                            "高庙展厅动线与墙面展陈",
+                            "高庙展厅中央展柜",
+                            "高庙夯土质感展陈场景",
+                            "高庙展柜与顶部影像界面",
+                          ][j]
+                    }
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <figcaption>
+                    0{j + 1} /{" "}
+                    {en ? "Published project record" : "公开项目资料"}
+                  </figcaption>
+                </figure>
+              ))}
             </div>
-          ) : i === 1 && p.gallery.length ? (
-            <figure className="case-full-media" data-reveal="media">
-              <img
-                src={asset(p.gallery[p.gallery.length - 1].image)}
-                alt={p.gallery[p.gallery.length - 1].alt}
-                width={1440}
-                height={900}
-                loading="lazy"
-              />
-              <figcaption className="container">
-                {p.gallery[p.gallery.length - 1].alt}
-              </figcaption>
-            </figure>
-          ) : null}
+          )}
         </section>
       ))}
       <section className="container case-film-result" data-reveal-group>
@@ -186,6 +204,33 @@ export function CaseFilm({
             ? "The original archive preserves the published project materials and images."
             : "项目的真实资料与完整图集继续保留。更多研究、设计与实施细节，可在原始项目档案中阅读。"}
         </p>
+        <div className="case-capability-links">
+          <Link
+            className="text-link"
+            href={
+              (en ? "/en" : "") +
+              "/services/#" +
+              (slug === "gaomiao" ? "heritage" : "display")
+            }
+          >
+            {en ? "Related expertise: " : "关联能力："}
+            {slug === "gaomiao"
+              ? en
+                ? "Digital museums"
+                : "数字文博"
+              : en
+                ? "Digital exhibitions"
+                : "数字展示"}
+            <ArrowUpRight size={18} />
+          </Link>
+          <Link
+            className="text-link"
+            href={(en ? "/en" : "") + "/contact/?project=" + slug}
+          >
+            {en ? "Discuss a similar project" : "沟通类似项目"}
+            <ArrowUpRight size={18} />
+          </Link>
+        </div>
         {source && (
           <details>
             <summary>
@@ -199,9 +244,11 @@ export function CaseFilm({
                 (en ? "/en" : "") + "/cases/brochure-2026-gaomiao-museum",
               ) && (
                 <SourceContent
-                  page={getSourcePage(
-                    (en ? "/en" : "") + "/cases/brochure-2026-gaomiao-museum",
-                  )!}
+                  page={
+                    getSourcePage(
+                      (en ? "/en" : "") + "/cases/brochure-2026-gaomiao-museum",
+                    )!
+                  }
                   idPrefix="brochure-archive-"
                 />
               )}

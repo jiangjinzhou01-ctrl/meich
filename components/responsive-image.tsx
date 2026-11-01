@@ -18,6 +18,7 @@ export function ResponsiveImage({
   sizes = "(max-width:767px) 100vw,65vw",
   className = "",
   cover = false,
+  mobileSource,
 }: {
   name: string;
   alt: string;
@@ -25,14 +26,15 @@ export function ResponsiveImage({
   sizes?: string;
   className?: string;
   cover?: boolean;
+  mobileSource?: string;
 }) {
   const v = variants[name];
   return (
     <picture className={className}>
-      {name === "gaomiao" && sizes === "100vw" && (
+      {mobileSource && (
         <source
-          srcSet={asset("/brand/gaomiao-portrait.avif")}
-          type="image/avif"
+          srcSet={asset("/brand/" + mobileSource + ".webp")}
+          type="image/webp"
           media="(max-width:767px)"
         />
       )}

@@ -1,6 +1,6 @@
 {
   "name": "meichuang-digital",
-  "version": "2.5.0",
+  "version": "3.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev --hostname 0.0.0.0",
@@ -12,7 +12,8 @@
     "typecheck": "tsc --noEmit",
     "check:export": "node scripts/check-export.mjs",
     "check:search": "node scripts/check-search.mjs",
-    "check:motion": "node scripts/check-motion.mjs"
+    "check:motion": "node scripts/check-motion.mjs",
+    "check:v3": "node scripts/check-v3.mjs"
   },
   "dependencies": {
     "geist": "^1.7.2",

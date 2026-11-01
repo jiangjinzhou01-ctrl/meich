@@ -1,0 +1,226 @@
+{
+  "createdAt": "2026-11-01T10:47:08.462Z",
+  "tool": "axe-core WCAG 2 A/AA + WCAG 2.1 AA; automated audit, not certification",
+  "results": [
+    {
+      "route": "/",
+      "width": 390,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 23
+        }
+      ],
+      "passes": 27
+    },
+    {
+      "route": "/en/",
+      "width": 390,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 23
+        }
+      ],
+      "passes": 27
+    },
+    {
+      "route": "/cases/gaomiao/",
+      "width": 390,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 1
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 2
+        }
+      ],
+      "passes": 23
+    },
+    {
+      "route": "/cases/liye-qin-slips/",
+      "width": 390,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 1
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 12
+        }
+      ],
+      "passes": 24
+    },
+    {
+      "route": "/cases/potala-snow-city/",
+      "width": 390,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 1
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 2
+        }
+      ],
+      "passes": 24
+    },
+    {
+      "route": "/services/",
+      "width": 390,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 37
+        }
+      ],
+      "passes": 29
+    },
+    {
+      "route": "/culture-ai/",
+      "width": 390,
+      "violations": [],
+      "incomplete": [],
+      "passes": 24
+    },
+    {
+      "route": "/research/",
+      "width": 390,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 3
+        }
+      ],
+      "passes": 25
+    },
+    {
+      "route": "/contact/",
+      "width": 390,
+      "violations": [],
+      "incomplete": [],
+      "passes": 26
+    },
+    {
+      "route": "/",
+      "width": 1440,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 8
+        }
+      ],
+      "passes": 26
+    },
+    {
+      "route": "/en/",
+      "width": 1440,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 8
+        }
+      ],
+      "passes": 26
+    },
+    {
+      "route": "/cases/gaomiao/",
+      "width": 1440,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 1
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 2
+        }
+      ],
+      "passes": 23
+    },
+    {
+      "route": "/cases/liye-qin-slips/",
+      "width": 1440,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 1
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 11
+        }
+      ],
+      "passes": 23
+    },
+    {
+      "route": "/cases/potala-snow-city/",
+      "width": 1440,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 1
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 2
+        }
+      ],
+      "passes": 23
+    },
+    {
+      "route": "/services/",
+      "width": 1440,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 22
+        }
+      ],
+      "passes": 28
+    },
+    {
+      "route": "/culture-ai/",
+      "width": 1440,
+      "violations": [],
+      "incomplete": [],
+      "passes": 24
+    },
+    {
+      "route": "/research/",
+      "width": 1440,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 3
+        }
+      ],
+      "passes": 25
+    },
+    {
+      "route": "/contact/",
+      "width": 1440,
+      "violations": [],
+      "incomplete": [],
+      "passes": 26
+    }
+  ]
+}

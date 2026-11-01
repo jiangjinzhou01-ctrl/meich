@@ -1,0 +1,378 @@
+{
+  "createdAt": "2026-11-01T10:14:26.945Z",
+  "browser": "Chromium emulation; not physical Android / Safari",
+  "tests": [
+    {
+      "name": "首屏真实聚焦与最终清晰",
+      "result": "passed",
+      "evidence": {
+        "sampledFrames": 12,
+        "lines": [
+          {
+            "filter": "none",
+            "opacity": "1",
+            "duration": "0.88s"
+          },
+          {
+            "filter": "none",
+            "opacity": "1",
+            "duration": "0.88s"
+          }
+        ]
+      }
+    },
+    {
+      "name": "组内顺序、慢速与快速滚动",
+      "result": "passed",
+      "evidence": {
+        "delays": [
+          "0s",
+          "0.06s",
+          "0.12s"
+        ],
+        "footerVisible": true
+      }
+    },
+    {
+      "name": "八个断点与四类页面无横向溢出",
+      "result": "passed",
+      "evidence": [
+        {
+          "route": "/",
+          "width": 320,
+          "scrollWidth": 320,
+          "bodyWidth": 320
+        },
+        {
+          "route": "/services/",
+          "width": 320,
+          "scrollWidth": 320,
+          "bodyWidth": 320
+        },
+        {
+          "route": "/cases/liye-qin-slips/",
+          "width": 320,
+          "scrollWidth": 320,
+          "bodyWidth": 320
+        },
+        {
+          "route": "/contact/",
+          "width": 320,
+          "scrollWidth": 320,
+          "bodyWidth": 320
+        },
+        {
+          "route": "/",
+          "width": 375,
+          "scrollWidth": 375,
+          "bodyWidth": 375
+        },
+        {
+          "route": "/services/",
+          "width": 375,
+          "scrollWidth": 375,
+          "bodyWidth": 375
+        },
+        {
+          "route": "/cases/liye-qin-slips/",
+          "width": 375,
+          "scrollWidth": 375,
+          "bodyWidth": 375
+        },
+        {
+          "route": "/contact/",
+          "width": 375,
+          "scrollWidth": 375,
+          "bodyWidth": 375
+        },
+        {
+          "route": "/",
+          "width": 390,
+          "scrollWidth": 390,
+          "bodyWidth": 390
+        },
+        {
+          "route": "/services/",
+          "width": 390,
+          "scrollWidth": 390,
+          "bodyWidth": 390
+        },
+        {
+          "route": "/cases/liye-qin-slips/",
+          "width": 390,
+          "scrollWidth": 390,
+          "bodyWidth": 390
+        },
+        {
+          "route": "/contact/",
+          "width": 390,
+          "scrollWidth": 390,
+          "bodyWidth": 390
+        },
+        {
+          "route": "/",
+          "width": 430,
+          "scrollWidth": 430,
+          "bodyWidth": 430
+        },
+        {
+          "route": "/services/",
+          "width": 430,
+          "scrollWidth": 430,
+          "bodyWidth": 430
+        },
+        {
+          "route": "/cases/liye-qin-slips/",
+          "width": 430,
+          "scrollWidth": 430,
+          "bodyWidth": 430
+        },
+        {
+          "route": "/contact/",
+          "width": 430,
+          "scrollWidth": 430,
+          "bodyWidth": 430
+        },
+        {
+          "route": "/",
+          "width": 768,
+          "scrollWidth": 768,
+          "bodyWidth": 768
+        },
+        {
+          "route": "/services/",
+          "width": 768,
+          "scrollWidth": 768,
+          "bodyWidth": 768
+        },
+        {
+          "route": "/cases/liye-qin-slips/",
+          "width": 768,
+          "scrollWidth": 768,
+          "bodyWidth": 768
+        },
+        {
+          "route": "/contact/",
+          "width": 768,
+          "scrollWidth": 768,
+          "bodyWidth": 768
+        },
+        {
+          "route": "/",
+          "width": 1024,
+          "scrollWidth": 1024,
+          "bodyWidth": 1024
+        },
+        {
+          "route": "/services/",
+          "width": 1024,
+          "scrollWidth": 1024,
+          "bodyWidth": 1024
+        },
+        {
+          "route": "/cases/liye-qin-slips/",
+          "width": 1024,
+          "scrollWidth": 1024,
+          "bodyWidth": 1024
+        },
+        {
+          "route": "/contact/",
+          "width": 1024,
+          "scrollWidth": 1024,
+          "bodyWidth": 1024
+        },
+        {
+          "route": "/",
+          "width": 1440,
+          "scrollWidth": 1440,
+          "bodyWidth": 1440
+        },
+        {
+          "route": "/services/",
+          "width": 1440,
+          "scrollWidth": 1440,
+          "bodyWidth": 1440
+        },
+        {
+          "route": "/cases/liye-qin-slips/",
+          "width": 1440,
+          "scrollWidth": 1440,
+          "bodyWidth": 1440
+        },
+        {
+          "route": "/contact/",
+          "width": 1440,
+          "scrollWidth": 1440,
+          "bodyWidth": 1440
+        },
+        {
+          "route": "/",
+          "width": 1920,
+          "scrollWidth": 1920,
+          "bodyWidth": 1920
+        },
+        {
+          "route": "/services/",
+          "width": 1920,
+          "scrollWidth": 1920,
+          "bodyWidth": 1920
+        },
+        {
+          "route": "/cases/liye-qin-slips/",
+          "width": 1920,
+          "scrollWidth": 1920,
+          "bodyWidth": 1920
+        },
+        {
+          "route": "/contact/",
+          "width": 1920,
+          "scrollWidth": 1920,
+          "bodyWidth": 1920
+        }
+      ]
+    },
+    {
+      "name": "主要公共页面和英文页动效覆盖",
+      "result": "passed",
+      "evidence": [
+        {
+          "route": "/cases/",
+          "revealElements": 59
+        },
+        {
+          "route": "/solutions/",
+          "revealElements": 7
+        },
+        {
+          "route": "/culture-ai/",
+          "revealElements": 15
+        },
+        {
+          "route": "/research/",
+          "revealElements": 269
+        },
+        {
+          "route": "/research/technology/",
+          "revealElements": 18
+        },
+        {
+          "route": "/about/",
+          "revealElements": 240
+        },
+        {
+          "route": "/insights/",
+          "revealElements": 45
+        },
+        {
+          "route": "/insights/culture-in-experience/",
+          "revealElements": 9
+        },
+        {
+          "route": "/careers/",
+          "revealElements": 20
+        },
+        {
+          "route": "/privacy/",
+          "revealElements": 13
+        },
+        {
+          "route": "/products/",
+          "revealElements": 8
+        },
+        {
+          "route": "/products/areas/display/",
+          "revealElements": 336
+        },
+        {
+          "route": "/en/",
+          "revealElements": 53
+        },
+        {
+          "route": "/en/services/",
+          "revealElements": 11
+        },
+        {
+          "route": "/en/culture-ai/",
+          "revealElements": 15
+        },
+        {
+          "route": "/en/research/",
+          "revealElements": 263
+        },
+        {
+          "route": "/en/about/",
+          "revealElements": 179
+        }
+      ]
+    },
+    {
+      "name": "圆形菜单重复开关、退出、焦点与客户端导航",
+      "result": "failed",
+      "error": "Interrupted menu text must never jump to full opacity"
+    },
+    {
+      "name": "服务与 Culture × AI 连续切换无旧面板重叠",
+      "result": "passed",
+      "evidence": {
+        "servicePanelCount": 1,
+        "culturePanelCount": 1
+      }
+    },
+    {
+      "name": "搜索输入不模糊、空结果与短错峰",
+      "result": "passed",
+      "evidence": {
+        "results": 9,
+        "maxDelay": 120,
+        "emptyState": true
+      }
+    },
+    {
+      "name": "返回与滚动恢复不重新隐藏已读内容",
+      "result": "passed",
+      "evidence": {
+        "previous": 1200,
+        "restoredY": 1200
+      }
+    },
+    {
+      "name": "减少动态、运行中禁用、深色主题与表单可读",
+      "result": "passed",
+      "evidence": {
+        "reduceRoutes": 5,
+        "livePreferenceChange": true,
+        "darkTheme": true
+      }
+    },
+    {
+      "name": "代表性视觉截图与控制台",
+      "result": "passed",
+      "evidence": {
+        "screenshots": [
+          "motion-home-mobile.png",
+          "motion-home-desktop.png",
+          "motion-case-chapter.png"
+        ],
+        "pageErrors": 0
+      }
+    }
+  ],
+  "widths": [
+    320,
+    375,
+    390,
+    430,
+    768,
+    1024,
+    1440,
+    1920
+  ],
+  "errors": [],
+  "screenshots": [
+    "motion-home-mobile.png",
+    "motion-home-desktop.png",
+    "motion-case-chapter.png"
+  ],
+  "passed": 9,
+  "failed": 1
+}

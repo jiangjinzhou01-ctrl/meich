@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
-import { phone, phoneHref } from "@/lib/content";
+import { phone, phoneHref, projects } from "@/lib/content";
 type Values = {
   name: string;
   company: string;
@@ -62,7 +62,16 @@ export function ContactForm({ english: en = false }: { english?: boolean }) {
   const busy = state === "loading";
   useEffect(() => {
     setReady(true);
-    const type = new URLSearchParams(location.search).get("type");
+    const params = new URLSearchParams(location.search);
+    const type = params.get("type");
+    const project = projects.find((p) => p.slug === params.get("project"));
+    if (project)
+      setV((x) => ({
+        ...x,
+        message: en
+          ? `I would like to discuss a project related to ${project.en}. `
+          : `希望了解与「${project.title}」类似的项目合作。`,
+      }));
     if (type === "partner") setV((x) => ({ ...x, type: "合作伙伴" }));
     if (type === "career") setV((x) => ({ ...x, type: "人才交流" }));
     return () => {
@@ -397,7 +406,10 @@ export function ContactForm({ english: en = false }: { english?: boolean }) {
           target="_blank"
           rel="noreferrer"
         >
-          {t("前往企业原站联系渠道 ↗", "Contact MGC on the original website ↗")}
+          {t(
+            "前往企业原站联系渠道 ↗",
+            "Contact MGC on the original website ↗",
+          )}
         </a>
       )}
       {state !== "idle" && state !== "loading" && (

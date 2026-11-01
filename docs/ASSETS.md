@@ -4,7 +4,7 @@
 
 ## 已处理
 
-- Hero 使用 1920px 高庙真实展馆图；手机采用同一原图的 640×959 竖构图 AVIF（约 30KB），避免全屏裁切后仍加载低分辨率横图。
+- Hero 使用 1920px 高庙真实展馆图；V3 手机采用同一原图的 640×800 竖构图 WebP（52,764 bytes），保留雕塑与主题入口。此前 640×959 AVIF 文件保留，当前通过 mobileSource 明确选择构图。
 - 关键图片制作 640 / 960px WebP 响应版本及 AVIF，保留原图，不通过放大制造清晰度。
 - 使用明确尺寸、固定媒介比例、object-fit、首屏高优先级与非首屏懒加载。
 - AI 设备小图另设 240px 版本。
@@ -26,3 +26,11 @@
 6. 品牌规范、字体授权和现行资质资料，确认长期上线所需的最终版本。
 
 部分现有项目图片仍含旧水印。未伪造新现场图替代，也未删去原始素材。后续应由企业提供无水印、授权清晰的正式原图。
+
+## V3.0 art direction
+
+`gaomiao-hero-mobile.webp` is a 640×800 derivative of the existing 1920×959 Gaomiao photograph: source rectangle `(90, 0)–(858, 959)`, downsampled without enlargement. It retains the sculpture and exhibition entrance on mobile. Source file and prior portrait AVIF remain intact. `ResponsiveImage.mobileSource` now opts into mobile art direction explicitly; it no longer silently applies the old portrait crop to all Gaomiao images.
+
+ProjectStudy and Culture use only the original Gaomiao, Liye interpretation/exhibition/cinema and Potala assets. The inspector can display their original pixel dimensions. Cropped views are marked as crops/documentation; no generated image, new scan, fabricated transcription or invented camera angle was added. The Potala exterior is labelled as architectural context, with MGC’s published scope limited to the Snow City exhibition. The 762×508 interior plate remains visibly resolution-limited and is framed rather than treated as a new high-resolution photograph.
+
+Four Gaomiao interior plates (`gaomiao-gallery-02`–`05.webp`, approximately 671–673×504, 20–27KB each) are now stored locally. Their original `mgcdigi.com/brand/company-cases/gaomiao-museum-0N.webp` URLs were already listed in `source-pages.json`; those live corporate URLs were checked and downloaded on 2026-11-01. The unmodified pixels and archive URLs are preserved, `source-image-map.json` resolves them locally, and the case presents them as small published records. They are not high-resolution replacements. Request originals from the company before using them as full-screen/high-DPR photography.

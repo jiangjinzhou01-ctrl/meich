@@ -53,6 +53,19 @@ export function ProjectCard({
         "project-card selected-project-" + index + " climate-" + p.kind
       }
     >
+      <span className="project-editorial-label">
+        {en
+          ? {
+              gaomiao: "SPACE / NARRATIVE",
+              liye: "WRITING / INTERPRETATION",
+              potala: "ARCHITECTURE / CULTURE",
+            }[p.kind]
+          : {
+              gaomiao: "空间 · 叙事",
+              liye: "文字 · 释读",
+              potala: "建筑 · 文化",
+            }[p.kind]}
+      </span>
       <ProjectVisual
         project={p}
         sizes={index === 0 ? "100vw" : "(max-width:1023px) 100vw,50vw"}
