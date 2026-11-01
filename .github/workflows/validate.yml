@@ -8,7 +8,6 @@ jobs:
   production-builds:
     runs-on: ubuntu-latest
     env:
-      MGC_PLAYWRIGHT_MODULE: ${{ runner.temp }}/mgc-qa/node_modules/playwright
       MGC_QA_REPORT: v3.0-motion.json
     steps:
       - uses: actions/checkout@v4
@@ -29,6 +28,8 @@ jobs:
           npm install --prefix "$RUNNER_TEMP/mgc-qa" --no-package-lock playwright@1.56.1
           "$RUNNER_TEMP/mgc-qa/node_modules/.bin/playwright" install --with-deps chromium
       - run: npm run check:v3
+        env:
+          MGC_PLAYWRIGHT_MODULE: ${{ runner.temp }}/mgc-qa/node_modules/playwright
       - uses: actions/upload-artifact@v4
         with:
           name: mgc-v3-pages-preview
@@ -36,6 +37,8 @@ jobs:
       - run: npm run build:server
       - run: npm run package:server
       - run: npm run check:motion
+        env:
+          MGC_PLAYWRIGHT_MODULE: ${{ runner.temp }}/mgc-qa/node_modules/playwright
       - uses: actions/upload-artifact@v4
         if: always()
         with:
