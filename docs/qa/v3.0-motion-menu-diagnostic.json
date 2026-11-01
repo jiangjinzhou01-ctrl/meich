@@ -1,0 +1,29 @@
+{
+  "createdAt": "2026-11-01T10:16:41.437Z",
+  "browser": "Chromium emulation; not physical Android / Safari",
+  "tests": [
+    {
+      "name": "圆形菜单重复开关、退出、焦点与客户端导航",
+      "result": "passed",
+      "evidence": {
+        "cycles": 3,
+        "interruptedCycles": 4,
+        "exitBeforeNavigation": true
+      }
+    }
+  ],
+  "widths": [
+    320,
+    375,
+    390,
+    430,
+    768,
+    1024,
+    1440,
+    1920
+  ],
+  "errors": [],
+  "screenshots": [],
+  "passed": 1,
+  "failed": 0
+}

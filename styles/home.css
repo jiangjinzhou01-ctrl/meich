@@ -8,11 +8,18 @@
   background: #34312c;
   color: var(--media-ink);
 }
+/* V3: photography and brand typography each retain their own space. */
 .cinematic-hero {
-  min-height: 100svh;
-  margin-top: calc(-1 * var(--nav-height));
-  display: flex;
-  align-items: flex-end;
+  background: var(--bg);
+  color: var(--ink);
+}
+.hero-photograph {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  height: clamp(380px, 60svh, 800px);
+  background: #736754;
+  color: var(--media-ink);
 }
 .scene-media {
   position: absolute;
@@ -26,63 +33,108 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: center 48%;
 }
 .scene-shade {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(16, 16, 16, 0.82),
-      rgba(16, 16, 16, 0.55) 37%,
-      rgba(16, 16, 16, 0.1) 77%
-    ),
-    linear-gradient(0deg, rgba(16, 16, 16, 0.38), transparent 30%);
+  background: linear-gradient(0deg, #101010b8, transparent 72%);
+}
+.hero-photograph::after {
+  content: "";
+  position: absolute;
+  inset: 65% 0 0;
+  z-index: -1;
+  background: linear-gradient(transparent, #15130f80);
+}
+.hero-photo-caption {
+  position: absolute;
+  bottom: 22px;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+.hero-photo-caption a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+}
+.hero-photo-caption > span {
+  font-family: var(--mono);
 }
 .hero-opening {
-  padding-block: clamp(160px, 20svh, 240px) 150px;
-  position: relative;
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 7vw;
+  align-items: end;
+  padding-block: 34px 42px;
 }
 .hero-opening h1 {
-  font-size: clamp(44px, 6.1vw, 106px);
-  line-height: 1.18;
-  letter-spacing: -0.025em;
+  font-size: clamp(38px, 4.1vw, 72px);
+  line-height: 1.22;
+  letter-spacing: -0.035em;
   font-weight: 450;
 }
 .hero-opening h1 span {
   display: block;
-  white-space: nowrap;
 }
 .hero-eyebrow {
   display: flex;
   align-items: center;
-  gap: 14px;
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  color: #e2dcd0;
-  margin-bottom: 30px;
+  gap: 10px;
+  font-size: 10px;
+  letter-spacing: 0.09em;
+  color: var(--muted);
+  margin-bottom: 22px;
 }
 .hero-eyebrow > span {
-  color: #ff858a;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+}
+.hero-signature {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.hero-intro {
+  max-width: 34ch;
+  color: var(--muted);
+  margin-top: 14px;
+  font-size: 15px;
+  line-height: 1.9;
+}
+.hero-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-top: 24px;
+  max-width: 410px;
 }
 .hero-action {
   min-width: 190px;
+  min-height: 44px;
+  border-bottom: 1px solid var(--ink);
 }
-.hero-signature {
-  font-size: 14px;
-  letter-spacing: 0.08em;
-  margin-top: 24px;
-  color: var(--media-ink);
+.hero-scroll {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  transition: background var(--fast);
 }
-.hero-intro {
-  max-width: 28rem;
-  text-wrap: pretty;
-  color: #dfddd7;
-  margin-top: 16px;
-  font-size: 16px;
-  line-height: 1.85;
+.hero-scroll:hover {
+  background: var(--surface);
 }
 .scene-link {
   display: inline-flex;
@@ -107,25 +159,6 @@
 }
 .scene-link:hover {
   border-color: #fff;
-}
-.hero-opening > .scene-link {
-  margin-top: 32px;
-}
-.hero-bottom {
-  position: absolute;
-  bottom: 32px;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-between;
-  gap: 24px;
-  font-size: 13px;
-}
-.hero-bottom a {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  min-height: 44px;
 }
 .quiet-manifesto {
   position: relative;
@@ -741,59 +774,58 @@
   }
 }
 @media (max-width: 767px) {
-  .cinematic-hero {
-    align-items: flex-end;
-    min-height: 100svh;
+  .hero-photograph {
+    height: clamp(290px, 49svh, 480px);
   }
-  .scene-media img {
-    object-position: 58% center;
+  .hero-photograph .scene-media img {
+    object-position: center 45%;
   }
-  .scene-shade {
-    background: linear-gradient(
-      0deg,
-      rgba(16, 16, 16, 0.93),
-      rgba(16, 16, 16, 0.68) 40%,
-      rgba(16, 16, 16, 0.06) 95%
-    );
+  .hero-photo-caption {
+    bottom: 12px;
+    font-size: 10px;
+    gap: 10px;
+  }
+  .hero-photo-caption > span {
+    max-width: 100px;
+  }
+  .hero-photo-caption a {
+    gap: 5px;
   }
   .hero-opening {
-    padding: 145px 0 118px;
-  }
-  .hero-opening h1 {
-    font-size: clamp(35px, 9.6vw, 60px);
-    line-height: 1.35;
-  }
-  html[lang="en"] .hero-opening h1 {
-    font-size: clamp(30px, 7.8vw, 60px);
+    display: block;
+    padding-block: 25px 30px;
   }
   .hero-eyebrow {
-    font-size: 10px;
-    letter-spacing: 0.025em;
-    gap: 10px;
-    margin-bottom: 26px;
+    font-size: 9px;
+    letter-spacing: 0.035em;
+    margin-bottom: 16px;
+  }
+  .hero-opening h1 {
+    font-size: clamp(32px, 8.8vw, 42px);
+    line-height: 1.24;
+  }
+  html[lang="en"] .hero-opening h1 {
+    font-size: clamp(30px, 8vw, 40px);
+  }
+  .hero-context {
+    margin-top: 18px;
   }
   .hero-signature {
-    margin-top: 18px;
-    font-size: 13px;
+    font-size: 10px;
   }
   .hero-intro {
+    max-width: 34ch;
+    font-size: 13px;
+    line-height: 1.8;
+    margin-top: 8px;
+  }
+  .hero-actions {
     margin-top: 16px;
-    max-width: min(100%, 18rem);
+    max-width: none;
   }
-  .hero-opening > .scene-link {
-    margin-top: 25px;
-  }
-  .hero-bottom {
-    bottom: 18px;
-    font-size: 12px;
-    gap: 14px;
-  }
-  .hero-bottom a {
-    gap: 7px;
-  }
-  .hero-bottom a:last-child {
-    max-width: 52%;
-    text-align: right;
+  .hero-action {
+    min-width: 170px;
+    font-size: 13px;
   }
   .quiet-manifesto {
     padding-block: 85px;
@@ -1078,5 +1110,108 @@
   .project-card:hover .project-visual img,
   .project-card:focus-visible .project-visual img {
     transform: none;
+  }
+}
+
+/* Three editorial climates, shared structure and direct project links. */
+.selected-work {
+  border-top: 1px solid var(--border);
+}
+.selected-work .work-introduction {
+  padding-top: 64px;
+}
+.work-introduction {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+}
+.work-introduction .section-label {
+  grid-column: 1 / -1;
+}
+.work-introduction h2 {
+  margin-bottom: 0;
+}
+.selected-work-grid {
+  gap: 2px;
+}
+.project-editorial-label {
+  position: absolute;
+  top: 32px;
+  left: var(--gutter);
+  z-index: 1;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: #fff;
+  background: #161616b8;
+  padding: 8px 12px;
+}
+.project-card.climate-gaomiao {
+  min-height: 72svh;
+}
+.project-card.climate-gaomiao .project-scrim {
+  background: linear-gradient(0deg, #161616c9, transparent 64%);
+}
+.project-card.climate-liye {
+  background: #dcd7c8;
+  color: #242421;
+}
+.project-card.climate-liye .project-visual {
+  inset: 0 0 38%;
+}
+.project-card.climate-liye .project-visual img {
+  object-position: center;
+}
+.project-card.climate-liye .project-scrim {
+  background: linear-gradient(0deg, #eae6da 32%, transparent 80%);
+}
+.project-card.climate-liye .project-film-copy > p,
+.project-card.climate-liye .project-meta,
+.project-card.climate-liye .project-role {
+  color: #514b40;
+}
+.project-card.climate-potala .project-visual img {
+  object-position: center 30%;
+}
+.project-card.climate-potala .project-scrim {
+  background: linear-gradient(0deg, #171d22ee, transparent 85%);
+}
+@media (max-width: 767px) {
+  .work-introduction {
+    gap: 20px;
+  }
+  .work-introduction h2 {
+    font-size: 27px;
+  }
+  .work-introduction > .text-link {
+    font-size: 12px;
+    gap: 8px;
+  }
+  .work-introduction .section-label {
+    margin-bottom: 0;
+  }
+  .project-editorial-label {
+    top: 22px;
+  }
+  .project-card.climate-gaomiao {
+    min-height: max(540px, 68svh);
+  }
+  .project-card.climate-gaomiao .project-visual img {
+    object-position: 38% center;
+  }
+  .project-card.climate-liye .project-visual {
+    inset: 0 0 40%;
+  }
+  .project-card.climate-liye .project-visual img {
+    object-position: 50% center;
+  }
+}
+
+/* Tablet framing keeps the entrance and sculpture together in a wider image field. */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .hero-photograph {
+    height: clamp(340px, 42svh, 560px);
+  }
+  .hero-photograph .scene-media img {
+    object-position: 32% 48%;
   }
 }

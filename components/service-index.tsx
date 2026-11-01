@@ -1,4 +1,5 @@
 "use client";
+import { languagePair } from "@/lib/routes";
 import { serviceEnglish } from "@/lib/english-content";
 
 import Link from "next/link";
@@ -116,11 +117,23 @@ export function ServiceIndex({ english: en = false }: { english?: boolean }) {
                 className="scene-link"
                 href={
                   en
-                    ? "/en/cases/brochure-2026-liye-qin-slips/"
-                    : "/cases/liye-qin-slips/"
+                    ? languagePair(
+                        "/cases/" +
+                          (active === 0 ? "liye-qin-slips" : "gaomiao") +
+                          "/",
+                      ).en
+                    : "/cases/" +
+                      (active === 0 ? "liye-qin-slips" : "gaomiao") +
+                      "/"
                 }
               >
-                {en ? "Related project" : "相关项目"}
+                {active === 0
+                  ? en
+                    ? "Liye / Design & production"
+                    : "里耶 / 创意设计与实施"
+                  : en
+                    ? "Gaomiao / Digital interpretation"
+                    : "高庙 / 数字文化表达"}
                 <ArrowUpRight size={18} />
               </Link>
             )}

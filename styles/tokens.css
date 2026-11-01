@@ -25,7 +25,7 @@
   --radius: 2px;
   --section-space: clamp(80px, 9vw, 160px);
   --nav-height: 72px;
-  --nav-media-bg: rgba(16, 16, 16, 0.82);
+  --nav-media-bg: #161616;
   --display: clamp(38px, 5.1vw, 78px);
   --h2: clamp(30px, 3.3vw, 52px);
   --h3: clamp(22px, 1.7vw, 28px);

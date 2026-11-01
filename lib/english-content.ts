@@ -84,6 +84,10 @@ export const projectEnglish: Record<
         title: "Connect different themes into one visit.",
         text: "Palace conservation, local coinage and wine culture each provide a distinct cultural lens. Historical life scenes connect the themes into a coherent spatial experience.",
       },
+      {
+        title: "Bring cultural content into space and production.",
+        text: "Exhibition design and implementation bring together objects, graphics and staged scenes. The scope and presentation follow MGC’s published project materials; no unverified commercial outcome metrics are added.",
+      },
     ],
   },
   gaomiao: {

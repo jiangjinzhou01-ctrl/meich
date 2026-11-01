@@ -1,0 +1,1820 @@
+{
+  "createdAt": "2026-11-01T10:12:16.913Z",
+  "environment": "Production static export /meich; headless Chromium; Linux; emulated widths and touch. Not physical devices or Safari.",
+  "widths": [
+    320,
+    360,
+    390,
+    412,
+    430,
+    768,
+    1024,
+    1440,
+    1920
+  ],
+  "tests": [
+    {
+      "name": "18 core routes × 9 widths: overflow, language, headings, images and metadata",
+      "result": "passed",
+      "evidence": {
+        "pages": 18,
+        "widths": 9,
+        "observations": 162
+      }
+    },
+    {
+      "name": "Hero CTA, photography, narrow landscape and no JavaScript",
+      "result": "passed",
+      "evidence": {
+        "evidence": [
+          {
+            "route": "/",
+            "width": 320,
+            "height": 740,
+            "actionBottom": 714.96875,
+            "source": "http://127.0.0.1:3013/meich/brand/gaomiao-hero-mobile.webp"
+          },
+          {
+            "route": "/",
+            "width": 390,
+            "height": 844,
+            "actionBottom": 771.671875,
+            "source": "http://127.0.0.1:3013/meich/brand/gaomiao-hero-mobile.webp"
+          },
+          {
+            "route": "/",
+            "width": 430,
+            "height": 932,
+            "actionBottom": 823.546875,
+            "source": "http://127.0.0.1:3013/meich/brand/gaomiao-hero-mobile.webp"
+          },
+          {
+            "route": "/",
+            "width": 1440,
+            "height": 1000,
+            "actionBottom": 889.5625,
+            "source": "http://127.0.0.1:3013/meich/brand/gaomiao.avif"
+          },
+          {
+            "route": "/",
+            "width": 1920,
+            "height": 1080,
+            "actionBottom": 969.15625,
+            "source": "http://127.0.0.1:3013/meich/brand/gaomiao.avif"
+          },
+          {
+            "route": "/",
+            "width": 844,
+            "height": 390,
+            "actionBottom": 644.25,
+            "source": "http://127.0.0.1:3013/meich/brand/gaomiao-960.webp"
+          },
+          {
+            "route": "/en/",
+            "width": 320,
+            "height": 740,
+            "actionBottom": 733.390625,
+            "source": "http://127.0.0.1:3013/meich/brand/gaomiao-hero-mobile.webp"
+          },
+          {
+            "route": "/en/",
+            "width": 390,
+            "height": 844,
+            "actionBottom": 787.34375,
+            "source": "http://127.0.0.1:3013/meich/brand/gaomiao-hero-mobile.webp"
+          },
+          {
+            "route": "/en/",
+            "width": 430,
+            "height": 932,
+            "actionBottom": 838.40625,
+            "source": "http://127.0.0.1:3013/meich/brand/gaomiao-hero-mobile.webp"
+          },
+          {
+            "route": "/en/",
+            "width": 1440,
+            "height": 1000,
+            "actionBottom": 892.75,
+            "source": "http://127.0.0.1:3013/meich/brand/gaomiao.avif"
+          },
+          {
+            "route": "/en/",
+            "width": 1920,
+            "height": 1080,
+            "actionBottom": 969.15625,
+            "source": "http://127.0.0.1:3013/meich/brand/gaomiao.avif"
+          },
+          {
+            "route": "/en/",
+            "width": 844,
+            "height": 390,
+            "actionBottom": 672.75,
+            "source": "http://127.0.0.1:3013/meich/brand/gaomiao-960.webp"
+          }
+        ],
+        "noJavaScript": true
+      }
+    },
+    {
+      "name": "Mobile menu: focus containment, Escape, rapid close, scroll restore, language and theme",
+      "result": "passed",
+      "evidence": {
+        "cycles": 3,
+        "persistentTheme": true,
+        "language": true
+      }
+    },
+    {
+      "name": "Culture: 4 stages × 3 lenses, keyboard, stable panels and source-image focus",
+      "result": "failed",
+      "error": "AssertionError [ERR_ASSERTION]: Unstable scene 320: 850,880,850,850,880,850\n    at file:///workspace/meich/scripts/check-v3.mjs:80:7\n    at async test (file:///workspace/meich/scripts/check-v3.mjs:17:24)\n    at async file:///workspace/meich/scripts/check-v3.mjs:71:3"
+    },
+    {
+      "name": "Three flagship cases: source plates, fast chapter navigation, backtracking and next project",
+      "result": "failed",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\nnull !== 'step'\n\n    at file:///workspace/meich/scripts/check-v3.mjs:93:120\n    at async test (file:///workspace/meich/scripts/check-v3.mjs:17:24)\n    at async file:///workspace/meich/scripts/check-v3.mjs:87:3"
+    },
+    {
+      "name": "Search, filters, empty state and URL persistence",
+      "result": "failed",
+      "error": "locator.selectOption: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.catalog-filter-grid select').first()\u001b[22m\n\n    at /workspace/meich/scripts/check-v3.mjs:104:94\n    at async test (/workspace/meich/scripts/check-v3.mjs:17:24)\n    at async file:///workspace/meich/scripts/check-v3.mjs:102:3"
+    },
+    {
+      "name": "Contact: local-only validation, focus, copy, download, clipboard failure and project context",
+      "result": "passed",
+      "evidence": [
+        {
+          "route": "/contact/",
+          "errors": 5,
+          "localOnly": true,
+          "download": "MGC-collaboration-brief.txt",
+          "copied": true
+        },
+        {
+          "route": "/en/contact/",
+          "errors": 5,
+          "localOnly": true,
+          "download": "MGC-collaboration-brief.txt",
+          "copied": true
+        }
+      ]
+    },
+    {
+      "name": "Reduced motion, live preference change, keyboard and deep-link compatibility",
+      "result": "passed",
+      "evidence": {
+        "reduce": true,
+        "keyboard": true,
+        "oldPathPreservesQueryAndHash": true,
+        "notFound": true
+      }
+    },
+    {
+      "name": "Production screenshots, lazy media and console",
+      "result": "failed",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'Failed to load resource: the server responded with a status of 404 (Not Found)'\n+ ]\n- []\n\n    at file:///workspace/meich/scripts/check-v3.mjs:134:12\n    at async test (file:///workspace/meich/scripts/check-v3.mjs:17:24)\n    at async file:///workspace/meich/scripts/check-v3.mjs:127:3"
+    }
+  ],
+  "responsive": [
+    {
+      "route": "/",
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/",
+      "description": "湖南美创数字科技有限公司，专注文化与科技融合。连接文化研究、空间设计、数字技术与 AI，让文化成为可感知、可参与的体验。"
+    },
+    {
+      "route": "/en/",
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/",
+      "description": "MGC Digital connects cultural research, creative design and digital technology to shape exhibitions, museums, cultural products and operations."
+    },
+    {
+      "route": "/cases/gaomiao/",
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/gaomiao/",
+      "description": "以空间叙事连接文物、历史与观众，让遗址文化进入今天的体验。"
+    },
+    {
+      "route": "/cases/liye-qin-slips/",
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/liye-qin-slips/",
+      "description": "把秦简中的文字与日常，转化为可读、可感、可参与的历史体验。"
+    },
+    {
+      "route": "/cases/potala-snow-city/",
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/potala-snow-city/",
+      "description": "在历史建筑中组织文化叙事，让保护、展示与体验形成连贯的空间。"
+    },
+    {
+      "route": "/en/cases/gaomiao/",
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/gaomiao/",
+      "description": "Connecting the roots of an archaeological culture with a contemporary museum experience."
+    },
+    {
+      "route": "/en/cases/brochure-2026-liye-qin-slips/",
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/brochure-2026-liye-qin-slips/",
+      "description": "MGC helped renew the Liye museum through exhibition design and implementation, combining layered interpretation, a bowl-screen theatre and over 30 multimedia interactives to bring Qin-era records to life."
+    },
+    {
+      "route": "/en/cases/brochure-2026-potala-snow-city/",
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/brochure-2026-potala-snow-city/",
+      "description": "Potala Palace Snow City Exhibition Renewal, a 2021 project in the museums portfolio. MGC scope: design and construction."
+    },
+    {
+      "route": "/services/",
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/services/",
+      "description": "数字展示、数字文博、数字文创与数字运营，连接文化研究、空间设计和数字技术。"
+    },
+    {
+      "route": "/en/services/",
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/services/",
+      "description": "Cultural research, exhibition design, digital production and museum software."
+    },
+    {
+      "route": "/culture-ai/",
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/culture-ai/",
+      "description": "从里耶秦简出发，体验识别、解读、表达与空间化的文化转化过程。预置概念演示，无实时 AI 接口。"
+    },
+    {
+      "route": "/en/culture-ai/",
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/culture-ai/",
+      "description": "Explore the Liye manuscripts through recognition, interpretation, expression and space. A curated concept without a live AI connection."
+    },
+    {
+      "route": "/research/",
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/research/",
+      "description": "文物数字化、智慧博物馆与互动系统。查看美创公开研究、项目及证据。"
+    },
+    {
+      "route": "/en/research/",
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/research/",
+      "description": "Digital heritage, museum systems and interactive research."
+    },
+    {
+      "route": "/contact/",
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/contact/",
+      "description": "与美创数字讨论文化展示、智慧文博、文创开发与合作需求。商务咨询：0731-89728572。"
+    },
+    {
+      "route": "/en/contact/",
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/contact/",
+      "description": "Discuss cultural exhibitions, museum technology and collaboration with MGC Digital."
+    },
+    {
+      "route": "/cases/",
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/",
+      "description": "美创数字真实文化展示、数字文博与互动体验项目。了解项目内容与美创职责。"
+    },
+    {
+      "route": "/products/",
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/products/",
+      "description": "美创数字以文化研究、创意设计与数字技术连接数字展示、数字文博、数字文创、数字运营，提供产品研发、内容制作、系统集成及运营支持。"
+    },
+    {
+      "route": "/",
+      "width": 360,
+      "scrollWidth": 360,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/",
+      "description": "湖南美创数字科技有限公司，专注文化与科技融合。连接文化研究、空间设计、数字技术与 AI，让文化成为可感知、可参与的体验。"
+    },
+    {
+      "route": "/en/",
+      "width": 360,
+      "scrollWidth": 360,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/",
+      "description": "MGC Digital connects cultural research, creative design and digital technology to shape exhibitions, museums, cultural products and operations."
+    },
+    {
+      "route": "/cases/gaomiao/",
+      "width": 360,
+      "scrollWidth": 360,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/gaomiao/",
+      "description": "以空间叙事连接文物、历史与观众，让遗址文化进入今天的体验。"
+    },
+    {
+      "route": "/cases/liye-qin-slips/",
+      "width": 360,
+      "scrollWidth": 360,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/liye-qin-slips/",
+      "description": "把秦简中的文字与日常，转化为可读、可感、可参与的历史体验。"
+    },
+    {
+      "route": "/cases/potala-snow-city/",
+      "width": 360,
+      "scrollWidth": 360,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/potala-snow-city/",
+      "description": "在历史建筑中组织文化叙事，让保护、展示与体验形成连贯的空间。"
+    },
+    {
+      "route": "/en/cases/gaomiao/",
+      "width": 360,
+      "scrollWidth": 360,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/gaomiao/",
+      "description": "Connecting the roots of an archaeological culture with a contemporary museum experience."
+    },
+    {
+      "route": "/en/cases/brochure-2026-liye-qin-slips/",
+      "width": 360,
+      "scrollWidth": 360,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/brochure-2026-liye-qin-slips/",
+      "description": "MGC helped renew the Liye museum through exhibition design and implementation, combining layered interpretation, a bowl-screen theatre and over 30 multimedia interactives to bring Qin-era records to life."
+    },
+    {
+      "route": "/en/cases/brochure-2026-potala-snow-city/",
+      "width": 360,
+      "scrollWidth": 360,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/brochure-2026-potala-snow-city/",
+      "description": "Potala Palace Snow City Exhibition Renewal, a 2021 project in the museums portfolio. MGC scope: design and construction."
+    },
+    {
+      "route": "/services/",
+      "width": 360,
+      "scrollWidth": 360,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/services/",
+      "description": "数字展示、数字文博、数字文创与数字运营，连接文化研究、空间设计和数字技术。"
+    },
+    {
+      "route": "/en/services/",
+      "width": 360,
+      "scrollWidth": 360,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/services/",
+      "description": "Cultural research, exhibition design, digital production and museum software."
+    },
+    {
+      "route": "/culture-ai/",
+      "width": 360,
+      "scrollWidth": 360,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/culture-ai/",
+      "description": "从里耶秦简出发，体验识别、解读、表达与空间化的文化转化过程。预置概念演示，无实时 AI 接口。"
+    },
+    {
+      "route": "/en/culture-ai/",
+      "width": 360,
+      "scrollWidth": 360,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/culture-ai/",
+      "description": "Explore the Liye manuscripts through recognition, interpretation, expression and space. A curated concept without a live AI connection."
+    },
+    {
+      "route": "/research/",
+      "width": 360,
+      "scrollWidth": 360,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/research/",
+      "description": "文物数字化、智慧博物馆与互动系统。查看美创公开研究、项目及证据。"
+    },
+    {
+      "route": "/en/research/",
+      "width": 360,
+      "scrollWidth": 360,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/research/",
+      "description": "Digital heritage, museum systems and interactive research."
+    },
+    {
+      "route": "/contact/",
+      "width": 360,
+      "scrollWidth": 360,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/contact/",
+      "description": "与美创数字讨论文化展示、智慧文博、文创开发与合作需求。商务咨询：0731-89728572。"
+    },
+    {
+      "route": "/en/contact/",
+      "width": 360,
+      "scrollWidth": 360,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/contact/",
+      "description": "Discuss cultural exhibitions, museum technology and collaboration with MGC Digital."
+    },
+    {
+      "route": "/cases/",
+      "width": 360,
+      "scrollWidth": 360,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/",
+      "description": "美创数字真实文化展示、数字文博与互动体验项目。了解项目内容与美创职责。"
+    },
+    {
+      "route": "/products/",
+      "width": 360,
+      "scrollWidth": 360,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/products/",
+      "description": "美创数字以文化研究、创意设计与数字技术连接数字展示、数字文博、数字文创、数字运营，提供产品研发、内容制作、系统集成及运营支持。"
+    },
+    {
+      "route": "/",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/",
+      "description": "湖南美创数字科技有限公司，专注文化与科技融合。连接文化研究、空间设计、数字技术与 AI，让文化成为可感知、可参与的体验。"
+    },
+    {
+      "route": "/en/",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/",
+      "description": "MGC Digital connects cultural research, creative design and digital technology to shape exhibitions, museums, cultural products and operations."
+    },
+    {
+      "route": "/cases/gaomiao/",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/gaomiao/",
+      "description": "以空间叙事连接文物、历史与观众，让遗址文化进入今天的体验。"
+    },
+    {
+      "route": "/cases/liye-qin-slips/",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/liye-qin-slips/",
+      "description": "把秦简中的文字与日常，转化为可读、可感、可参与的历史体验。"
+    },
+    {
+      "route": "/cases/potala-snow-city/",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/potala-snow-city/",
+      "description": "在历史建筑中组织文化叙事，让保护、展示与体验形成连贯的空间。"
+    },
+    {
+      "route": "/en/cases/gaomiao/",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/gaomiao/",
+      "description": "Connecting the roots of an archaeological culture with a contemporary museum experience."
+    },
+    {
+      "route": "/en/cases/brochure-2026-liye-qin-slips/",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/brochure-2026-liye-qin-slips/",
+      "description": "MGC helped renew the Liye museum through exhibition design and implementation, combining layered interpretation, a bowl-screen theatre and over 30 multimedia interactives to bring Qin-era records to life."
+    },
+    {
+      "route": "/en/cases/brochure-2026-potala-snow-city/",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/brochure-2026-potala-snow-city/",
+      "description": "Potala Palace Snow City Exhibition Renewal, a 2021 project in the museums portfolio. MGC scope: design and construction."
+    },
+    {
+      "route": "/services/",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/services/",
+      "description": "数字展示、数字文博、数字文创与数字运营，连接文化研究、空间设计和数字技术。"
+    },
+    {
+      "route": "/en/services/",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/services/",
+      "description": "Cultural research, exhibition design, digital production and museum software."
+    },
+    {
+      "route": "/culture-ai/",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/culture-ai/",
+      "description": "从里耶秦简出发，体验识别、解读、表达与空间化的文化转化过程。预置概念演示，无实时 AI 接口。"
+    },
+    {
+      "route": "/en/culture-ai/",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/culture-ai/",
+      "description": "Explore the Liye manuscripts through recognition, interpretation, expression and space. A curated concept without a live AI connection."
+    },
+    {
+      "route": "/research/",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/research/",
+      "description": "文物数字化、智慧博物馆与互动系统。查看美创公开研究、项目及证据。"
+    },
+    {
+      "route": "/en/research/",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/research/",
+      "description": "Digital heritage, museum systems and interactive research."
+    },
+    {
+      "route": "/contact/",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/contact/",
+      "description": "与美创数字讨论文化展示、智慧文博、文创开发与合作需求。商务咨询：0731-89728572。"
+    },
+    {
+      "route": "/en/contact/",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/contact/",
+      "description": "Discuss cultural exhibitions, museum technology and collaboration with MGC Digital."
+    },
+    {
+      "route": "/cases/",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/",
+      "description": "美创数字真实文化展示、数字文博与互动体验项目。了解项目内容与美创职责。"
+    },
+    {
+      "route": "/products/",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/products/",
+      "description": "美创数字以文化研究、创意设计与数字技术连接数字展示、数字文博、数字文创、数字运营，提供产品研发、内容制作、系统集成及运营支持。"
+    },
+    {
+      "route": "/",
+      "width": 412,
+      "scrollWidth": 412,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/",
+      "description": "湖南美创数字科技有限公司，专注文化与科技融合。连接文化研究、空间设计、数字技术与 AI，让文化成为可感知、可参与的体验。"
+    },
+    {
+      "route": "/en/",
+      "width": 412,
+      "scrollWidth": 412,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/",
+      "description": "MGC Digital connects cultural research, creative design and digital technology to shape exhibitions, museums, cultural products and operations."
+    },
+    {
+      "route": "/cases/gaomiao/",
+      "width": 412,
+      "scrollWidth": 412,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/gaomiao/",
+      "description": "以空间叙事连接文物、历史与观众，让遗址文化进入今天的体验。"
+    },
+    {
+      "route": "/cases/liye-qin-slips/",
+      "width": 412,
+      "scrollWidth": 412,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/liye-qin-slips/",
+      "description": "把秦简中的文字与日常，转化为可读、可感、可参与的历史体验。"
+    },
+    {
+      "route": "/cases/potala-snow-city/",
+      "width": 412,
+      "scrollWidth": 412,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/potala-snow-city/",
+      "description": "在历史建筑中组织文化叙事，让保护、展示与体验形成连贯的空间。"
+    },
+    {
+      "route": "/en/cases/gaomiao/",
+      "width": 412,
+      "scrollWidth": 412,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/gaomiao/",
+      "description": "Connecting the roots of an archaeological culture with a contemporary museum experience."
+    },
+    {
+      "route": "/en/cases/brochure-2026-liye-qin-slips/",
+      "width": 412,
+      "scrollWidth": 412,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/brochure-2026-liye-qin-slips/",
+      "description": "MGC helped renew the Liye museum through exhibition design and implementation, combining layered interpretation, a bowl-screen theatre and over 30 multimedia interactives to bring Qin-era records to life."
+    },
+    {
+      "route": "/en/cases/brochure-2026-potala-snow-city/",
+      "width": 412,
+      "scrollWidth": 412,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/brochure-2026-potala-snow-city/",
+      "description": "Potala Palace Snow City Exhibition Renewal, a 2021 project in the museums portfolio. MGC scope: design and construction."
+    },
+    {
+      "route": "/services/",
+      "width": 412,
+      "scrollWidth": 412,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/services/",
+      "description": "数字展示、数字文博、数字文创与数字运营，连接文化研究、空间设计和数字技术。"
+    },
+    {
+      "route": "/en/services/",
+      "width": 412,
+      "scrollWidth": 412,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/services/",
+      "description": "Cultural research, exhibition design, digital production and museum software."
+    },
+    {
+      "route": "/culture-ai/",
+      "width": 412,
+      "scrollWidth": 412,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/culture-ai/",
+      "description": "从里耶秦简出发，体验识别、解读、表达与空间化的文化转化过程。预置概念演示，无实时 AI 接口。"
+    },
+    {
+      "route": "/en/culture-ai/",
+      "width": 412,
+      "scrollWidth": 412,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/culture-ai/",
+      "description": "Explore the Liye manuscripts through recognition, interpretation, expression and space. A curated concept without a live AI connection."
+    },
+    {
+      "route": "/research/",
+      "width": 412,
+      "scrollWidth": 412,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/research/",
+      "description": "文物数字化、智慧博物馆与互动系统。查看美创公开研究、项目及证据。"
+    },
+    {
+      "route": "/en/research/",
+      "width": 412,
+      "scrollWidth": 412,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/research/",
+      "description": "Digital heritage, museum systems and interactive research."
+    },
+    {
+      "route": "/contact/",
+      "width": 412,
+      "scrollWidth": 412,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/contact/",
+      "description": "与美创数字讨论文化展示、智慧文博、文创开发与合作需求。商务咨询：0731-89728572。"
+    },
+    {
+      "route": "/en/contact/",
+      "width": 412,
+      "scrollWidth": 412,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/contact/",
+      "description": "Discuss cultural exhibitions, museum technology and collaboration with MGC Digital."
+    },
+    {
+      "route": "/cases/",
+      "width": 412,
+      "scrollWidth": 412,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/",
+      "description": "美创数字真实文化展示、数字文博与互动体验项目。了解项目内容与美创职责。"
+    },
+    {
+      "route": "/products/",
+      "width": 412,
+      "scrollWidth": 412,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/products/",
+      "description": "美创数字以文化研究、创意设计与数字技术连接数字展示、数字文博、数字文创、数字运营，提供产品研发、内容制作、系统集成及运营支持。"
+    },
+    {
+      "route": "/",
+      "width": 430,
+      "scrollWidth": 430,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/",
+      "description": "湖南美创数字科技有限公司，专注文化与科技融合。连接文化研究、空间设计、数字技术与 AI，让文化成为可感知、可参与的体验。"
+    },
+    {
+      "route": "/en/",
+      "width": 430,
+      "scrollWidth": 430,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/",
+      "description": "MGC Digital connects cultural research, creative design and digital technology to shape exhibitions, museums, cultural products and operations."
+    },
+    {
+      "route": "/cases/gaomiao/",
+      "width": 430,
+      "scrollWidth": 430,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/gaomiao/",
+      "description": "以空间叙事连接文物、历史与观众，让遗址文化进入今天的体验。"
+    },
+    {
+      "route": "/cases/liye-qin-slips/",
+      "width": 430,
+      "scrollWidth": 430,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/liye-qin-slips/",
+      "description": "把秦简中的文字与日常，转化为可读、可感、可参与的历史体验。"
+    },
+    {
+      "route": "/cases/potala-snow-city/",
+      "width": 430,
+      "scrollWidth": 430,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/potala-snow-city/",
+      "description": "在历史建筑中组织文化叙事，让保护、展示与体验形成连贯的空间。"
+    },
+    {
+      "route": "/en/cases/gaomiao/",
+      "width": 430,
+      "scrollWidth": 430,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/gaomiao/",
+      "description": "Connecting the roots of an archaeological culture with a contemporary museum experience."
+    },
+    {
+      "route": "/en/cases/brochure-2026-liye-qin-slips/",
+      "width": 430,
+      "scrollWidth": 430,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/brochure-2026-liye-qin-slips/",
+      "description": "MGC helped renew the Liye museum through exhibition design and implementation, combining layered interpretation, a bowl-screen theatre and over 30 multimedia interactives to bring Qin-era records to life."
+    },
+    {
+      "route": "/en/cases/brochure-2026-potala-snow-city/",
+      "width": 430,
+      "scrollWidth": 430,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/brochure-2026-potala-snow-city/",
+      "description": "Potala Palace Snow City Exhibition Renewal, a 2021 project in the museums portfolio. MGC scope: design and construction."
+    },
+    {
+      "route": "/services/",
+      "width": 430,
+      "scrollWidth": 430,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/services/",
+      "description": "数字展示、数字文博、数字文创与数字运营，连接文化研究、空间设计和数字技术。"
+    },
+    {
+      "route": "/en/services/",
+      "width": 430,
+      "scrollWidth": 430,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/services/",
+      "description": "Cultural research, exhibition design, digital production and museum software."
+    },
+    {
+      "route": "/culture-ai/",
+      "width": 430,
+      "scrollWidth": 430,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/culture-ai/",
+      "description": "从里耶秦简出发，体验识别、解读、表达与空间化的文化转化过程。预置概念演示，无实时 AI 接口。"
+    },
+    {
+      "route": "/en/culture-ai/",
+      "width": 430,
+      "scrollWidth": 430,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/culture-ai/",
+      "description": "Explore the Liye manuscripts through recognition, interpretation, expression and space. A curated concept without a live AI connection."
+    },
+    {
+      "route": "/research/",
+      "width": 430,
+      "scrollWidth": 430,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/research/",
+      "description": "文物数字化、智慧博物馆与互动系统。查看美创公开研究、项目及证据。"
+    },
+    {
+      "route": "/en/research/",
+      "width": 430,
+      "scrollWidth": 430,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/research/",
+      "description": "Digital heritage, museum systems and interactive research."
+    },
+    {
+      "route": "/contact/",
+      "width": 430,
+      "scrollWidth": 430,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/contact/",
+      "description": "与美创数字讨论文化展示、智慧文博、文创开发与合作需求。商务咨询：0731-89728572。"
+    },
+    {
+      "route": "/en/contact/",
+      "width": 430,
+      "scrollWidth": 430,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/contact/",
+      "description": "Discuss cultural exhibitions, museum technology and collaboration with MGC Digital."
+    },
+    {
+      "route": "/cases/",
+      "width": 430,
+      "scrollWidth": 430,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/",
+      "description": "美创数字真实文化展示、数字文博与互动体验项目。了解项目内容与美创职责。"
+    },
+    {
+      "route": "/products/",
+      "width": 430,
+      "scrollWidth": 430,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/products/",
+      "description": "美创数字以文化研究、创意设计与数字技术连接数字展示、数字文博、数字文创、数字运营，提供产品研发、内容制作、系统集成及运营支持。"
+    },
+    {
+      "route": "/",
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/",
+      "description": "湖南美创数字科技有限公司，专注文化与科技融合。连接文化研究、空间设计、数字技术与 AI，让文化成为可感知、可参与的体验。"
+    },
+    {
+      "route": "/en/",
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/",
+      "description": "MGC Digital connects cultural research, creative design and digital technology to shape exhibitions, museums, cultural products and operations."
+    },
+    {
+      "route": "/cases/gaomiao/",
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/gaomiao/",
+      "description": "以空间叙事连接文物、历史与观众，让遗址文化进入今天的体验。"
+    },
+    {
+      "route": "/cases/liye-qin-slips/",
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/liye-qin-slips/",
+      "description": "把秦简中的文字与日常，转化为可读、可感、可参与的历史体验。"
+    },
+    {
+      "route": "/cases/potala-snow-city/",
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/potala-snow-city/",
+      "description": "在历史建筑中组织文化叙事，让保护、展示与体验形成连贯的空间。"
+    },
+    {
+      "route": "/en/cases/gaomiao/",
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/gaomiao/",
+      "description": "Connecting the roots of an archaeological culture with a contemporary museum experience."
+    },
+    {
+      "route": "/en/cases/brochure-2026-liye-qin-slips/",
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/brochure-2026-liye-qin-slips/",
+      "description": "MGC helped renew the Liye museum through exhibition design and implementation, combining layered interpretation, a bowl-screen theatre and over 30 multimedia interactives to bring Qin-era records to life."
+    },
+    {
+      "route": "/en/cases/brochure-2026-potala-snow-city/",
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/brochure-2026-potala-snow-city/",
+      "description": "Potala Palace Snow City Exhibition Renewal, a 2021 project in the museums portfolio. MGC scope: design and construction."
+    },
+    {
+      "route": "/services/",
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/services/",
+      "description": "数字展示、数字文博、数字文创与数字运营，连接文化研究、空间设计和数字技术。"
+    },
+    {
+      "route": "/en/services/",
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/services/",
+      "description": "Cultural research, exhibition design, digital production and museum software."
+    },
+    {
+      "route": "/culture-ai/",
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/culture-ai/",
+      "description": "从里耶秦简出发，体验识别、解读、表达与空间化的文化转化过程。预置概念演示，无实时 AI 接口。"
+    },
+    {
+      "route": "/en/culture-ai/",
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/culture-ai/",
+      "description": "Explore the Liye manuscripts through recognition, interpretation, expression and space. A curated concept without a live AI connection."
+    },
+    {
+      "route": "/research/",
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/research/",
+      "description": "文物数字化、智慧博物馆与互动系统。查看美创公开研究、项目及证据。"
+    },
+    {
+      "route": "/en/research/",
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/research/",
+      "description": "Digital heritage, museum systems and interactive research."
+    },
+    {
+      "route": "/contact/",
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/contact/",
+      "description": "与美创数字讨论文化展示、智慧文博、文创开发与合作需求。商务咨询：0731-89728572。"
+    },
+    {
+      "route": "/en/contact/",
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/contact/",
+      "description": "Discuss cultural exhibitions, museum technology and collaboration with MGC Digital."
+    },
+    {
+      "route": "/cases/",
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/",
+      "description": "美创数字真实文化展示、数字文博与互动体验项目。了解项目内容与美创职责。"
+    },
+    {
+      "route": "/products/",
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/products/",
+      "description": "美创数字以文化研究、创意设计与数字技术连接数字展示、数字文博、数字文创、数字运营，提供产品研发、内容制作、系统集成及运营支持。"
+    },
+    {
+      "route": "/",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/",
+      "description": "湖南美创数字科技有限公司，专注文化与科技融合。连接文化研究、空间设计、数字技术与 AI，让文化成为可感知、可参与的体验。"
+    },
+    {
+      "route": "/en/",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/",
+      "description": "MGC Digital connects cultural research, creative design and digital technology to shape exhibitions, museums, cultural products and operations."
+    },
+    {
+      "route": "/cases/gaomiao/",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/gaomiao/",
+      "description": "以空间叙事连接文物、历史与观众，让遗址文化进入今天的体验。"
+    },
+    {
+      "route": "/cases/liye-qin-slips/",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/liye-qin-slips/",
+      "description": "把秦简中的文字与日常，转化为可读、可感、可参与的历史体验。"
+    },
+    {
+      "route": "/cases/potala-snow-city/",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/potala-snow-city/",
+      "description": "在历史建筑中组织文化叙事，让保护、展示与体验形成连贯的空间。"
+    },
+    {
+      "route": "/en/cases/gaomiao/",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/gaomiao/",
+      "description": "Connecting the roots of an archaeological culture with a contemporary museum experience."
+    },
+    {
+      "route": "/en/cases/brochure-2026-liye-qin-slips/",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/brochure-2026-liye-qin-slips/",
+      "description": "MGC helped renew the Liye museum through exhibition design and implementation, combining layered interpretation, a bowl-screen theatre and over 30 multimedia interactives to bring Qin-era records to life."
+    },
+    {
+      "route": "/en/cases/brochure-2026-potala-snow-city/",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/brochure-2026-potala-snow-city/",
+      "description": "Potala Palace Snow City Exhibition Renewal, a 2021 project in the museums portfolio. MGC scope: design and construction."
+    },
+    {
+      "route": "/services/",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/services/",
+      "description": "数字展示、数字文博、数字文创与数字运营，连接文化研究、空间设计和数字技术。"
+    },
+    {
+      "route": "/en/services/",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/services/",
+      "description": "Cultural research, exhibition design, digital production and museum software."
+    },
+    {
+      "route": "/culture-ai/",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/culture-ai/",
+      "description": "从里耶秦简出发，体验识别、解读、表达与空间化的文化转化过程。预置概念演示，无实时 AI 接口。"
+    },
+    {
+      "route": "/en/culture-ai/",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/culture-ai/",
+      "description": "Explore the Liye manuscripts through recognition, interpretation, expression and space. A curated concept without a live AI connection."
+    },
+    {
+      "route": "/research/",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/research/",
+      "description": "文物数字化、智慧博物馆与互动系统。查看美创公开研究、项目及证据。"
+    },
+    {
+      "route": "/en/research/",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/research/",
+      "description": "Digital heritage, museum systems and interactive research."
+    },
+    {
+      "route": "/contact/",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/contact/",
+      "description": "与美创数字讨论文化展示、智慧文博、文创开发与合作需求。商务咨询：0731-89728572。"
+    },
+    {
+      "route": "/en/contact/",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/contact/",
+      "description": "Discuss cultural exhibitions, museum technology and collaboration with MGC Digital."
+    },
+    {
+      "route": "/cases/",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/",
+      "description": "美创数字真实文化展示、数字文博与互动体验项目。了解项目内容与美创职责。"
+    },
+    {
+      "route": "/products/",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/products/",
+      "description": "美创数字以文化研究、创意设计与数字技术连接数字展示、数字文博、数字文创、数字运营，提供产品研发、内容制作、系统集成及运营支持。"
+    },
+    {
+      "route": "/",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/",
+      "description": "湖南美创数字科技有限公司，专注文化与科技融合。连接文化研究、空间设计、数字技术与 AI，让文化成为可感知、可参与的体验。"
+    },
+    {
+      "route": "/en/",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/",
+      "description": "MGC Digital connects cultural research, creative design and digital technology to shape exhibitions, museums, cultural products and operations."
+    },
+    {
+      "route": "/cases/gaomiao/",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/gaomiao/",
+      "description": "以空间叙事连接文物、历史与观众，让遗址文化进入今天的体验。"
+    },
+    {
+      "route": "/cases/liye-qin-slips/",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/liye-qin-slips/",
+      "description": "把秦简中的文字与日常，转化为可读、可感、可参与的历史体验。"
+    },
+    {
+      "route": "/cases/potala-snow-city/",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/potala-snow-city/",
+      "description": "在历史建筑中组织文化叙事，让保护、展示与体验形成连贯的空间。"
+    },
+    {
+      "route": "/en/cases/gaomiao/",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/gaomiao/",
+      "description": "Connecting the roots of an archaeological culture with a contemporary museum experience."
+    },
+    {
+      "route": "/en/cases/brochure-2026-liye-qin-slips/",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/brochure-2026-liye-qin-slips/",
+      "description": "MGC helped renew the Liye museum through exhibition design and implementation, combining layered interpretation, a bowl-screen theatre and over 30 multimedia interactives to bring Qin-era records to life."
+    },
+    {
+      "route": "/en/cases/brochure-2026-potala-snow-city/",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/brochure-2026-potala-snow-city/",
+      "description": "Potala Palace Snow City Exhibition Renewal, a 2021 project in the museums portfolio. MGC scope: design and construction."
+    },
+    {
+      "route": "/services/",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/services/",
+      "description": "数字展示、数字文博、数字文创与数字运营，连接文化研究、空间设计和数字技术。"
+    },
+    {
+      "route": "/en/services/",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/services/",
+      "description": "Cultural research, exhibition design, digital production and museum software."
+    },
+    {
+      "route": "/culture-ai/",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/culture-ai/",
+      "description": "从里耶秦简出发，体验识别、解读、表达与空间化的文化转化过程。预置概念演示，无实时 AI 接口。"
+    },
+    {
+      "route": "/en/culture-ai/",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/culture-ai/",
+      "description": "Explore the Liye manuscripts through recognition, interpretation, expression and space. A curated concept without a live AI connection."
+    },
+    {
+      "route": "/research/",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/research/",
+      "description": "文物数字化、智慧博物馆与互动系统。查看美创公开研究、项目及证据。"
+    },
+    {
+      "route": "/en/research/",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/research/",
+      "description": "Digital heritage, museum systems and interactive research."
+    },
+    {
+      "route": "/contact/",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/contact/",
+      "description": "与美创数字讨论文化展示、智慧文博、文创开发与合作需求。商务咨询：0731-89728572。"
+    },
+    {
+      "route": "/en/contact/",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/contact/",
+      "description": "Discuss cultural exhibitions, museum technology and collaboration with MGC Digital."
+    },
+    {
+      "route": "/cases/",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/",
+      "description": "美创数字真实文化展示、数字文博与互动体验项目。了解项目内容与美创职责。"
+    },
+    {
+      "route": "/products/",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/products/",
+      "description": "美创数字以文化研究、创意设计与数字技术连接数字展示、数字文博、数字文创、数字运营，提供产品研发、内容制作、系统集成及运营支持。"
+    },
+    {
+      "route": "/",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/",
+      "description": "湖南美创数字科技有限公司，专注文化与科技融合。连接文化研究、空间设计、数字技术与 AI，让文化成为可感知、可参与的体验。"
+    },
+    {
+      "route": "/en/",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/",
+      "description": "MGC Digital connects cultural research, creative design and digital technology to shape exhibitions, museums, cultural products and operations."
+    },
+    {
+      "route": "/cases/gaomiao/",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/gaomiao/",
+      "description": "以空间叙事连接文物、历史与观众，让遗址文化进入今天的体验。"
+    },
+    {
+      "route": "/cases/liye-qin-slips/",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/liye-qin-slips/",
+      "description": "把秦简中的文字与日常，转化为可读、可感、可参与的历史体验。"
+    },
+    {
+      "route": "/cases/potala-snow-city/",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/potala-snow-city/",
+      "description": "在历史建筑中组织文化叙事，让保护、展示与体验形成连贯的空间。"
+    },
+    {
+      "route": "/en/cases/gaomiao/",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/gaomiao/",
+      "description": "Connecting the roots of an archaeological culture with a contemporary museum experience."
+    },
+    {
+      "route": "/en/cases/brochure-2026-liye-qin-slips/",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/brochure-2026-liye-qin-slips/",
+      "description": "MGC helped renew the Liye museum through exhibition design and implementation, combining layered interpretation, a bowl-screen theatre and over 30 multimedia interactives to bring Qin-era records to life."
+    },
+    {
+      "route": "/en/cases/brochure-2026-potala-snow-city/",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/cases/brochure-2026-potala-snow-city/",
+      "description": "Potala Palace Snow City Exhibition Renewal, a 2021 project in the museums portfolio. MGC scope: design and construction."
+    },
+    {
+      "route": "/services/",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/services/",
+      "description": "数字展示、数字文博、数字文创与数字运营，连接文化研究、空间设计和数字技术。"
+    },
+    {
+      "route": "/en/services/",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/services/",
+      "description": "Cultural research, exhibition design, digital production and museum software."
+    },
+    {
+      "route": "/culture-ai/",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/culture-ai/",
+      "description": "从里耶秦简出发，体验识别、解读、表达与空间化的文化转化过程。预置概念演示，无实时 AI 接口。"
+    },
+    {
+      "route": "/en/culture-ai/",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/culture-ai/",
+      "description": "Explore the Liye manuscripts through recognition, interpretation, expression and space. A curated concept without a live AI connection."
+    },
+    {
+      "route": "/research/",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/research/",
+      "description": "文物数字化、智慧博物馆与互动系统。查看美创公开研究、项目及证据。"
+    },
+    {
+      "route": "/en/research/",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/research/",
+      "description": "Digital heritage, museum systems and interactive research."
+    },
+    {
+      "route": "/contact/",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/contact/",
+      "description": "与美创数字讨论文化展示、智慧文博、文创开发与合作需求。商务咨询：0731-89728572。"
+    },
+    {
+      "route": "/en/contact/",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "h1": 1,
+      "lang": "en",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/en/contact/",
+      "description": "Discuss cultural exhibitions, museum technology and collaboration with MGC Digital."
+    },
+    {
+      "route": "/cases/",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/cases/",
+      "description": "美创数字真实文化展示、数字文博与互动体验项目。了解项目内容与美创职责。"
+    },
+    {
+      "route": "/products/",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "h1": 1,
+      "lang": "zh-CN",
+      "brokenImages": 0,
+      "canonical": "https://jiangjinzhou01-ctrl.github.io/meich/products/",
+      "description": "美创数字以文化研究、创意设计与数字技术连接数字展示、数字文博、数字文创、数字运营，提供产品研发、内容制作、系统集成及运营支持。"
+    }
+  ],
+  "errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "screenshots": [
+    "home-desktop.jpg",
+    "work-desktop.jpg",
+    "gaomiao-desktop.jpg",
+    "liye-qin-slips-desktop.jpg",
+    "potala-snow-city-desktop.jpg",
+    "culture-desktop.jpg",
+    "home-mobile.jpg",
+    "home-english-mobile.jpg",
+    "services-mobile.jpg",
+    "contact-mobile.jpg",
+    "culture-mobile.jpg",
+    "liye-mobile.jpg"
+  ],
+  "browser": "154.0.8037.57",
+  "passed": 5,
+  "failed": 4
+}

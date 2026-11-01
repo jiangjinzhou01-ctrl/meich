@@ -39,6 +39,7 @@ export function SourcePageView({ page }: { page: SourcePage }) {
   const featured: Record<string, string> = {
     "/cases/brochure-2026-liye-qin-slips": "liye-qin-slips",
     "/cases/potala-snow-city": "potala-snow-city",
+    "/cases/brochure-2026-potala-snow-city": "potala-snow-city",
     "/cases/gaomiao": "gaomiao",
   };
   if (en && featured[prefix])

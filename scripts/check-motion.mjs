@@ -7,7 +7,7 @@ const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.MGC_PLAYWRIGHT_MODULE || "playwright");
 const port = process.env.MGC_QA_PORT || "3012";
 const origin = `http://127.0.0.1:${port}`;
-const report = { createdAt: new Date().toISOString(), browser: "Chromium emulation; not physical Android / Safari", tests: [], widths: [320,375,390,430,768,1024,1440,1920], errors: [], screenshots: [] };
+const report = { createdAt: new Date().toISOString(), browser: "Chromium emulation; not physical Android / Safari", tests: [], widths: [320,360,375,390,412,430,768,1024,1440,1920], errors: [], screenshots: [] };
 await fs.mkdir("docs/qa", { recursive: true });
 const server = spawn(process.execPath, ["app/server.js"], {
   cwd: "dist/MGC-Enterprise-Server", env: { ...process.env, PORT: port, HOSTNAME: "127.0.0.1" },
@@ -89,7 +89,7 @@ try {
     assert((await visibleText(page)).every((item) => +item.opacity > .98));
     return { delays, footerVisible: true };
   });
-  await test("八个断点与四类页面无横向溢出", async () => {
+  await test("十个断点与四类页面无横向溢出", async () => {
     const observations = [];
     for (const width of report.widths) {
       await page.setViewportSize({ width, height: width < 768 ? 844 : 1000 });
@@ -132,8 +132,10 @@ try {
       await page.keyboard.press("Escape");
       const start = await page.locator(".mobile-primary a").first().evaluate((el)=>+el.style.getPropertyValue("--menu-exit-opacity"));
       for (let i=0;i<5;i++) {
-        const opacity = await page.locator(".mobile-primary a").first().evaluate((el)=>+getComputedStyle(el).opacity);
-        assert(opacity <= start + .02, "Interrupted menu text must never jump to full opacity"); await pause(16);
+        const sample = await page.locator(".mobile-primary a").first().evaluate((el)=>({ open: el.closest("dialog").open, opacity: +getComputedStyle(el).opacity }));
+        // Closed content has its normal computed opacity again; sample visible exit frames only.
+        if (!sample.open) break;
+        assert(sample.opacity <= start + .02, "Interrupted menu text must never jump to full opacity"); await pause(16);
       }
       const radius = await page.locator(".mobile-menu").evaluate((el)=>({
         exit: parseFloat(el.style.getPropertyValue("--menu-exit-clip").match(/circle\(([^ ]+)/)?.[1] || "0"),

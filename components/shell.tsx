@@ -177,7 +177,7 @@ export function Navbar() {
           <Link
             className="brand"
             href={en ? "/en/" : "/"}
-            aria-label={`${company}，首页`}
+            aria-label={en ? "MGC Digital, home" : `${company}，首页`}
             prefetch={false}
           >
             <BrandMark />
@@ -213,7 +213,7 @@ export function Navbar() {
             <button
               className="icon-button theme-toggle"
               onClick={theme}
-              aria-label={dark ? "切换浅色主题" : "切换深色主题"}
+              aria-label={en ? (dark ? "Switch to light theme" : "Switch to dark theme") : (dark ? "切换浅色主题" : "切换深色主题")}
             >
               {dark ? <Sun size={17} /> : <Moon size={17} />}
             </button>

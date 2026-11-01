@@ -1,0 +1,183 @@
+{
+  "environment": "Local production static export at /meich; gzip server; Linux, Node 24.19.0; Lighthouse 13 simulated throttling; one cold navigation per preset after batching. Not field data or a physical device.",
+  "INP": "Not measured; Lighthouse TBT is not field INP.",
+  "targetStatus": "Mobile LCP remains above the 2.5s goal. Both CLS measurements are 0.",
+  "runs": [
+    {
+      "preset": "mobile",
+      "createdAt": "2026-11-01T10:58:54.755Z",
+      "lighthouseVersion": "13.0.1",
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+      "score": 80.0,
+      "configSettings": {
+        "output": [
+          "json"
+        ],
+        "maxWaitForFcp": 30000,
+        "maxWaitForLoad": 45000,
+        "pauseAfterFcpMs": 1000,
+        "pauseAfterLoadMs": 1000,
+        "networkQuietThresholdMs": 1000,
+        "cpuQuietThresholdMs": 1000,
+        "formFactor": "mobile",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "throttlingMethod": "simulate",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+        "auditMode": false,
+        "gatherMode": false,
+        "clearStorageTypes": [
+          "file_systems",
+          "shader_cache",
+          "service_workers",
+          "cache_storage"
+        ],
+        "disableStorageReset": false,
+        "debugNavigation": false,
+        "channel": "cli",
+        "usePassiveGathering": false,
+        "disableFullPageScreenshot": false,
+        "skipAboutBlank": false,
+        "blankPage": "about:blank",
+        "ignoreStatusCode": false,
+        "locale": "en-US",
+        "blockedUrlPatterns": null,
+        "additionalTraceCategories": null,
+        "extraHeaders": null,
+        "precomputedLanternData": null,
+        "onlyAudits": null,
+        "onlyCategories": [
+          "performance"
+        ],
+        "skipAudits": null
+      },
+      "metrics": {
+        "first-contentful-paint": {
+          "numericValue": 914.2008000000001,
+          "displayValue": "0.9 s"
+        },
+        "largest-contentful-paint": {
+          "numericValue": 3085.3012,
+          "displayValue": "3.1 s"
+        },
+        "speed-index": {
+          "numericValue": 2841.44585932309,
+          "displayValue": "2.8 s"
+        },
+        "total-blocking-time": {
+          "numericValue": 518.3996,
+          "displayValue": "520 ms"
+        },
+        "cumulative-layout-shift": {
+          "numericValue": 0,
+          "displayValue": "0"
+        }
+      },
+      "totalByteWeight": 558227,
+      "warnings": [],
+      "runtimeError": null,
+      "rawSHA256": "06154f02e9744eab5cf3719963ac3fd73d52cf69dd6f97da9e8dc6a06bcc5630"
+    },
+    {
+      "preset": "desktop",
+      "createdAt": "2026-11-01T10:59:11.417Z",
+      "lighthouseVersion": "13.0.1",
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+      "score": 86.0,
+      "configSettings": {
+        "output": [
+          "json"
+        ],
+        "maxWaitForFcp": 30000,
+        "maxWaitForLoad": 45000,
+        "pauseAfterFcpMs": 1000,
+        "pauseAfterLoadMs": 1000,
+        "networkQuietThresholdMs": 1000,
+        "cpuQuietThresholdMs": 1000,
+        "formFactor": "desktop",
+        "throttling": {
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "requestLatencyMs": 0,
+          "downloadThroughputKbps": 0,
+          "uploadThroughputKbps": 0,
+          "cpuSlowdownMultiplier": 1
+        },
+        "throttlingMethod": "simulate",
+        "screenEmulation": {
+          "mobile": false,
+          "width": 1350,
+          "height": 940,
+          "deviceScaleFactor": 1,
+          "disabled": false
+        },
+        "emulatedUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36",
+        "auditMode": false,
+        "gatherMode": false,
+        "clearStorageTypes": [
+          "file_systems",
+          "shader_cache",
+          "service_workers",
+          "cache_storage"
+        ],
+        "disableStorageReset": false,
+        "debugNavigation": false,
+        "channel": "cli",
+        "usePassiveGathering": false,
+        "disableFullPageScreenshot": false,
+        "skipAboutBlank": false,
+        "blankPage": "about:blank",
+        "ignoreStatusCode": false,
+        "locale": "en-US",
+        "blockedUrlPatterns": null,
+        "additionalTraceCategories": null,
+        "extraHeaders": null,
+        "precomputedLanternData": null,
+        "onlyAudits": null,
+        "onlyCategories": [
+          "performance"
+        ],
+        "skipAudits": null
+      },
+      "metrics": {
+        "first-contentful-paint": {
+          "numericValue": 333.50989999999996,
+          "displayValue": "0.3 s"
+        },
+        "largest-contentful-paint": {
+          "numericValue": 789.0198,
+          "displayValue": "0.8 s"
+        },
+        "speed-index": {
+          "numericValue": 1234.9178208174394,
+          "displayValue": "1.2 s"
+        },
+        "total-blocking-time": {
+          "numericValue": 312.4999999999999,
+          "displayValue": "310 ms"
+        },
+        "cumulative-layout-shift": {
+          "numericValue": 0,
+          "displayValue": "0"
+        }
+      },
+      "totalByteWeight": 651756,
+      "warnings": [],
+      "runtimeError": null,
+      "rawSHA256": "0a23f204a0541947ee88c5943e1b388479b1fc50ed1562325a0939fc8d4ff4c0"
+    }
+  ]
+}

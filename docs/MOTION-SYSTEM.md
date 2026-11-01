@@ -74,3 +74,11 @@ npm run check:motion
 原附件的内容工作台仍为浏览器草稿编辑与预览，未实现正式登录、团队数据库、审核发布，本次没有伪装成正式 CMS。联系表单保留需求整理/下载与可配置端点；真实收件需要企业设置 `NEXT_PUBLIC_CONTACT_ENDPOINT`，本次没有向外部收件人发送测试数据。
 
 原企业长片约 97MB 未包含在附件中，部署时需按原说明保留或迁移该媒体文件。
+
+## V3.0 regression additions
+
+V3 continues to use this motion system with no additional runtime framework. CaseNavigation reads actual scroll position and cancels interrupted native smooth scrolling before a new target. Image inspection uses native modal focus management. Culture’s stage controls remain available above its material; all four stages preserve the reading area at each narrow bilingual breakpoint.
+
+`check:motion` now includes 360px and 412px (ten widths including the historical 375px). The interrupted-menu assertion samples opacity only while the dialog remains open: after close, hidden links regain their ordinary computed opacity and are not visible animation frames. The earlier busy-runner false positive is retained in `docs/qa/v3.0-motion-initial.json`; the complete V3 run is `v3.0-motion.json`. Production static acceptance, including touch taps, source dialogs, chapter reversal and no-JS hero, is `npm run check:v3`; see [V3 QA](V3.0-QA.md).
+
+The V3 performance pass also batches reveal geometry reads before class/style writes, caching each group rectangle once per registration. This avoids a forced layout per node during hydration and archive expansion. Observer, restoration, focus recovery, reduced-motion and interaction semantics are retained. The initial Lighthouse report and the measured rerun are retained separately; no improvement percentage or field INP is inferred from a build.

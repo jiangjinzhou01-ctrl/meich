@@ -1,7 +1,9 @@
 "use client";
+import { languagePair } from "@/lib/routes";
 import Link from "next/link";
 import { useId, useState } from "react";
 import { ArrowUpRight, RotateCcw } from "lucide-react";
+import { ImageInspector } from "./image-inspector";
 import { ResponsiveImage } from "./responsive-image";
 const lenses = [
   {
@@ -94,13 +96,73 @@ export function CultureLab({
       data-nav-tone="dark"
       data-scene="Culture × AI"
     >
-      <div className="container installation-title" data-reveal-group>
-        <p data-reveal="content" data-reveal-order="0">
-          Culture × AI
-        </p>
-        <h2 data-reveal="editorial">
-          {en ? "Another way\ninto culture." : "重新理解，\n才能重新表达。"}
-        </h2>
+      {standalone ? (
+        <div className="container installation-standalone-intro">
+          <h2>
+            {en
+              ? "Four stages. One cultural source."
+              : "四个阶段，一份文化资料。"}
+          </h2>
+          <p>
+            {en
+              ? "Choose a stage, compare the reading lenses, then inspect the original record."
+              : "选择阶段、切换阅读视角，再打开原图对照细节。"}
+          </p>
+        </div>
+      ) : (
+        <div className="container installation-title" data-reveal-group>
+          <p data-reveal="content" data-reveal-order="0">
+            Culture × AI
+          </p>
+          <h2 data-reveal="editorial">
+            {en ? "Another way\ninto culture." : "重新理解，\n才能重新表达。"}
+          </h2>
+        </div>
+      )}
+      <div className="installation-controls container">
+        <div
+          className="installation-tabs"
+          role="tablist"
+          aria-label={en ? "Interpretation process" : "文化内容转化过程"}
+        >
+          {stages.map((s, i) => (
+            <button
+              role="tab"
+              key={i}
+              id={id + "-tab-" + i}
+              aria-selected={active === i}
+              aria-controls={id + "-panel"}
+              tabIndex={active === i ? 0 : -1}
+              onClick={() => setActive(i)}
+              onKeyDown={(e) => {
+                if (
+                  ["ArrowRight", "ArrowLeft", "Home", "End"].includes(e.key)
+                ) {
+                  e.preventDefault();
+                  move(
+                    e.key === "Home"
+                      ? 0
+                      : e.key === "End"
+                        ? 3
+                        : (active + (e.key === "ArrowRight" ? 1 : 3)) % 4,
+                  );
+                }
+              }}
+            >
+              {en ? s.en : s.title}
+            </button>
+          ))}
+        </div>
+        <button
+          className="installation-reset"
+          onClick={() => {
+            setDetail(0);
+            move(0);
+          }}
+          aria-label={en ? "Reset interpretation" : "重置演示"}
+        >
+          <RotateCcw size={18} />
+        </button>
       </div>
       <div
         className={"installation-scene installation-" + active}
@@ -137,9 +199,20 @@ export function CultureLab({
           </div>
         ))}
         <div className="installation-shade" />
+        <div className="installation-inspect">
+          <ImageInspector
+            name={s.image}
+            label={
+              en ? "Liye / published project record" : "里耶秦简 / 公开项目资料"
+            }
+            english={en}
+          />
+        </div>
         <div className="installation-plate-label">
           {en ? "PROJECT RECORD / LIYE" : "项目资料 / 里耶秦简"}{" "}
-          <span>0{active + 1} / 04</span>
+          <span>
+            0{active + 1} / 04 · {en ? stages[active].en : stages[active].title}
+          </span>
         </div>
         <div className="container installation-content">
           <div className="installation-object">
@@ -157,6 +230,35 @@ export function CultureLab({
           >
             <h3>{en ? s.enHeading : s.heading}</h3>
             <p>{en ? s.enText : s.text}</p>
+            {active > 1 && (
+              <div className="installation-lenses stage-source-note">
+                <p className="lens-label">
+                  {en ? "Image & interpretation" : "资料与表达的对应"}
+                </p>
+                <p>
+                  {active === 2
+                    ? en
+                      ? "The photograph shows the exhibition setting. The project describes an approach that connects objects, transcription and commentary."
+                      : "图中为真实展厅。项目公开介绍的“三重释义”，连接实物、转写与重点解读。"
+                    : en
+                      ? "The photograph records the actual bowl-screen cinema. It shows how digital film extends interpretation into a shared viewing space."
+                      : "图中为真实碗幕影院。数字影像把展厅中的文化释读延伸为共同观看的空间体验。"}
+                </p>
+                <Link
+                  className="scene-link"
+                  href={
+                    (en
+                      ? languagePair("/cases/liye-qin-slips/").en
+                      : "/cases/liye-qin-slips/") +
+                    "#" +
+                    (active === 2 ? "case-chapter-2" : "case-chapter-3")
+                  }
+                >
+                  {en ? "Read this project chapter" : "阅读对应项目章节"}
+                  <ArrowUpRight size={16} />
+                </Link>
+              </div>
+            )}
             {active <= 1 && (
               <div className="installation-lenses">
                 <p className="lens-label">
@@ -196,51 +298,6 @@ export function CultureLab({
                 : "公开项目资料导览 / 未连接实时 AI"}
             </span>
           </div>
-          <div className="installation-controls">
-            <div
-              className="installation-tabs"
-              role="tablist"
-              aria-label={en ? "Interpretation process" : "文化内容转化过程"}
-            >
-              {stages.map((s, i) => (
-                <button
-                  role="tab"
-                  key={i}
-                  id={id + "-tab-" + i}
-                  aria-selected={active === i}
-                  aria-controls={id + "-panel"}
-                  tabIndex={active === i ? 0 : -1}
-                  onClick={() => setActive(i)}
-                  onKeyDown={(e) => {
-                    if (
-                      ["ArrowRight", "ArrowLeft", "Home", "End"].includes(e.key)
-                    ) {
-                      e.preventDefault();
-                      move(
-                        e.key === "Home"
-                          ? 0
-                          : e.key === "End"
-                            ? 3
-                            : (active + (e.key === "ArrowRight" ? 1 : 3)) % 4,
-                      );
-                    }
-                  }}
-                >
-                  {en ? s.en : s.title}
-                </button>
-              ))}
-            </div>
-            <button
-              className="installation-reset"
-              onClick={() => {
-                setDetail(0);
-                move(0);
-              }}
-              aria-label={en ? "Reset interpretation" : "重置演示"}
-            >
-              <RotateCcw size={18} />
-            </button>
-          </div>
         </div>
       </div>
       <div className="installation-footer container" data-reveal-group>
@@ -252,13 +309,17 @@ export function CultureLab({
         <Link
           href={
             en
-              ? "/en/cases/brochure-2026-liye-qin-slips/"
+              ? languagePair("/cases/liye-qin-slips/").en
               : "/cases/liye-qin-slips/"
           }
           className="scene-link"
           data-reveal="interaction"
         >
           {en ? "Read the project" : "阅读项目"}
+          <ArrowUpRight size={18} />
+        </Link>
+        <Link className="scene-link" href={(en ? "/en" : "") + "/research/"}>
+          {en ? "Research & evidence" : "研究与公开证据"}
           <ArrowUpRight size={18} />
         </Link>
       </div>

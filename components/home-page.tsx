@@ -38,7 +38,7 @@ export function HomePage({ english: en = false }: { english?: boolean }) {
           </Link>
         </div>
         <div className="selected-work-grid">
-          {projects.map((p, i) => (
+          {[projects[2], projects[0], projects[1]].map((p, i) => (
             <ProjectCard key={p.slug} project={p} index={i} english={en} />
           ))}
         </div>
