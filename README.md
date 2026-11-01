@@ -37,3 +37,17 @@ NEXT_PUBLIC_BASE_PATH=/meich npm start
 ## 全站动效升级
 
 本轮实现见 [docs/MOTION-SYSTEM.md](docs/MOTION-SYSTEM.md)，验收见 `docs/qa/motion-regression.json`。原有服务器部署、内容工作台和联系功能保留。
+
+## Experience Refinement V2.5
+
+本次升级与真实验证范围见 [V2.5 审计](docs/V2.5-AUDIT.md) 和 [V2.5 交付与验收](docs/V2.5-DELIVERY.md)。独立开发分支不触发正式 Pages 部署。
+
+生产副本预览（构建时使用 `/meich`）：
+
+```bash
+node scripts/prepare-preview.mjs
+# 在支持 Sites preview 的环境中：
+sites-preview start "$PWD/qa-results/preview"
+```
+
+打开返回地址的 `/qa.html` 可切换十二个页面与十个屏宽。普通本机仍可按前述 `NEXT_PUBLIC_BASE_PATH=/meich npm start` 预览。

@@ -1,0 +1,17 @@
+{
+  "baseline": "ff08836",
+  "version": "2.5.0",
+  "typecheck": "passed",
+  "search": "passed",
+  "staticBuild": "passed",
+  "exportHTML": 570,
+  "brokenInternalLinksOrImages": 0,
+  "serverBuild": "passed",
+  "serverPackage": "passed",
+  "homeFirstLoadKB": 115,
+  "baselineHomeFirstLoadKB": 114,
+  "sharedFirstLoadKB": 103,
+  "lighthouse": "not run",
+  "physicalDevices": "not tested",
+  "motionRunner": "failed at initial setup; browser interactions verified separately"
+}

@@ -23,9 +23,28 @@ export function CaseFilm({
   const source = getSourcePage(
     en ? languagePair("/cases/" + slug + "/").en : p.source,
   );
-  const chapters = en
-    ? ["Context", "Interpretation", "Spatial experience", "Implementation"]
-    : ["文化背景", "内容转化", "空间体验", "项目实施"];
+  const chapters =
+    slug === "liye-qin-slips"
+      ? en
+        ? [
+            "Cultural context",
+            "Viewing challenge",
+            "Interpretation",
+            "Delivery",
+          ]
+        : ["文化背景", "观看的挑战", "释读与设计", "空间与交付"]
+      : slug === "potala-snow-city"
+        ? en
+          ? [
+              "Context & role",
+              "Conservation",
+              "Visitor narrative",
+              "Implementation",
+            ]
+          : ["背景与职责", "保护与设计", "参观叙事", "实施与边界"]
+        : en
+          ? ["Cultural context", "Digital expression", "Delivery scope"]
+          : ["文化背景", "数字表达", "交付边界"];
   return (
     <div className={"case-film climate-" + p.kind}>
       <section
@@ -39,16 +58,40 @@ export function CaseFilm({
           priority
           sizes="100vw"
           className="scene-media"
+          cover
         />
         <div className="scene-shade" />
         <div className="container case-film-heading" data-reveal-group>
-          <Link className="scene-link" href={en ? "/en/cases/" : "/cases/"} data-reveal="content" data-motion-enter>
+          <Link
+            className="scene-link"
+            href={en ? "/en/cases/" : "/cases/"}
+            data-reveal="content"
+            data-motion-enter
+          >
             {en ? "All work" : "全部案例"}
             <ArrowUpRight size={16} />
           </Link>
-          <h1 data-reveal="cinematic" data-motion-enter style={{ "--motion-delay": "90ms" } as React.CSSProperties}>{en ? projectNames[slug] : p.title}</h1>
-          <p data-reveal="content" data-motion-enter style={{ "--motion-delay": "180ms" } as React.CSSProperties}>{en ? projectEnglish[slug].description : p.description}</p>
-          <a className="scene-link" href="#case-context" data-reveal="interaction" data-motion-enter style={{ "--motion-delay": "270ms" } as React.CSSProperties}>
+          <h1
+            data-reveal="cinematic"
+            data-motion-enter
+            style={{ "--motion-delay": "90ms" } as React.CSSProperties}
+          >
+            {en ? projectNames[slug] : p.title}
+          </h1>
+          <p
+            data-reveal="content"
+            data-motion-enter
+            style={{ "--motion-delay": "180ms" } as React.CSSProperties}
+          >
+            {en ? projectEnglish[slug].description : p.description}
+          </p>
+          <a
+            className="scene-link"
+            href="#case-context"
+            data-reveal="interaction"
+            data-motion-enter
+            style={{ "--motion-delay": "270ms" } as React.CSSProperties}
+          >
             {en ? "Read the story" : "进入项目叙事"}
             <ArrowUpRight size={19} />
           </a>
@@ -94,9 +137,15 @@ export function CaseFilm({
           key={i}
         >
           <div className="container case-chapter-copy" data-reveal-group>
-            <span data-reveal="content" data-reveal-order="0">{chapters[i]}</span>
-            <h2 data-reveal="editorial">{en ? projectEnglish[slug].sections[i].title : s.title}</h2>
-            <p data-reveal="content">{en ? projectEnglish[slug].sections[i].text : s.text}</p>
+            <span data-reveal="content" data-reveal-order="0">
+              {chapters[i]}
+            </span>
+            <h2 data-reveal="editorial">
+              {en ? projectEnglish[slug].sections[i].title : s.title}
+            </h2>
+            <p data-reveal="content">
+              {en ? projectEnglish[slug].sections[i].text : s.text}
+            </p>
           </div>
           {slug === "liye-qin-slips" && i === 2 ? (
             <CaseReader english={en} />
@@ -171,7 +220,9 @@ export function CaseFilm({
       >
         <ResponsiveImage name={next.kind} alt={next.imageAlt} sizes="100vw" />
         <div className="container case-next-copy" data-reveal-group>
-          <span data-reveal="content" data-reveal-order="0">{en ? "Next project" : "下一个项目"}</span>
+          <span data-reveal="content" data-reveal-order="0">
+            {en ? "Next project" : "下一个项目"}
+          </span>
           <h2 data-reveal="editorial">
             {en ? projectNames[next.slug] : next.title}
             <ArrowUpRight size={27} />

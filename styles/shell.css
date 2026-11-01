@@ -9,7 +9,7 @@
   border-bottom: 1px solid var(--border);
 }
 .navbar[data-tone="dark"] {
-  background: rgba(16, 16, 16, 0.22);
+  background: var(--nav-media-bg);
   border-color: #ffffff30;
   color: #f6f5f1;
 }
@@ -307,7 +307,7 @@
     display: none;
   }
   .navbar[data-tone="dark"] {
-    background: rgba(16, 16, 16, 0.22);
+    background: var(--nav-media-bg);
     border-color: #ffffff30;
     color: #f6f5f1;
   }
@@ -356,7 +356,7 @@
     width: 137px;
   }
   .navbar[data-tone="dark"] {
-    background: rgba(16, 16, 16, 0.22);
+    background: var(--nav-media-bg);
     border-color: #ffffff30;
     color: #f6f5f1;
   }

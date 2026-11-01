@@ -1,0 +1,29 @@
+name: Validate experience changes
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  production-builds:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run check:search
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_PATH: /meich
+          NEXT_PUBLIC_SITE_URL: https://jiangjinzhou01-ctrl.github.io/meich
+      - run: npm run check:export
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mgc-v2-5-pages-preview
+          path: out/
+      - run: npm run build:server
+      - run: npm run package:server

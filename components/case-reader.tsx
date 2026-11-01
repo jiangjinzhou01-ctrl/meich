@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { ResponsiveImage } from "./responsive-image";
 export function CaseReader({ english: en = false }: { english?: boolean }) {
   const [active, setActive] = useState(0);
+  const id = useId();
   const labels = en
     ? ["Spatial narrative", "Digital film", "Visitor experience"]
     : ["空间叙事", "数字影像", "观看体验"];
@@ -18,7 +19,11 @@ export function CaseReader({ english: en = false }: { english?: boolean }) {
         "空间、光影与动态内容连接观众与秦简故事。",
       ];
   return (
-    <figure className={"case-readable reading-" + active} data-nav-tone="dark" data-scene={en ? "Liye / Spatial experience" : "里耶 / 空间体验"}>
+    <figure
+      className={"case-readable reading-" + active}
+      data-nav-tone="dark"
+      data-scene={en ? "Liye / Spatial experience" : "里耶 / 空间体验"}
+    >
       <div className="case-readable-media">
         <ResponsiveImage
           name="liye-cinema"
@@ -32,6 +37,7 @@ export function CaseReader({ english: en = false }: { english?: boolean }) {
               aria-label={label}
               onClick={() => setActive(i)}
               aria-pressed={active === i}
+              aria-controls={id}
               className={"case-hotspot hotspot-" + i}
             >
               <span>{i + 1}</span>
@@ -41,8 +47,13 @@ export function CaseReader({ english: en = false }: { english?: boolean }) {
         </div>
       </div>
       <figcaption className="container case-reading-caption">
-        <strong>{labels[active]}</strong>
-        <p aria-live="polite">{text[active]}</p>
+        <strong>
+          <span className="reading-count">0{active + 1} / 03</span>{" "}
+          {labels[active]}
+        </strong>
+        <p id={id} aria-live="polite">
+          {text[active]}
+        </p>
       </figcaption>
     </figure>
   );

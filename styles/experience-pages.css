@@ -376,6 +376,7 @@
   background: #c8171e;
   border-color: #c8171e;
 }
+.reading-count { font-family: var(--mono); font-size: 12px; margin-right: 16px; color: var(--media-ink); }
 .case-reading-caption {
   position: absolute;
   bottom: 50px;

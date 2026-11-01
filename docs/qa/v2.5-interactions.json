@@ -1,0 +1,87 @@
+[
+  {
+    "test": "artifact mobile last chapter",
+    "active": 4,
+    "scrollLeft": 1500,
+    "railWidth": 375
+  },
+  {
+    "test": "artifact rapid reversal",
+    "active": 1,
+    "scrollLeft": 375
+  },
+  {
+    "test": "artifact keyboard End",
+    "active": 4
+  },
+  {
+    "test": "culture lens",
+    "detail": 2,
+    "note": "重点解读"
+  },
+  {
+    "test": "culture keyboard End",
+    "stage": "空间化"
+  },
+  {
+    "test": "culture reset",
+    "stage": "识别",
+    "detail": 0
+  },
+  {
+    "test": "theme and menu",
+    "dark": true,
+    "closed": true
+  },
+  {
+    "test": "contact validation",
+    "errors": 5
+  },
+  {
+    "test": "contact preparation",
+    "sent": false
+  },
+  {
+    "test": "copy brief",
+    "feedback": "需求已复制，未因此发送。"
+  },
+  {
+    "test": "download brief",
+    "file": "MGC-collaboration-brief.txt",
+    "eventWait": "timed out; file verified in shared filesystem"
+  },
+  {
+    "test": "search and venue filter",
+    "summary": "博物馆 / 46 项内容\n\n全部46\n案例23\n产品23\n案例 / 数字展示\n长沙博物馆\n\n长沙博物馆，2017年博物馆项目。美创服务范围为多媒体创新设计。\n\n案例 / 数字展示\n中国考古博物馆\n\n中国考古博物馆，2023年博物馆项目。美创服务范围为多媒体设计施工。\n\n案例 / 数字展示\n甘肃简牍博物馆\n\n甘肃简牍博物馆，2023年博物馆项目。美创服务范围为多媒体施工。\n\n案例 / 数字展示\n衡阳铁路博物馆\n\n衡阳铁路博物馆，2019年博物馆项目。美创服务范围为深化设计与施工。\n\n案例 / 数字展示\n湖南省博物馆\n\n湖南省博物馆，2017年博物馆项目。美创服务范围为多媒体创新设计。\n\n案例 / 数字展示\n晋祠博物馆\n\n晋祠博物馆，2024年博物馆项目。美创服务范围为多媒体设计施工。\n\n案例 / 数字展示\n里耶古城（秦简）博物馆\n\n以“大秦迁陵 简读中华”为主题，美创参与里耶古城（秦简）博物馆创意设计与实施制作，通过三重释义、碗幕影院及30余项多媒体互动，将秦简记录转化为可读、可感、可参与的历史体验。\n\n案例 / 数字展示\n陕西历史博物馆秦汉馆\n\n陕西历史博物馆秦汉馆，2023年博物馆项目。美创服务范围为多媒体设计施工。\n\n案例 / 数字展示\n长沙简牍博物馆“大道至简·简牍里的中国精神”主题展\n\n长沙简牍博物馆“大道至简·简牍里的中国精神”主题展，2022年沉浸式数字体验项目。美创服务范围为设计施工。\n\n加载更多"
+  },
+  {
+    "test": "case reading",
+    "caption": "02 / 03 数字影像\n\n文化释读从展厅文字延伸到数字影像。"
+  },
+  {
+    "test": "case archive",
+    "open": ""
+  },
+  {
+    "test": "culture mobile stage geometry",
+    "width": 390,
+    "height": 964,
+    "allFourStagesEqual": true
+  },
+  {
+    "test": "film modal",
+    "autoplay": false,
+    "controls": true,
+    "closed": true,
+    "externalPlayback": "not verified"
+  },
+  {
+    "test": "English contact",
+    "language": "en",
+    "formLocalMode": true
+  },
+  {
+    "test": "empty search",
+    "result": "no matches with reset action"
+  }
+]

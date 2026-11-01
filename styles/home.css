@@ -12,7 +12,7 @@
   min-height: 100svh;
   margin-top: calc(-1 * var(--nav-height));
   display: flex;
-  align-items: center;
+  align-items: flex-end;
 }
 .scene-media {
   position: absolute;
@@ -42,12 +42,12 @@
     linear-gradient(0deg, rgba(16, 16, 16, 0.38), transparent 30%);
 }
 .hero-opening {
-  padding-block: 90px;
+  padding-block: clamp(160px, 20svh, 240px) 150px;
   position: relative;
 }
 .hero-opening h1 {
-  font-size: clamp(44px, 5.3vw, 94px);
-  line-height: 1.26;
+  font-size: clamp(44px, 6.1vw, 106px);
+  line-height: 1.18;
   letter-spacing: -0.025em;
   font-weight: 450;
 }
@@ -55,10 +55,25 @@
   display: block;
   white-space: nowrap;
 }
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: #e2dcd0;
+  margin-bottom: 30px;
+}
+.hero-eyebrow > span {
+  color: #ff858a;
+}
+.hero-action {
+  min-width: 190px;
+}
 .hero-signature {
-  font-size: clamp(20px, 2vw, 32px);
-  letter-spacing: -0.045em;
-  margin-top: 28px;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  margin-top: 24px;
   color: var(--media-ink);
 }
 .hero-intro {
@@ -116,7 +131,7 @@
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  padding-block: clamp(100px, 12vw, 210px);
+  padding-block: clamp(70px, 8vw, 130px);
   background: var(--bg);
 }
 .archive-underlay {
@@ -141,7 +156,7 @@
   margin-bottom: 28px;
 }
 .quiet-manifesto h2 {
-  font-size: clamp(36px, 4.4vw, 72px);
+  font-size: clamp(32px, 3.8vw, 62px);
   line-height: 1.45;
   white-space: pre-line;
   max-width: 18ch;
@@ -149,8 +164,18 @@
 .manifesto-body {
   max-width: 35ch;
   font-size: 17px;
-  margin: 38px 0 0 32%;
+  margin: 30px 0 0 32%;
   line-height: 2;
+}
+.quiet-manifesto .film-trigger {
+  margin-left: 32%;
+}
+.quiet-manifesto .film-trigger small {
+  color: var(--muted);
+}
+.quiet-manifesto .film-trigger:hover .play-circle {
+  background: var(--ink);
+  color: var(--bg);
 }
 .reel-scene {
   min-height: 76svh;
@@ -283,6 +308,47 @@
   height: 100%;
   object-fit: cover;
 }
+/* Distinct editorial plates use existing records; no fabricated acquisition footage. */
+.artifact-plate-0 img {
+  object-fit: contain;
+  background: #ddd1b8;
+}
+.artifact-plate-1 {
+  background: #eeece6;
+  padding: 9%;
+}
+.artifact-plate-1 picture {
+  display: block;
+  border: 1px solid #b7ae9b;
+}
+.artifact-plate-1 img {
+  object-fit: contain;
+}
+.artifact-plate-2 img {
+  object-position: 32% center;
+}
+.artifact-plate-3 img {
+  object-position: 70% center;
+}
+.artifact-record {
+  position: absolute;
+  top: 26px;
+  left: var(--gutter);
+  right: var(--gutter);
+  font-size: 12px;
+  color: #242421;
+  background: #f6f5f1;
+  padding: 9px 12px;
+  width: fit-content;
+  max-width: calc(100% - 2 * var(--gutter));
+}
+.artifact-source {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.8;
+  margin-top: 20px;
+}
 .artifact-stage-label {
   position: absolute;
   left: var(--gutter);
@@ -340,6 +406,12 @@
 .work-introduction {
   padding-block: var(--section-space) 48px;
 }
+.work-introduction .section-label {
+  color: var(--accent-ink);
+  font-size: 12px;
+  margin-bottom: 24px;
+  letter-spacing: 0.04em;
+}
 .work-introduction h2 {
   margin-bottom: 20px;
 }
@@ -374,8 +446,13 @@
   object-fit: cover;
   transition: transform 1s var(--ease);
 }
-.project-card:hover .project-visual img {
-  transform: scale(1.035);
+.project-card:focus-visible .project-visual img {
+  transform: scale(1.02);
+}
+@media (hover: hover) and (pointer: fine) {
+  .project-card:hover .project-visual img {
+    transform: scale(1.025);
+  }
 }
 .project-scrim {
   position: absolute;
@@ -578,6 +655,63 @@
 .cta-inner .button {
   margin-bottom: 12px;
 }
+@media (min-width: 768px) {
+  .artifact-mobile-index {
+    display: flex;
+    gap: 32px;
+    margin: 0 var(--gutter) 30px;
+  }
+  .artifact-mobile-index a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 44px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+  }
+  .artifact-mobile-index a > span {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .artifact-mobile-index a[aria-current="step"] {
+    border-color: var(--accent);
+    color: var(--accent-ink);
+  }
+}
+@media (min-width: 768px) and (prefers-reduced-motion: reduce) {
+  .artifact-body {
+    display: block;
+  }
+  .artifact-stage {
+    display: none;
+  }
+  .artifact-steps {
+    padding-inline: var(--gutter);
+  }
+  .artifact-steps article {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 30px 0;
+    border: 0;
+    min-height: 360px;
+  }
+  .artifact-mobile-media {
+    display: block;
+    height: 330px;
+    overflow: hidden;
+  }
+  .artifact-mobile-media picture,
+  .artifact-mobile-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .artifact-copy {
+    align-self: center;
+  }
+}
 @media (max-width: 1023px) {
   .artifact-body {
     grid-template-columns: 55% 45%;
@@ -623,7 +757,7 @@
     );
   }
   .hero-opening {
-    padding: 120px 0 125px;
+    padding: 145px 0 118px;
   }
   .hero-opening h1 {
     font-size: clamp(35px, 9.6vw, 60px);
@@ -632,9 +766,15 @@
   html[lang="en"] .hero-opening h1 {
     font-size: clamp(30px, 7.8vw, 60px);
   }
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.025em;
+    gap: 10px;
+    margin-bottom: 26px;
+  }
   .hero-signature {
-    margin-top: 20px;
-    font-size: 25px;
+    margin-top: 18px;
+    font-size: 13px;
   }
   .hero-intro {
     margin-top: 16px;
@@ -659,7 +799,10 @@
     padding-block: 85px;
   }
   .quiet-manifesto h2 {
-    font-size: 34px;
+    font-size: clamp(28px, 7.4vw, 34px);
+  }
+  .quiet-manifesto .film-trigger {
+    margin-left: 0;
   }
   .manifesto-body {
     margin: 35px 0 0;
@@ -766,7 +909,12 @@
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, transparent 42%, color-mix(in srgb, var(--bg) 30%, transparent) 65%, var(--bg) 100%);
+    background: linear-gradient(
+      180deg,
+      transparent 42%,
+      color-mix(in srgb, var(--bg) 30%, transparent) 65%,
+      var(--bg) 100%
+    );
   }
   .artifact-copy {
     padding: clamp(228px, 66vw, 285px) var(--gutter) 26px;
@@ -774,8 +922,6 @@
   .artifact-total {
     display: inline;
   }
-
-
 
   .artifact-steps h3 {
     font-size: 30px;
@@ -811,7 +957,7 @@
   }
   .project-card,
   .selected-project-0 {
-    min-height: 70svh;
+    min-height: max(560px, 72svh);
   }
   .project-film-copy {
     left: 20px;
@@ -821,7 +967,7 @@
   .project-film-copy h3,
   .selected-project-1 .project-film-copy h3,
   .selected-project-2 .project-film-copy h3 {
-    font-size: 30px;
+    font-size: clamp(25px, 7vw, 32px);
     gap: 15px;
   }
   .project-film-copy h3 svg {
@@ -929,7 +1075,8 @@
   .artifact-layer {
     transition: none;
   }
-  .project-card:hover .project-visual img {
+  .project-card:hover .project-visual img,
+  .project-card:focus-visible .project-visual img {
     transform: none;
   }
 }
