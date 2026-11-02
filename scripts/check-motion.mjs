@@ -162,6 +162,7 @@ try {
     assert.equal(await page.locator(".service-index-panel").evaluate((el)=>getComputedStyle(el).filter), "none");
     await visit(page, "/culture-ai/");
     for (const n of [1,3,2,0,2]) { await page.locator(".installation-tabs [role=tab]").nth(n).click(); await pause(35); }
+    await page.waitForFunction(() => document.querySelectorAll(".installation-tabs [role=tab]")[2].getAttribute("aria-selected") === "true" && !document.querySelector(".installation-visual-rail").classList.contains("is-dragging"));
     assert.equal(await page.locator(".installation-reading").count(),1);
     assert.equal(await page.locator(".installation-tabs [role=tab]").nth(2).getAttribute("aria-selected"), "true");
     return { servicePanelCount: 1, culturePanelCount: 1 };

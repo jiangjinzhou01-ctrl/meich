@@ -51,4 +51,5 @@ jobs:
             docs/qa/v3.0-motion.json
             docs/qa/swipe-regression.json
             docs/qa/v3.0/
+            docs/qa/culture-touch/
             docs/qa/motion-*.png

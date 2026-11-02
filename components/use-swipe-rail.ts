@@ -98,6 +98,11 @@ export function useSwipeRail(railRef: RefObject<HTMLDivElement | null>, count: n
     const up = (event: PointerEvent) => {
       if (event.pointerId === gesture?.pointer) finish(true, event.timeStamp);
     };
+    // Pointer capture alone does not cancel the native touch fling recognizer in Chromium.
+    // Cancel only a claimed horizontal gesture, or its leftover fling may consume the next tap.
+    const touchMove = (event: TouchEvent) => {
+      if (gesture?.horizontal && event.cancelable) event.preventDefault();
+    };
     const abort = () => finish(false);
     const lost = (event: PointerEvent) => {
       if (event.target === rail && event.pointerId === gesture?.pointer) abort();
@@ -116,6 +121,7 @@ export function useSwipeRail(railRef: RefObject<HTMLDivElement | null>, count: n
     rail.addEventListener("pointerdown", down);
     rail.addEventListener("pointermove", move, { passive: false });
     rail.addEventListener("pointerup", up);
+    rail.addEventListener("touchmove", touchMove, { passive: false });
     rail.addEventListener("pointercancel", abort);
     rail.addEventListener("lostpointercapture", lost);
     window.addEventListener("resize", resize);
@@ -126,6 +132,7 @@ export function useSwipeRail(railRef: RefObject<HTMLDivElement | null>, count: n
       rail.removeEventListener("pointerdown", down);
       rail.removeEventListener("pointermove", move);
       rail.removeEventListener("pointerup", up);
+      rail.removeEventListener("touchmove", touchMove);
       rail.removeEventListener("pointercancel", abort);
       rail.removeEventListener("lostpointercapture", lost);
       window.removeEventListener("resize", resize);

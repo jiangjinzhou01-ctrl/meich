@@ -1,10 +1,11 @@
 "use client";
 import { languagePair } from "@/lib/routes";
 import Link from "next/link";
-import { useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { ArrowUpRight, RotateCcw } from "lucide-react";
 import { ImageInspector } from "./image-inspector";
 import { ResponsiveImage } from "./responsive-image";
+import { useSwipeRail } from "./use-swipe-rail";
 const lenses = [
   {
     title: "简牍实物",
@@ -81,11 +82,45 @@ export function CultureLab({
 }) {
   const [active, setActive] = useState(0);
   const [detail, setDetail] = useState(0);
+  const images = useRef<HTMLDivElement>(null);
+  const currentStage = useRef(active);
+  currentStage.current = active;
+  const scrollToStage = useSwipeRail(images, stages.length);
   const id = useId(),
     s = stages[active];
+  useEffect(() => {
+    const rail = images.current;
+    if (!rail) return;
+    const mobile = matchMedia("(max-width: 767px)");
+    let frame = 0;
+    const sync = () => {
+      frame = 0;
+      if (mobile.matches && rail.clientWidth) {
+        setActive(Math.max(0, Math.min(stages.length - 1, Math.round(rail.scrollLeft / rail.clientWidth))));
+      }
+    };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(sync); };
+    const resize = () => {
+      if (mobile.matches) rail.scrollTo({ left: currentStage.current * rail.clientWidth, behavior: "instant" });
+      schedule();
+    };
+    rail.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", resize);
+    mobile.addEventListener("change", resize);
+    return () => {
+      cancelAnimationFrame(frame);
+      rail.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", resize);
+      mobile.removeEventListener("change", resize);
+    };
+  }, []);
+  function selectStage(i: number) {
+    if (matchMedia("(max-width: 767px)").matches) scrollToStage(i);
+    else setActive(i);
+  }
   function move(i: number) {
-    setActive(i);
-    document.getElementById(id + "-tab-" + i)?.focus();
+    selectStage(i);
+    document.getElementById(id + "-tab-" + i)?.focus({ preventScroll: true });
   }
   return (
     <section
@@ -95,6 +130,7 @@ export function CultureLab({
       id="culture-lab"
       data-nav-tone="dark"
       data-scene="Culture × AI"
+      data-active={active}
     >
       {standalone ? (
         <div className="container installation-standalone-intro">
@@ -133,7 +169,7 @@ export function CultureLab({
               aria-selected={active === i}
               aria-controls={id + "-panel"}
               tabIndex={active === i ? 0 : -1}
-              onClick={() => setActive(i)}
+              onClick={() => selectStage(i)}
               onKeyDown={(e) => {
                 if (
                   ["ArrowRight", "ArrowLeft", "Home", "End"].includes(e.key)
@@ -144,7 +180,7 @@ export function CultureLab({
                       ? 0
                       : e.key === "End"
                         ? 3
-                        : (active + (e.key === "ArrowRight" ? 1 : 3)) % 4,
+                        : (i + (e.key === "ArrowRight" ? 1 : 3)) % 4,
                   );
                 }
               }}
@@ -164,6 +200,10 @@ export function CultureLab({
           <RotateCcw size={18} />
         </button>
       </div>
+      <p className="installation-swipe-hint container">
+        {en ? "Swipe the image to explore the stages" : "左右滑动图片，探索四个阶段"}
+        <span aria-hidden="true">↔</span>
+      </p>
       <div
         className={"installation-scene installation-" + active}
         data-detail={detail}
@@ -173,31 +213,39 @@ export function CultureLab({
           } as React.CSSProperties
         }
       >
-        {stages.map((s, i) => (
-          <div
-            key={i}
-            className={"installation-media " + (active === i ? "active" : "")}
-            aria-hidden={active !== i}
-          >
-            <ResponsiveImage
-              name={s.image}
-              alt={
-                i <= 1
-                  ? en
-                    ? "Published Liye manuscript interpretation layout"
-                    : "里耶秦简公开释读版面"
-                  : i === 2
+        <div
+          className="installation-visual-rail"
+          ref={images}
+          role="group"
+          aria-label={en ? "Stage images; swipe left or right" : "阶段图片，可左右滑动切换"}
+        >
+          {stages.map((s, i) => (
+            <div
+              key={i}
+              className={"installation-media " + (active === i ? "active" : "")}
+              data-stage={i}
+              aria-hidden={active !== i}
+            >
+              <ResponsiveImage
+                name={s.image}
+                alt={
+                  i <= 1
                     ? en
-                      ? "Liye exhibition design, actual project"
-                      : "里耶博物馆真实展陈设计"
-                    : en
-                      ? "Liye immersive cinema, actual project"
-                      : "里耶博物馆真实碗幕影院"
-              }
-              sizes="100vw"
-            />
-          </div>
-        ))}
+                      ? "Published Liye manuscript interpretation layout"
+                      : "里耶秦简公开释读版面"
+                    : i === 2
+                      ? en
+                        ? "Liye exhibition design, actual project"
+                        : "里耶博物馆真实展陈设计"
+                      : en
+                        ? "Liye immersive cinema, actual project"
+                        : "里耶博物馆真实碗幕影院"
+                }
+                sizes="100vw"
+              />
+            </div>
+          ))}
+        </div>
         <div className="installation-shade" />
         <div className="installation-inspect">
           <ImageInspector

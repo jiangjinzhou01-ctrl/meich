@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import { createRequire } from "node:module";
 import { spawn } from "node:child_process";
+import { checkCultureSwipes } from "./check-culture-swipe.mjs";
 const { chromium } = createRequire(import.meta.url)(process.env.MGC_PLAYWRIGHT_MODULE || "playwright");
 const port = process.env.MGC_SWIPE_QA_PORT || "3032";
 const origin = `http://127.0.0.1:${port}/meich/`;
@@ -72,10 +73,13 @@ try {
   async function drag(dx, dy, duration, points = 6, sampleRelease = false) {
     const box = await rail.boundingBox();
     const x = dx < 0 ? box.width - 28 : 28, y = box.y + 150;
-    await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y, id: 1 }] });
+    // Explicit input times preserve the intended finger speed despite CDP round-trip latency.
+    const started = Date.now() / 1000;
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", timestamp: started, touchPoints: [{ x, y, id: 1 }] });
+    const startIndex = await rail.evaluate(el => Math.round(el.scrollLeft / el.clientWidth));
     for (let n = 1; n <= points; n++) {
       await pause(duration / points);
-      await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: x + dx * n / points, y: y + dy * n / points, id: 1 }] });
+      await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", timestamp: started + duration * n / points / 1000, touchPoints: [{ x: x + dx * n / points, y: y + dy * n / points, id: 1 }] });
     }
     if (sampleRelease) await page.evaluate(() => {
       const trace = { running: true, start: document.querySelector(".artifact-steps").scrollLeft, positions: [] };
@@ -86,7 +90,8 @@ try {
       };
       requestAnimationFrame(frame);
     });
-    await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", timestamp: started + duration / 1000, touchPoints: [] });
+    return startIndex;
   }
   for (const width of [360, 390, 412, 430]) {
     await page.setViewportSize({ width, height: 844 });
@@ -139,8 +144,7 @@ try {
     await page.emulateMedia({ reducedMotion: "no-preference" });
     await reset(2); await drag(-75, 0, 100);
     // Interrupt a transition with a new touch; it must not inherit the old fling.
-    const start = await rail.evaluate(el => Math.round(el.scrollLeft / el.clientWidth));
-    await drag(80, 0, 120); await aligned(Math.max(0, start - 1));
+    const start = await drag(80, 0, 120); await aligned(Math.max(0, start - 1));
     return { reducedMotion: true, interruptedFrom: start, settledAt: Math.max(0, start - 1) };
   });
   await test("No-JavaScript native pan fallback", async () => {
@@ -150,6 +154,8 @@ try {
     assert.equal(state.controlled, false); assert.equal(state.touchAction, "auto"); assert.equal(state.stop, "always");
     await fallback.close(); return state;
   });
+  await context.close();
+  await checkCultureSwipes({ browser, origin, test, report });
   assert.deepEqual(report.errors, []);
 } catch (error) { report.tests.push({ name: "Runtime", result: "failed", error: error.stack }); }
 finally {
