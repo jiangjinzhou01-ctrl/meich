@@ -1,7 +1,20 @@
 {
-  "createdAt": "2026-11-02T00:19:46.863Z",
+  "createdAt": "2026-11-02T03:59:30.127Z",
   "environment": "Chromium CDP touch input, emulated phones; not physical Android/iOS",
   "tests": [
+    {
+      "name": "Release velocity continuity, refresh-rate independence and soft edges",
+      "result": "passed",
+      "evidence": {
+        "continuousRelease": true,
+        "simulatedRefreshRates": [
+          60,
+          120
+        ],
+        "softEdgeLimit": 80,
+        "staleReleaseVelocity": 0
+      }
+    },
     {
       "name": "360px: short/slow/fast/long gestures, reversal and edges",
       "result": "passed",
@@ -23,9 +36,9 @@
           "release": {
             "from": 63,
             "minimum": 75,
-            "frames": 17
+            "frames": 37
           },
-          "actual": 0.9972222222222222
+          "actual": 1
         },
         {
           "name": "light quick flick",
@@ -41,7 +54,7 @@
           "dx": -305,
           "duration": 60,
           "target": 1,
-          "actual": 0.9972222222222222
+          "actual": 1
         },
         {
           "name": "reverse short drag",
@@ -101,9 +114,9 @@
           "release": {
             "from": 63,
             "minimum": 75,
-            "frames": 18
+            "frames": 37
           },
-          "actual": 0.9974358974358974
+          "actual": 1
         },
         {
           "name": "light quick flick",
@@ -119,7 +132,7 @@
           "dx": -335,
           "duration": 60,
           "target": 1,
-          "actual": 0.9974358974358974
+          "actual": 1
         },
         {
           "name": "reverse short drag",
@@ -127,7 +140,7 @@
           "dx": 75,
           "duration": 240,
           "target": 2,
-          "actual": 2.0025641025641026
+          "actual": 2
         },
         {
           "name": "first edge",
@@ -179,9 +192,9 @@
           "release": {
             "from": 63,
             "minimum": 75,
-            "frames": 19
+            "frames": 37
           },
-          "actual": 0.9975728155339806
+          "actual": 1
         },
         {
           "name": "light quick flick",
@@ -197,7 +210,7 @@
           "dx": -357,
           "duration": 60,
           "target": 1,
-          "actual": 0.9975728155339806
+          "actual": 1
         },
         {
           "name": "reverse short drag",
@@ -257,9 +270,9 @@
           "release": {
             "from": 63,
             "minimum": 75,
-            "frames": 19
+            "frames": 38
           },
-          "actual": 0.9976744186046511
+          "actual": 1
         },
         {
           "name": "light quick flick",
@@ -267,7 +280,7 @@
           "dx": -48,
           "duration": 30,
           "target": 1,
-          "actual": 0.9976744186046511
+          "actual": 1
         },
         {
           "name": "strong flick stops at next",
@@ -275,7 +288,7 @@
           "dx": -375,
           "duration": 60,
           "target": 1,
-          "actual": 0.9976744186046511
+          "actual": 1
         },
         {
           "name": "reverse short drag",
@@ -283,7 +296,7 @@
           "dx": 75,
           "duration": 240,
           "target": 2,
-          "actual": 2.0023255813953487
+          "actual": 2
         },
         {
           "name": "first edge",
@@ -335,6 +348,6 @@
   ],
   "errors": [],
   "browser": "154.0.8037.57",
-  "passed": 10,
+  "passed": 11,
   "failed": 0
 }

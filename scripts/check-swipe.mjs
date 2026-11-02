@@ -22,6 +22,30 @@ try {
     server.stdout.on("data", data => { if (data.toString().includes("Preview:")) { clearTimeout(timer); resolve(); } });
     server.once("error", reject);
   });
+  await test("Release velocity continuity, refresh-rate independence and soft edges", async () => {
+    const ts = createRequire(import.meta.url)("typescript");
+    const source = await fs.readFile("lib/swipe-physics.ts", "utf8");
+    const js = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ES2022 } }).outputText;
+    const { swipeSpring, resistedPosition, sampledVelocity } = await import("data:text/javascript;base64," + Buffer.from(js).toString("base64"));
+    for (const velocity of [-8000, -400, 0, 350, 1800, 8000]) {
+      const initial = swipeSpring(75, velocity, 390, 0);
+      assert.equal(initial.position, 75); assert.equal(initial.velocity, velocity);
+      const dt = 0.000001;
+      assert(Math.abs((swipeSpring(75, velocity, 390, dt).position - 75) / dt - velocity) < 5);
+      for (let n = 1; n <= 60; n++) {
+        const a = swipeSpring(75, velocity, 390, n / 60);
+        const b = swipeSpring(75, velocity, 390, (n * 2) / 120);
+        assert(Math.abs(a.position - b.position) < 0.00001);
+      }
+      assert(Math.abs(swipeSpring(75, velocity, 390, 1.5).position - 390) < .01);
+    }
+    assert(Math.abs(resistedPosition(-.001, 0, 390) / -.001 - 1) < .001);
+    assert(resistedPosition(-10000, 0, 390) > -80);
+    assert(resistedPosition(10000, 0, 390) < 470);
+    assert.equal(sampledVelocity([{position:0,time:0},{position:10,time:10},{position:20,time:20}],20),1000);
+    assert.equal(sampledVelocity([{position:0,time:0},{position:10,time:10}],200),0);
+    return { continuousRelease: true, simulatedRefreshRates: [60,120], softEdgeLimit: 80, staleReleaseVelocity: 0 };
+  });
   browser = await chromium.launch({ headless: true, executablePath: process.env.MGC_CHROMIUM_PATH || undefined,
     args: process.env.MGC_CHROMIUM_ARGS ? JSON.parse(process.env.MGC_CHROMIUM_ARGS) : [] });
   report.browser = browser.version();
@@ -34,7 +58,7 @@ try {
   async function aligned(index) {
     await page.waitForFunction(index => {
       const rail = document.querySelector(".artifact-steps");
-      return Math.abs(rail.scrollLeft - index * rail.clientWidth) < 2 &&
+      return !rail.classList.contains("is-dragging") && Math.abs(rail.scrollLeft - index * rail.clientWidth) < 2 &&
         Number(document.querySelector(".artifact-journey").dataset.active) === index;
     }, index, { timeout: 5000 });
   }
