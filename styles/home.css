@@ -917,6 +917,7 @@
     border: 0;
     padding: 0;
     scroll-snap-align: start;
+    scroll-snap-stop: always;
     justify-content: flex-start;
     isolation: isolate;
     overflow: hidden;
@@ -1213,5 +1214,17 @@
   }
   .hero-photograph .scene-media img {
     object-position: 32% 48%;
+  }
+}
+
+@media (max-width: 767px) {
+  .artifact-steps.has-swipe-control {
+    touch-action: pan-y pinch-zoom;
+  }
+  .artifact-steps.is-dragging {
+    scroll-snap-type: none;
+  }
+  .artifact-steps.is-dragging > article {
+    user-select: none;
   }
 }
