@@ -26,3 +26,19 @@ MGC_PLAYWRIGHT_MODULE=/tmp/mgc-qa/node_modules/playwright npm run check:swipe
 ```
 
 The script starts its own static preview; no dev server is required. Existing Chromium may be selected with `MGC_CHROMIUM_PATH`. Publishing follows the existing PR → main → Pages workflow, with no forced pushes or bypassed checks.
+
+## Culture × AI: connect the actual image surface
+
+The user's screenshot identified `CultureLab`, a different surface from the ArtifactJourney rail corrected above. CultureLab only had click/keyboard stage selection. Earlier ArtifactJourney tests could not establish that CultureLab supported swiping.
+
+The mobile CultureLab images now form a horizontal gallery using the same `useSwipeRail` controller and physics. Fingers drag the actual image; each gesture settles at the current or adjacent stage. The stage indicator, reading panel and source-image link follow actual gallery position. Tabs/reset/keyboard navigate that same gallery. Rotation preserves the current stage. Desktop retains its existing image composition and crossfades. Each interpretation plate keeps its own crop while moving between stages, so neighboring photographs do not change scale halfway through a drag.
+
+The reading layout's transparent space and photographic labels allow pointer events through to the image. Reading controls and the original-image dialog keep their own input handling; vertical page scrolling and pinch zoom remain native. A bilingual mobile hint identifies the swipe surface. No new runtime dependency or media asset was introduced.
+
+A fast horizontal gesture also exposed a shared-controller defect: pointer capture and `pointermove.preventDefault()` alone did not cancel Chromium's native touch fling recognizer. The subsequent tap reached the button as pointer/touch events but produced no click. A non-passive `touchmove` listener now cancels the native behavior only after the controller has claimed a horizontal gesture. Vertical and multi-touch gestures remain available to the browser. The regression deliberately taps a stage immediately after a quick flick to verify that the click is not swallowed.
+
+`scripts/check-culture-swipe.mjs` is included in `npm run check:swipe`: it tests the Chinese homepage and standalone Culture × AI page at 320/360/390/412/430px, plus both English entries at 390px. It checks movement **before touch release**, all four stages, reverse gestures, small nudges, fast/strong flicks, both edges, vertical page scrolling, lenses, original-image access, reset, keyboard selection, interrupted transitions, Reduced Motion and desktop/mobile rotation. Results remain in `docs/qa/swipe-regression.json`; the 390px screenshot is `docs/qa/culture-touch/mobile.png`. The existing V3/motion suites wait for the real selected stage after animated navigation rather than assuming synchronous switching. These are browser-emulation checks; the user's Android browser, physical phones and Safari remain unverified.
+
+The input harness supplies explicit CDP event timestamps for the intended gesture speed, so transport latency does not accidentally turn a quick flick into a slow drag. After testing vertical pan it waits for actual page scrolling to stop before tapping controls; browsers may consume a tap to stop ongoing native momentum. Assertions still require actual image displacement, correct final stage and completed settling. Rapid keyboard navigation advances from the focused tab while a prior transition is still running.
+
+Local verification after the correction: typecheck, production Pages build, export check (570 pages, zero broken links/images), and all 24 swipe regression groups passed. Screenshot and JSON evidence are retained at the paths above. Full V3, standalone server packaging and motion checks run in PR CI.

@@ -3,6 +3,12 @@
   color: var(--media-ink);
   padding-top: var(--section-space);
 }
+.installation-visual-rail {
+  display: contents;
+}
+.installation-swipe-hint {
+  display: none;
+}
 .installation-title {
   padding-bottom: 50px;
 }
@@ -40,8 +46,8 @@
   height: 100%;
   object-fit: cover;
 }
-.installation-0 .installation-media img,
-.installation-1 .installation-media img {
+.installation-media[data-stage="0"] img,
+.installation-media[data-stage="1"] img {
   object-fit: cover;
   object-position: var(--detail-position) center;
   background: #ddd1b8;
@@ -247,8 +253,8 @@
   .installation-media img {
     object-position: 65% top;
   }
-  .installation-0 .installation-media img,
-  .installation-1 .installation-media img {
+  .installation-media[data-stage="0"] img,
+  .installation-media[data-stage="1"] img {
     object-fit: cover;
     object-position: var(--detail-position) center;
     height: 100%;
@@ -318,8 +324,8 @@
   margin-top: 24px;
   font-size: 13px;
 }
-.installation-0 .installation-media img,
-.installation-1 .installation-media img {
+.installation-media[data-stage="0"] img,
+.installation-media[data-stage="1"] img {
   transform: scale(1.3);
   transform-origin: var(--detail-position) center;
   transition:
@@ -366,14 +372,14 @@
   .installation-reading .lens-explanation {
     min-height: 8em;
   }
-  .installation-0 .installation-media img,
-  .installation-1 .installation-media img {
+  .installation-media[data-stage="0"] img,
+  .installation-media[data-stage="1"] img {
     transform: scale(1.55);
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .installation-0 .installation-media img,
-  .installation-1 .installation-media img {
+  .installation-media[data-stage="0"] img,
+  .installation-media[data-stage="1"] img {
     transition: none;
   }
 }
@@ -426,5 +432,58 @@
   }
   html[lang="en"] .installation-reading {
     min-height: 510px;
+  }
+}
+
+/* The image itself is the touch surface; empty reading-layout space must not cover it. */
+@media (max-width: 767px) {
+  .installation-swipe-hint {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 14px;
+    color: #c9c5bd;
+    font-size: 11px;
+  }
+  .installation-visual-rail {
+    display: flex;
+    position: absolute;
+    inset: 0 0 auto;
+    height: 330px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+  .installation-visual-rail::-webkit-scrollbar {
+    display: none;
+  }
+  .installation-visual-rail .installation-media {
+    position: relative;
+    inset: auto;
+    z-index: auto;
+    flex: 0 0 100%;
+    min-width: 0;
+    opacity: 1;
+    transition: none;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    transform: translate3d(var(--swipe-edge, 0px), 0, 0);
+  }
+  .installation-visual-rail.has-swipe-control {
+    touch-action: pan-y pinch-zoom;
+  }
+  .installation-visual-rail.is-dragging {
+    scroll-snap-type: none;
+    user-select: none;
+  }
+  .installation-content,
+  .installation-shade,
+  .installation-plate-label {
+    pointer-events: none;
+  }
+  .installation-object,
+  .installation-reading {
+    pointer-events: auto;
   }
 }

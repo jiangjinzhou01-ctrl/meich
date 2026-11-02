@@ -274,9 +274,11 @@ try {
         await page.setViewportSize({ width, height: 1000 });
         await visit(page, route);
         const stages = page.locator(".installation-tabs [role=tab]");
+        const selected = stage => page.waitForFunction(stage => document.querySelectorAll(".installation-tabs [role=tab]")[stage].getAttribute("aria-selected") === "true" && !document.querySelector(".installation-visual-rail").classList.contains("is-dragging"), stage);
         let heights = [];
         for (const stage of [0, 1, 2, 3, 1, 0]) {
           await stages.nth(stage).click();
+          await selected(stage);
           assert.equal(
             await stages.nth(stage).getAttribute("aria-selected"),
             "true",
@@ -311,8 +313,10 @@ try {
         );
         await stages.first().focus();
         await page.keyboard.press("End");
+        await selected(3);
         assert.equal(await stages.last().getAttribute("aria-selected"), "true");
         await page.keyboard.press("Home");
+        await selected(0);
         assert.equal(
           await stages.first().getAttribute("aria-selected"),
           "true",
@@ -576,6 +580,7 @@ try {
     await visit(page, "/culture-ai/");
     await page.locator(".installation-tabs [role=tab]").first().focus();
     await page.keyboard.press("ArrowRight");
+    await page.waitForFunction(() => document.querySelectorAll(".installation-tabs [role=tab]")[1].getAttribute("aria-selected") === "true");
     assert.equal(
       await page
         .locator(".installation-tabs [role=tab]")

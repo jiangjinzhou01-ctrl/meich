@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-11-02T03:59:30.127Z",
+  "createdAt": "2026-11-02T05:18:55.335Z",
   "environment": "Chromium CDP touch input, emulated phones; not physical Android/iOS",
   "tests": [
     {
@@ -34,7 +34,7 @@
           "duration": 240,
           "target": 1,
           "release": {
-            "from": 63,
+            "from": 75,
             "minimum": 75,
             "frames": 37
           },
@@ -87,8 +87,8 @@
       "result": "passed",
       "evidence": {
         "before": 3527,
-        "after": 3667,
-        "pageScroll": 140,
+        "after": 3700,
+        "pageScroll": 173,
         "directChapter": 4,
         "keyboardHome": 0
       }
@@ -112,9 +112,9 @@
           "duration": 240,
           "target": 1,
           "release": {
-            "from": 63,
+            "from": 75,
             "minimum": 75,
-            "frames": 37
+            "frames": 33
           },
           "actual": 1
         },
@@ -165,8 +165,8 @@
       "result": "passed",
       "evidence": {
         "before": 3514,
-        "after": 3654,
-        "pageScroll": 140,
+        "after": 3713,
+        "pageScroll": 199,
         "directChapter": 4,
         "keyboardHome": 0
       }
@@ -190,7 +190,7 @@
           "duration": 240,
           "target": 1,
           "release": {
-            "from": 63,
+            "from": 75,
             "minimum": 75,
             "frames": 37
           },
@@ -243,8 +243,8 @@
       "result": "passed",
       "evidence": {
         "before": 3497,
-        "after": 3637,
-        "pageScroll": 140,
+        "after": 3656,
+        "pageScroll": 159,
         "directChapter": 4,
         "keyboardHome": 0
       }
@@ -268,7 +268,7 @@
           "duration": 240,
           "target": 1,
           "release": {
-            "from": 63,
+            "from": 75,
             "minimum": 75,
             "frames": 38
           },
@@ -321,8 +321,8 @@
       "result": "passed",
       "evidence": {
         "before": 3508,
-        "after": 3648,
-        "pageScroll": 140,
+        "after": 3685,
+        "pageScroll": 177,
         "directChapter": 4,
         "keyboardHome": 0
       }
@@ -344,10 +344,235 @@
         "touchAction": "auto",
         "stop": "always"
       }
+    },
+    {
+      "name": "Culture touch 320px /: swipe all stages, reverse, edges and controls",
+      "result": "passed",
+      "evidence": {
+        "stagesBySwipe": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "fingerTracking": true,
+        "strongFling": "0→1",
+        "verticalScroll": true,
+        "lenses": 3,
+        "inspector": true,
+        "keyboard": true
+      }
+    },
+    {
+      "name": "Culture touch 320px /culture-ai/: swipe all stages, reverse, edges and controls",
+      "result": "passed",
+      "evidence": {
+        "stagesBySwipe": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "fingerTracking": true,
+        "strongFling": "0→1",
+        "verticalScroll": true,
+        "lenses": 3,
+        "inspector": true,
+        "keyboard": true
+      }
+    },
+    {
+      "name": "Culture touch 360px /: swipe all stages, reverse, edges and controls",
+      "result": "passed",
+      "evidence": {
+        "stagesBySwipe": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "fingerTracking": true,
+        "strongFling": "0→1",
+        "verticalScroll": true,
+        "lenses": 3,
+        "inspector": true,
+        "keyboard": true
+      }
+    },
+    {
+      "name": "Culture touch 360px /culture-ai/: swipe all stages, reverse, edges and controls",
+      "result": "passed",
+      "evidence": {
+        "stagesBySwipe": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "fingerTracking": true,
+        "strongFling": "0→1",
+        "verticalScroll": true,
+        "lenses": 3,
+        "inspector": true,
+        "keyboard": true
+      }
+    },
+    {
+      "name": "Culture touch 390px /: swipe all stages, reverse, edges and controls",
+      "result": "passed",
+      "evidence": {
+        "stagesBySwipe": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "fingerTracking": true,
+        "strongFling": "0→1",
+        "verticalScroll": true,
+        "lenses": 3,
+        "inspector": true,
+        "keyboard": true
+      }
+    },
+    {
+      "name": "Culture touch 390px /en/: swipe all stages, reverse, edges and controls",
+      "result": "passed",
+      "evidence": {
+        "stagesBySwipe": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "fingerTracking": true,
+        "strongFling": "0→1",
+        "verticalScroll": true,
+        "lenses": 3,
+        "inspector": true,
+        "keyboard": true
+      }
+    },
+    {
+      "name": "Culture touch 390px /culture-ai/: swipe all stages, reverse, edges and controls",
+      "result": "passed",
+      "evidence": {
+        "stagesBySwipe": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "fingerTracking": true,
+        "strongFling": "0→1",
+        "verticalScroll": true,
+        "lenses": 3,
+        "inspector": true,
+        "keyboard": true
+      }
+    },
+    {
+      "name": "Culture touch 390px /en/culture-ai/: swipe all stages, reverse, edges and controls",
+      "result": "passed",
+      "evidence": {
+        "stagesBySwipe": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "fingerTracking": true,
+        "strongFling": "0→1",
+        "verticalScroll": true,
+        "lenses": 3,
+        "inspector": true,
+        "keyboard": true
+      }
+    },
+    {
+      "name": "Culture touch 412px /: swipe all stages, reverse, edges and controls",
+      "result": "passed",
+      "evidence": {
+        "stagesBySwipe": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "fingerTracking": true,
+        "strongFling": "0→1",
+        "verticalScroll": true,
+        "lenses": 3,
+        "inspector": true,
+        "keyboard": true
+      }
+    },
+    {
+      "name": "Culture touch 412px /culture-ai/: swipe all stages, reverse, edges and controls",
+      "result": "passed",
+      "evidence": {
+        "stagesBySwipe": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "fingerTracking": true,
+        "strongFling": "0→1",
+        "verticalScroll": true,
+        "lenses": 3,
+        "inspector": true,
+        "keyboard": true
+      }
+    },
+    {
+      "name": "Culture touch 430px /: swipe all stages, reverse, edges and controls",
+      "result": "passed",
+      "evidence": {
+        "stagesBySwipe": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "fingerTracking": true,
+        "strongFling": "0→1",
+        "verticalScroll": true,
+        "lenses": 3,
+        "inspector": true,
+        "keyboard": true
+      }
+    },
+    {
+      "name": "Culture touch 430px /culture-ai/: swipe all stages, reverse, edges and controls",
+      "result": "passed",
+      "evidence": {
+        "stagesBySwipe": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "fingerTracking": true,
+        "strongFling": "0→1",
+        "verticalScroll": true,
+        "lenses": 3,
+        "inspector": true,
+        "keyboard": true
+      }
+    },
+    {
+      "name": "Culture touch: reduced motion, interruption and rotation",
+      "result": "passed",
+      "evidence": {
+        "reducedMotion": true,
+        "interrupted": true,
+        "desktopToMobileStage": 3
+      }
     }
   ],
   "errors": [],
   "browser": "154.0.8037.57",
-  "passed": 11,
+  "passed": 24,
   "failed": 0
 }
