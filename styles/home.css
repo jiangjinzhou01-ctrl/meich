@@ -1228,3 +1228,9 @@
     user-select: none;
   }
 }
+
+@media (max-width: 767px) {
+  .artifact-steps.has-swipe-control > article {
+    transform: translate3d(var(--swipe-edge, 0px), 0, 0);
+  }
+}
