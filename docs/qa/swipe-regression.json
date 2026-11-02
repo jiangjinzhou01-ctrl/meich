@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-11-02T00:07:34.273Z",
+  "createdAt": "2026-11-02T00:19:46.863Z",
   "environment": "Chromium CDP touch input, emulated phones; not physical Android/iOS",
   "tests": [
     {
@@ -20,6 +20,11 @@
           "dx": -75,
           "duration": 240,
           "target": 1,
+          "release": {
+            "from": 63,
+            "minimum": 75,
+            "frames": 17
+          },
           "actual": 0.9972222222222222
         },
         {
@@ -28,7 +33,7 @@
           "dx": -48,
           "duration": 30,
           "target": 1,
-          "actual": 0.9972222222222222
+          "actual": 1
         },
         {
           "name": "strong flick stops at next",
@@ -36,7 +41,7 @@
           "dx": -305,
           "duration": 60,
           "target": 1,
-          "actual": 1
+          "actual": 0.9972222222222222
         },
         {
           "name": "reverse short drag",
@@ -93,6 +98,11 @@
           "dx": -75,
           "duration": 240,
           "target": 1,
+          "release": {
+            "from": 63,
+            "minimum": 75,
+            "frames": 18
+          },
           "actual": 0.9974358974358974
         },
         {
@@ -101,7 +111,7 @@
           "dx": -48,
           "duration": 30,
           "target": 1,
-          "actual": 0.9974358974358974
+          "actual": 1
         },
         {
           "name": "strong flick stops at next",
@@ -109,7 +119,7 @@
           "dx": -335,
           "duration": 60,
           "target": 1,
-          "actual": 1
+          "actual": 0.9974358974358974
         },
         {
           "name": "reverse short drag",
@@ -166,6 +176,11 @@
           "dx": -75,
           "duration": 240,
           "target": 1,
+          "release": {
+            "from": 63,
+            "minimum": 75,
+            "frames": 19
+          },
           "actual": 0.9975728155339806
         },
         {
@@ -174,7 +189,7 @@
           "dx": -48,
           "duration": 30,
           "target": 1,
-          "actual": 0.9975728155339806
+          "actual": 1
         },
         {
           "name": "strong flick stops at next",
@@ -182,7 +197,7 @@
           "dx": -357,
           "duration": 60,
           "target": 1,
-          "actual": 1
+          "actual": 0.9975728155339806
         },
         {
           "name": "reverse short drag",
@@ -190,7 +205,7 @@
           "dx": 75,
           "duration": 240,
           "target": 2,
-          "actual": 2.0024271844660193
+          "actual": 2
         },
         {
           "name": "first edge",
@@ -239,6 +254,11 @@
           "dx": -75,
           "duration": 240,
           "target": 1,
+          "release": {
+            "from": 63,
+            "minimum": 75,
+            "frames": 19
+          },
           "actual": 0.9976744186046511
         },
         {
@@ -255,7 +275,7 @@
           "dx": -375,
           "duration": 60,
           "target": 1,
-          "actual": 1
+          "actual": 0.9976744186046511
         },
         {
           "name": "reverse short drag",
@@ -263,7 +283,7 @@
           "dx": 75,
           "duration": 240,
           "target": 2,
-          "actual": 2
+          "actual": 2.0023255813953487
         },
         {
           "name": "first edge",

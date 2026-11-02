@@ -45,7 +45,7 @@ try {
     }, index);
     await aligned(index);
   }
-  async function drag(dx, dy, duration, points = 6) {
+  async function drag(dx, dy, duration, points = 6, sampleRelease = false) {
     const box = await rail.boundingBox();
     const x = dx < 0 ? box.width - 28 : 28, y = box.y + 150;
     await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y, id: 1 }] });
@@ -53,6 +53,15 @@ try {
       await pause(duration / points);
       await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: x + dx * n / points, y: y + dy * n / points, id: 1 }] });
     }
+    if (sampleRelease) await page.evaluate(() => {
+      const trace = { running: true, start: document.querySelector(".artifact-steps").scrollLeft, positions: [] };
+      window.__swipeReleaseTrace = trace;
+      const frame = () => {
+        trace.positions.push(document.querySelector(".artifact-steps").scrollLeft);
+        if (trace.running) requestAnimationFrame(frame);
+      };
+      requestAnimationFrame(frame);
+    });
     await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
   }
   for (const width of [360, 390, 412, 430]) {
@@ -70,8 +79,19 @@ try {
         ["first edge", 0, 140, 80, 0, 6],
         ["last edge", 4, -140, 80, 4, 6],
       ]) {
-        await reset(start); await drag(dx, 0, duration, points); await aligned(target);
-        observations.push({ name, start, dx, duration, target, actual: await rail.evaluate(el => el.scrollLeft / el.clientWidth) });
+        const sample = name === "comfortable short drag";
+        await reset(start); await drag(dx, 0, duration, points, sample); await aligned(target);
+        let release;
+        if (sample) {
+          release = await page.evaluate(() => {
+            const trace = window.__swipeReleaseTrace;
+            trace.running = false;
+            return { from: trace.start, minimum: Math.min(...trace.positions), frames: trace.positions.length };
+          });
+          assert(release.frames > 1, "Release must be sampled across actual animation frames");
+          assert(release.minimum >= release.from - 2, "Release must continue forwards without a snap-back frame");
+        }
+        observations.push({ name, start, dx, duration, target, release, actual: await rail.evaluate(el => el.scrollLeft / el.clientWidth) });
       }
       return observations;
     });

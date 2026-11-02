@@ -61,7 +61,7 @@ export function ArtifactJourney({
   const [active, setActive] = useState(0);
   const root = useRef<HTMLElement>(null);
   const steps = useRef<HTMLDivElement>(null);
-  const cancelSwipe = useSwipeRail(steps, phases.length);
+  const scrollToPhase = useSwipeRail(steps, phases.length);
   useEffect(() => {
     const mobile = window.matchMedia("(max-width: 767px)");
     const rail = steps.current;
@@ -120,7 +120,6 @@ export function ArtifactJourney({
     };
   }, []);
   const selectPhase = (index: number) => {
-    cancelSwipe();
     const rail = steps.current;
     const chapter = rail?.children[index] as HTMLElement | undefined;
     if (!rail || !chapter) return;
@@ -133,12 +132,7 @@ export function ArtifactJourney({
       });
       return;
     }
-    rail.scrollTo({
-      left: index * rail.clientWidth,
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        ? "instant"
-        : "smooth",
-    });
+    scrollToPhase(index);
   };
   return (
     <section
