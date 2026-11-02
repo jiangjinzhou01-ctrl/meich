@@ -30,6 +30,9 @@ jobs:
       - run: npm run check:v3
         env:
           MGC_PLAYWRIGHT_MODULE: ${{ runner.temp }}/mgc-qa/node_modules/playwright
+      - run: npm run check:swipe
+        env:
+          MGC_PLAYWRIGHT_MODULE: ${{ runner.temp }}/mgc-qa/node_modules/playwright
       - uses: actions/upload-artifact@v4
         with:
           name: mgc-v3-pages-preview
@@ -46,5 +49,6 @@ jobs:
           path: |
             docs/qa/v3.0-browser.json
             docs/qa/v3.0-motion.json
+            docs/qa/swipe-regression.json
             docs/qa/v3.0/
             docs/qa/motion-*.png

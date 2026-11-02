@@ -75,3 +75,5 @@ MGC_PLAYWRIGHT_MODULE=/tmp/mgc-qa/node_modules/playwright MGC_QA_REPORT=v3.0-mot
 ```
 
 已有 Chromium 时可设置 `MGC_CHROMIUM_PATH`；容器可按需要设置 `MGC_CHROMIUM_ARGS='["--no-sandbox"]'`。PR 工作流自动运行这两组浏览器检查并上传证据，只有 main 的既有发布工作流会部署正式站。
+
+手机图片轨道的轻滑/惯性专项回归：完成静态构建后，使用相同 Playwright 环境执行 `npm run check:swipe`。说明见 [触摸优化](docs/TOUCH-REFINEMENT.md)，结果在 `docs/qa/swipe-regression.json`。

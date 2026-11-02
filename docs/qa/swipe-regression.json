@@ -1,0 +1,340 @@
+{
+  "createdAt": "2026-11-02T00:19:46.863Z",
+  "environment": "Chromium CDP touch input, emulated phones; not physical Android/iOS",
+  "tests": [
+    {
+      "name": "360px: short/slow/fast/long gestures, reversal and edges",
+      "result": "passed",
+      "evidence": [
+        {
+          "name": "small nudge returns",
+          "start": 0,
+          "dx": -15,
+          "duration": 150,
+          "target": 0,
+          "actual": 0
+        },
+        {
+          "name": "comfortable short drag",
+          "start": 0,
+          "dx": -75,
+          "duration": 240,
+          "target": 1,
+          "release": {
+            "from": 63,
+            "minimum": 75,
+            "frames": 17
+          },
+          "actual": 0.9972222222222222
+        },
+        {
+          "name": "light quick flick",
+          "start": 0,
+          "dx": -48,
+          "duration": 30,
+          "target": 1,
+          "actual": 1
+        },
+        {
+          "name": "strong flick stops at next",
+          "start": 0,
+          "dx": -305,
+          "duration": 60,
+          "target": 1,
+          "actual": 0.9972222222222222
+        },
+        {
+          "name": "reverse short drag",
+          "start": 3,
+          "dx": 75,
+          "duration": 240,
+          "target": 2,
+          "actual": 2
+        },
+        {
+          "name": "first edge",
+          "start": 0,
+          "dx": 140,
+          "duration": 80,
+          "target": 0,
+          "actual": 0
+        },
+        {
+          "name": "last edge",
+          "start": 4,
+          "dx": -140,
+          "duration": 80,
+          "target": 4,
+          "actual": 4
+        }
+      ]
+    },
+    {
+      "name": "360px: vertical scrolling, direct chapters and keyboard",
+      "result": "passed",
+      "evidence": {
+        "before": 3527,
+        "after": 3667,
+        "pageScroll": 140,
+        "directChapter": 4,
+        "keyboardHome": 0
+      }
+    },
+    {
+      "name": "390px: short/slow/fast/long gestures, reversal and edges",
+      "result": "passed",
+      "evidence": [
+        {
+          "name": "small nudge returns",
+          "start": 0,
+          "dx": -15,
+          "duration": 150,
+          "target": 0,
+          "actual": 0
+        },
+        {
+          "name": "comfortable short drag",
+          "start": 0,
+          "dx": -75,
+          "duration": 240,
+          "target": 1,
+          "release": {
+            "from": 63,
+            "minimum": 75,
+            "frames": 18
+          },
+          "actual": 0.9974358974358974
+        },
+        {
+          "name": "light quick flick",
+          "start": 0,
+          "dx": -48,
+          "duration": 30,
+          "target": 1,
+          "actual": 1
+        },
+        {
+          "name": "strong flick stops at next",
+          "start": 0,
+          "dx": -335,
+          "duration": 60,
+          "target": 1,
+          "actual": 0.9974358974358974
+        },
+        {
+          "name": "reverse short drag",
+          "start": 3,
+          "dx": 75,
+          "duration": 240,
+          "target": 2,
+          "actual": 2.0025641025641026
+        },
+        {
+          "name": "first edge",
+          "start": 0,
+          "dx": 140,
+          "duration": 80,
+          "target": 0,
+          "actual": 0
+        },
+        {
+          "name": "last edge",
+          "start": 4,
+          "dx": -140,
+          "duration": 80,
+          "target": 4,
+          "actual": 4
+        }
+      ]
+    },
+    {
+      "name": "390px: vertical scrolling, direct chapters and keyboard",
+      "result": "passed",
+      "evidence": {
+        "before": 3514,
+        "after": 3654,
+        "pageScroll": 140,
+        "directChapter": 4,
+        "keyboardHome": 0
+      }
+    },
+    {
+      "name": "412px: short/slow/fast/long gestures, reversal and edges",
+      "result": "passed",
+      "evidence": [
+        {
+          "name": "small nudge returns",
+          "start": 0,
+          "dx": -15,
+          "duration": 150,
+          "target": 0,
+          "actual": 0
+        },
+        {
+          "name": "comfortable short drag",
+          "start": 0,
+          "dx": -75,
+          "duration": 240,
+          "target": 1,
+          "release": {
+            "from": 63,
+            "minimum": 75,
+            "frames": 19
+          },
+          "actual": 0.9975728155339806
+        },
+        {
+          "name": "light quick flick",
+          "start": 0,
+          "dx": -48,
+          "duration": 30,
+          "target": 1,
+          "actual": 1
+        },
+        {
+          "name": "strong flick stops at next",
+          "start": 0,
+          "dx": -357,
+          "duration": 60,
+          "target": 1,
+          "actual": 0.9975728155339806
+        },
+        {
+          "name": "reverse short drag",
+          "start": 3,
+          "dx": 75,
+          "duration": 240,
+          "target": 2,
+          "actual": 2
+        },
+        {
+          "name": "first edge",
+          "start": 0,
+          "dx": 140,
+          "duration": 80,
+          "target": 0,
+          "actual": 0
+        },
+        {
+          "name": "last edge",
+          "start": 4,
+          "dx": -140,
+          "duration": 80,
+          "target": 4,
+          "actual": 4
+        }
+      ]
+    },
+    {
+      "name": "412px: vertical scrolling, direct chapters and keyboard",
+      "result": "passed",
+      "evidence": {
+        "before": 3497,
+        "after": 3637,
+        "pageScroll": 140,
+        "directChapter": 4,
+        "keyboardHome": 0
+      }
+    },
+    {
+      "name": "430px: short/slow/fast/long gestures, reversal and edges",
+      "result": "passed",
+      "evidence": [
+        {
+          "name": "small nudge returns",
+          "start": 0,
+          "dx": -15,
+          "duration": 150,
+          "target": 0,
+          "actual": 0
+        },
+        {
+          "name": "comfortable short drag",
+          "start": 0,
+          "dx": -75,
+          "duration": 240,
+          "target": 1,
+          "release": {
+            "from": 63,
+            "minimum": 75,
+            "frames": 19
+          },
+          "actual": 0.9976744186046511
+        },
+        {
+          "name": "light quick flick",
+          "start": 0,
+          "dx": -48,
+          "duration": 30,
+          "target": 1,
+          "actual": 0.9976744186046511
+        },
+        {
+          "name": "strong flick stops at next",
+          "start": 0,
+          "dx": -375,
+          "duration": 60,
+          "target": 1,
+          "actual": 0.9976744186046511
+        },
+        {
+          "name": "reverse short drag",
+          "start": 3,
+          "dx": 75,
+          "duration": 240,
+          "target": 2,
+          "actual": 2.0023255813953487
+        },
+        {
+          "name": "first edge",
+          "start": 0,
+          "dx": 140,
+          "duration": 80,
+          "target": 0,
+          "actual": 0
+        },
+        {
+          "name": "last edge",
+          "start": 4,
+          "dx": -140,
+          "duration": 80,
+          "target": 4,
+          "actual": 4
+        }
+      ]
+    },
+    {
+      "name": "430px: vertical scrolling, direct chapters and keyboard",
+      "result": "passed",
+      "evidence": {
+        "before": 3508,
+        "after": 3648,
+        "pageScroll": 140,
+        "directChapter": 4,
+        "keyboardHome": 0
+      }
+    },
+    {
+      "name": "Reduced motion and rapid reverse gestures",
+      "result": "passed",
+      "evidence": {
+        "reducedMotion": true,
+        "interruptedFrom": 2,
+        "settledAt": 1
+      }
+    },
+    {
+      "name": "No-JavaScript native pan fallback",
+      "result": "passed",
+      "evidence": {
+        "controlled": false,
+        "touchAction": "auto",
+        "stop": "always"
+      }
+    }
+  ],
+  "errors": [],
+  "browser": "154.0.8037.57",
+  "passed": 10,
+  "failed": 0
+}

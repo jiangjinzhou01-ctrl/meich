@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { ResponsiveImage } from "./responsive-image";
+import { useSwipeRail } from "./use-swipe-rail";
 const records = [
   ["公开项目 / 里耶秦简释读资料", "Project record / Liye interpretation"],
   ["资料示意 / 非采集现场", "Documentation / not acquisition footage"],
@@ -60,6 +61,7 @@ export function ArtifactJourney({
   const [active, setActive] = useState(0);
   const root = useRef<HTMLElement>(null);
   const steps = useRef<HTMLDivElement>(null);
+  const scrollToPhase = useSwipeRail(steps, phases.length);
   useEffect(() => {
     const mobile = window.matchMedia("(max-width: 767px)");
     const rail = steps.current;
@@ -130,12 +132,7 @@ export function ArtifactJourney({
       });
       return;
     }
-    rail.scrollTo({
-      left: index * rail.clientWidth,
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        ? "instant"
-        : "smooth",
-    });
+    scrollToPhase(index);
   };
   return (
     <section

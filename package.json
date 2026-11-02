@@ -13,7 +13,8 @@
     "check:export": "node scripts/check-export.mjs",
     "check:search": "node scripts/check-search.mjs",
     "check:motion": "node scripts/check-motion.mjs",
-    "check:v3": "node scripts/check-v3.mjs"
+    "check:v3": "node scripts/check-v3.mjs",
+    "check:swipe": "node scripts/check-swipe.mjs"
   },
   "dependencies": {
     "geist": "^1.7.2",
