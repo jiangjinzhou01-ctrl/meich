@@ -1,13 +1,16 @@
 :root {
-  --bg: #f6f5f1;
-  --surface: #eeece6;
-  --panel: #fbfaf7;
-  --ink: #242421;
-  --muted: #66645f;
-  --border: #d8d6cf;
-  --subtle: #e8e5df;
-  --accent: #c8171e;
-  --accent-ink: #b4141b;
+  --bg: #f8f5ed;
+  --surface: #eee9de;
+  --panel: #fcfaf5;
+  --ink: #211f1a;
+  --muted: #5c574e;
+  --border: #d8d0c2;
+  --subtle: #ebe6da;
+  --accent: #a3292b;
+  --accent-ink: #982426;
+  --seal: #92272a;
+  --seal-hover: #762022;
+  --editorial-heading: "Noto Serif CJK SC", "Songti SC", "STSong", SimSun, Georgia, serif;
   --on-accent: #fff;
   --font:
     var(--font-geist-sans), "PingFang SC", "Microsoft YaHei", "Noto Sans SC",
@@ -20,11 +23,11 @@
   --fast: 180ms;
   --normal: 360ms;
   --slow: 700ms;
-  --gutter: clamp(20px, 4.2vw, 80px);
+  --gutter: clamp(20px, 4.8vw, 86px);
   --space: var(--gutter);
   --radius: 2px;
   --section-space: clamp(80px, 9vw, 160px);
-  --nav-height: 72px;
+  --nav-height: 74px;
   --nav-media-bg: #161616;
   --display: clamp(38px, 5.1vw, 78px);
   --h2: clamp(30px, 3.3vw, 52px);

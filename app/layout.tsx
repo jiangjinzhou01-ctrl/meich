@@ -14,14 +14,14 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: `美创数字 · ${company}`, template: `%s · 美创数字` },
   description:
-    "湖南美创数字科技有限公司，专注文化与科技融合。连接文化研究、空间设计、数字技术与 AI，让文化成为可感知、可参与的体验。",
+    "湖南美创数字科技有限公司为博物馆、展馆和文旅场所提供展陈设计、数字文博、文创开发和数字运营服务。",
   icons: { icon: asset("/favicon.svg") },
   openGraph: {
     type: "website",
     locale: "zh_CN",
     siteName: company,
-    title: "MGC美创数字 · 文化的深度，AI的新表达。",
-    description: "连接文化研究、创意设计与AI，创造可感知的新体验。",
+    title: "美创数字 · 为文化空间设计数字体验",
+    description: "为博物馆、展馆和文旅场所设计展览、制作数字内容和实施互动展项。",
     images: [{ url: `${siteUrl}/og.png`, width: 1200, height: 630 }],
   },
   twitter: {

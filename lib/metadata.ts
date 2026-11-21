@@ -10,14 +10,7 @@ export function pageMetadata(
   const canonical = canonicalPath(path);
   const pair = languagePair(canonical);
   const en = canonical.startsWith("/en/");
-  const paired =
-    englishRoutes.has(pair.en) ||
-    [
-      "/en/services/",
-      "/en/solutions/",
-      "/en/culture-ai/",
-      "/en/research/technology/",
-    ].includes(pair.en);
+  const paired = englishRoutes.has(pair.en);
   return {
     title,
     description,

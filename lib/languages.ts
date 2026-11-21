@@ -1,5 +1,9 @@
 export const englishRoutes = new Set([
   "/en/",
+  "/en/services/",
+  "/en/solutions/",
+  "/en/culture-ai/",
+  "/en/research/technology/",
   "/en/about/",
   "/en/cases/",
   "/en/cases/brochure-2026-all-for-the-people/",

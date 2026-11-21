@@ -1,3 +1,4 @@
+import { ArtifactJourney } from "@/components/artifact-journey";
 import { PageHero, ContactCTA } from "@/components/ui";
 import { CultureLab } from "@/components/culture-lab";
 import { pageMetadata } from "@/lib/metadata";
@@ -48,6 +49,7 @@ export default function Page() {
           </article>
         </div>
       </section>
+      <ArtifactJourney english />
       <ContactCTA english />
     </div>
   );

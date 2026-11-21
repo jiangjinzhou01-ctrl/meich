@@ -1,311 +1,142 @@
 "use client";
+
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react";
-import { Moon, Sun, Menu, X, ArrowUpRight } from "lucide-react";
-import { BrandMark } from "./brand";
-import { company, navigation, phone, phoneHref, address } from "@/lib/content";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { ArrowRight, ArrowUpRight, Menu, Moon, Sun, X } from "lucide-react";
+import { address, company, phone, phoneHref } from "@/lib/content";
 import { englishRoutes } from "@/lib/languages";
 import { languagePair } from "@/lib/routes";
+import { BrandMark } from "./brand";
+
+const sections = [
+  { href: "/cases/", zh: "项目案例", en: "Projects", routes: ["cases", "work", "videos"] },
+  { href: "/services/", zh: "业务与产品", en: "Services & products", routes: ["services", "solutions", "products"] },
+  { href: "/research/", zh: "研发", en: "Research", routes: ["research", "technology", "culture-ai", "experiences"] },
+  { href: "/about/", zh: "关于美创", en: "About MGC", routes: ["about", "insights", "collaboration", "careers"] },
+];
 
 export function Navbar() {
   const path = usePathname();
-  const router = useRouter();
-  const en = path.startsWith("/en");
+  const en = /^\/en(?:\/|$)/.test(path);
+  const prefix = en ? "/en" : "";
+  const section = path.slice(prefix.length).split("/")[1];
   const [open, setOpen] = useState(false);
-  const [closing, setClosing] = useState(false);
   const [dark, setDark] = useState(false);
-  const [scene, setScene] = useState("");
-  const [tone, setTone] = useState("light");
   const dialog = useRef<HTMLDialogElement>(null);
-  const toggle = useRef<HTMLButtonElement>(null);
-  const closeTimer = useRef<number | null>(null);
-  const pendingHref = useRef<string | null>(null);
-  const links = en
-    ? [
-        { label: "Expertise", href: "/en/services/" },
-        { label: "Work", href: "/en/cases/" },
-        { label: "Culture × AI", href: "/en/culture-ai/" },
-        { label: "Research", href: "/en/research/" },
-        { label: "About", href: "/en/about/" },
-      ]
-    : navigation;
+  const trigger = useRef<HTMLButtonElement>(null);
+  const previousOverflow = useRef("");
   const pair = languagePair(path);
-  const candidate = en ? pair.zh : pair.en;
-  const addedEn = [
-    "/en/services/",
-    "/en/solutions/",
-    "/en/culture-ai/",
-    "/en/research/",
-    "/en/research/technology/",
-  ];
-  const languageHref =
-    en || englishRoutes.has(candidate) || addedEn.includes(candidate)
-      ? candidate
-      : "/en/";
-  const more = en
-    ? [
-        ["Solutions", "/en/solutions/"],
-        ["Products", "/en/products/"],
-        ["Insights", "/en/insights/"],
-        ["Films", "/en/videos/"],
-        ["Experiences", "/en/experiences/"],
-        ["Collaboration", "/en/collaboration/"],
-      ]
-    : [
-        ["解决方案", "/solutions/"],
-        ["产品目录", "/products/"],
-        ["洞察与动态", "/insights/"],
-        ["视频中心", "/videos/"],
-        ["线上体验", "/experiences/"],
-        ["人才与协作", "/collaboration/"],
-      ];
+  const languageHref = en ? pair.zh : englishRoutes.has(pair.en) ? pair.en : "/en/";
+  const languageLabel = en ? "切换中文" : "Switch to English";
+
   useEffect(() => {
     setDark(document.documentElement.dataset.theme === "dark");
   }, []);
   useEffect(() => {
-    if (closeTimer.current !== null) window.clearTimeout(closeTimer.current);
-    setClosing(false);
-    setOpen(false);
-    pendingHref.current = null;
     document.documentElement.lang = en ? "en" : "zh-CN";
+    if (dialog.current?.open) {
+      dialog.current.close();
+      document.body.style.overflow = previousOverflow.current;
+      setOpen(false);
+    }
   }, [path, en]);
-  useEffect(() => () => {
-    if (closeTimer.current !== null) window.clearTimeout(closeTimer.current);
-  }, []);
-  useEffect(() => {
-    if (!dialog.current) return;
-    if (open) dialog.current.showModal();
-    else dialog.current.close();
-    const previous = document.body.style.overflow;
-    if (open) document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = previous;
-    };
-  }, [open]);
-  useEffect(() => {
-    let observer: IntersectionObserver;
-    const connect = () => {
-      observer?.disconnect();
-      const nodes = [...document.querySelectorAll<HTMLElement>("[data-scene]")];
-      const update = () => {
-        const current = nodes
-          .filter(
-            (n) =>
-              n.getBoundingClientRect().top <= 85 &&
-              n.getBoundingClientRect().bottom > 75,
-          )
-          .at(-1);
-        setScene(current?.dataset.scene || "");
-        setTone(current?.dataset.navTone || "light");
-      };
-      observer = new IntersectionObserver(update, {
-        rootMargin: `0px 0px -${Math.max(0, innerHeight - 86)}px 0px`,
-        threshold: 0,
-      });
-      nodes.forEach((n) => observer.observe(n));
-      update();
-    };
-    connect();
-    addEventListener("resize", connect);
-    return () => {
-      observer?.disconnect();
-      removeEventListener("resize", connect);
-    };
-  }, [path]);
+
   function theme() {
-    const next = !dark;
-    setDark(next);
-    document.documentElement.dataset.theme = next ? "dark" : "light";
+    const next = dark ? "light" : "dark";
+    setDark(!dark);
+    document.documentElement.dataset.theme = next;
     try {
-      localStorage.setItem("meichuang-theme", next ? "dark" : "light");
+      localStorage.setItem("meichuang-theme", next);
     } catch {}
   }
-  function finishClose() {
-    if (closeTimer.current !== null) window.clearTimeout(closeTimer.current);
-    closeTimer.current = null;
-    dialog.current?.close();
-    setClosing(false);
-    setOpen(false);
-    toggle.current?.focus();
-    const href = pendingHref.current;
-    pendingHref.current = null;
-    if (href) router.push(href);
-  }
-  function close() {
-    if (closing) return;
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      finishClose();
-      return;
-    }
-    // Interrupt an unfinished entrance from its current frame, never from full opacity/radius.
-    const menu = dialog.current;
-    if (menu) {
-      menu.style.setProperty("--menu-exit-clip", getComputedStyle(menu).clipPath);
-      menu.querySelectorAll<HTMLElement>(".mobile-primary a,.mobile-secondary,.mobile-contact,.mobile-bottom").forEach((item) => {
-        const current = getComputedStyle(item);
-        item.style.setProperty("--menu-exit-opacity", current.opacity);
-        item.style.setProperty("--menu-exit-transform", current.transform);
-      });
-    }
-    setClosing(true);
-    closeTimer.current = window.setTimeout(finishClose, 400);
-  }
   function openMenu() {
-    const rect = toggle.current?.getBoundingClientRect();
-    if (!rect || !dialog.current) return;
-    const x = rect.left + rect.width / 2;
-    const y = rect.top + rect.height / 2;
-    const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y)) + 4;
-    dialog.current.style.setProperty("--menu-x", `${x}px`);
-    dialog.current.style.setProperty("--menu-y", `${y}px`);
-    dialog.current.style.setProperty("--menu-radius", `${radius}px`);
-    if (closeTimer.current !== null) window.clearTimeout(closeTimer.current);
-    setClosing(false);
+    if (!dialog.current || dialog.current.open) return;
+    previousOverflow.current = document.body.style.overflow;
+    dialog.current.showModal();
+    document.body.style.overflow = "hidden";
     setOpen(true);
   }
-  function navigateMenu(event: MouseEvent<HTMLAnchorElement>, href: string) {
-    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    event.preventDefault();
-    pendingHref.current = href;
-    close();
+  function closeMenu() {
+    dialog.current?.close();
+    document.body.style.overflow = previousOverflow.current;
+    setOpen(false);
+    trigger.current?.focus({ preventScroll: true });
   }
+  function followMenuLink(event: MouseEvent<HTMLAnchorElement>) {
+    if (event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+      closeMenu();
+    }
+  }
+  const themeLabel = dark
+    ? en ? "Switch to light theme" : "切换浅色主题"
+    : en ? "Switch to dark theme" : "切换深色主题";
+  const homeLabel = en ? "MGC Digital home" : "美创数字首页";
+  const contactLabel = en ? "Project enquiries" : "项目咨询";
+
   return (
     <>
-      <header className="navbar" data-tone={tone}>
-        <div className="nav-inner container">
-          <Link
-            className="brand"
-            href={en ? "/en/" : "/"}
-            aria-label={en ? "MGC Digital, home" : `${company}，首页`}
-            prefetch={false}
-          >
+      <header className="navbar">
+        <div className="container nav-inner">
+          <Link className="brand" href={prefix + "/"} aria-label={homeLabel}>
             <BrandMark />
           </Link>
-          <span className="nav-location" aria-hidden="true">
-            {scene}
-          </span>
-          <nav
-            className="desktop-nav"
-            aria-label={en ? "Main navigation" : "主导航"}
-          >
-            {links.map((n) => (
-              <Link
-                key={n.href}
-                href={n.href}
-                prefetch={false}
-                className={path.startsWith(n.href) ? "active" : ""}
-                aria-current={path.startsWith(n.href) ? "page" : undefined}
-              >
-                {n.label}
+          <nav className="desktop-nav" aria-label={en ? "Main navigation" : "主导航"}>
+            {sections.map((item) => (
+              <Link key={item.href} href={prefix + item.href} prefetch={false}
+                aria-current={item.routes.includes(section) ? "page" : undefined}>
+                {en ? item.en : item.zh}
               </Link>
             ))}
           </nav>
           <div className="nav-actions">
-            <Link
-              className="language-switch"
-              href={languageHref}
-              prefetch={false}
-              aria-label={en ? "切换中文" : "Switch to English"}
-            >
-              {en ? "中" : "EN"}
+            <Link className="language-switch" href={languageHref} aria-label={languageLabel} prefetch={false}>
+              {en ? "中文" : "EN"}
             </Link>
-            <button
-              className="icon-button theme-toggle"
-              onClick={theme}
-              aria-label={en ? (dark ? "Switch to light theme" : "Switch to dark theme") : (dark ? "切换浅色主题" : "切换深色主题")}
-            >
+            <button className="icon-button theme-toggle" onClick={theme} aria-label={themeLabel}>
               {dark ? <Sun size={17} /> : <Moon size={17} />}
             </button>
-            <Link
-              href={en ? "/en/contact/" : "/contact/"}
-              className="nav-cta"
-              prefetch={false}
-            >
-              {en ? "Contact" : "商务合作"}
-              <ArrowUpRight size={16} />
+            <Link className="nav-cta" href={prefix + "/contact/"}>
+              {contactLabel}<ArrowUpRight size={16} aria-hidden="true" />
             </Link>
-            <button
-              ref={toggle}
-              className="icon-button menu-toggle"
-              onClick={openMenu}
-              aria-expanded={open}
-              aria-controls="mobile-menu"
-              aria-label={en ? "Open navigation" : "打开导航菜单"}
-            >
-              <Menu size={24} />
+            <button ref={trigger} className="icon-button menu-toggle" onClick={openMenu}
+              aria-expanded={open} aria-controls="mobile-menu"
+              aria-label={en ? "Open navigation" : "打开导航菜单"}>
+              <Menu size={23} />
             </button>
           </div>
         </div>
       </header>
-      <dialog
-        className="mobile-menu"
-        ref={dialog}
-        id="mobile-menu"
-        data-closing={closing}
+      <dialog className="mobile-menu" id="mobile-menu" ref={dialog}
         aria-label={en ? "Site navigation" : "网站导航"}
-        onCancel={(event) => {
-          event.preventDefault();
-          close();
-        }}
-        onAnimationEnd={(event) => {
-          if (event.target === event.currentTarget && closing) finishClose();
-        }}
-        onClick={(e) => {
-          if (e.target === dialog.current) close();
-        }}
-      >
+        onCancel={(event) => { event.preventDefault(); closeMenu(); }}>
         <div className="mobile-top">
-          <BrandMark />
-          <button
-            className="icon-button"
-            onClick={close}
-            aria-label={en ? "Close navigation" : "关闭导航菜单"}
-          >
+          <Link className="brand" href={prefix + "/"} onClick={followMenuLink} aria-label={homeLabel}>
+            <BrandMark />
+          </Link>
+          <button className="icon-button" onClick={closeMenu} autoFocus
+            aria-label={en ? "Close navigation" : "关闭导航菜单"}>
             <X size={24} />
           </button>
         </div>
-        <nav className="mobile-primary">
-          {links.map((n, i) => (
-            <Link href={n.href} key={n.href} onClick={(event) => navigateMenu(event, n.href)} prefetch={false}
-              style={{ "--menu-order": i } as CSSProperties}
-              aria-current={path.startsWith(n.href) ? "page" : undefined}>
-              {n.label}
-              <ArrowUpRight size={20} />
+        <nav className="mobile-primary" aria-label={en ? "Main navigation" : "主导航"}>
+          {sections.map((item) => (
+            <Link key={item.href} href={prefix + item.href} prefetch={false} onClick={followMenuLink}
+              aria-current={item.routes.includes(section) ? "page" : undefined}>
+              {en ? item.en : item.zh}
+              <ArrowRight size={22} aria-hidden="true" />
             </Link>
           ))}
         </nav>
-        <details className="mobile-secondary">
-          <summary>{en ? "More from MGC" : "更多探索"}</summary>
-          <div>
-            {more.map(([label, href]) => (
-              <Link href={href} key={href} onClick={(event) => navigateMenu(event, href)} prefetch={false}>
-                {label}
-              </Link>
-            ))}
-          </div>
-        </details>
-        <Link
-          className="button mobile-contact"
-          href={en ? "/en/contact/" : "/contact/"}
-          onClick={(event) => navigateMenu(event, en ? "/en/contact/" : "/contact/")}
-          prefetch={false}
-        >
-          {en ? "Contact" : "商务合作"}
-          <ArrowUpRight size={18} />
-        </Link>
-        <div className="mobile-bottom">
-          <Link href={languageHref} onClick={(event) => navigateMenu(event, languageHref)}>
+        <div className="mobile-menu-actions">
+          <Link className="nav-cta" href={prefix + "/contact/"} onClick={followMenuLink}>
+            {contactLabel}<ArrowUpRight size={17} aria-hidden="true" />
+          </Link>
+          <Link href={languageHref} onClick={followMenuLink} aria-label={languageLabel}>
             {en ? "简体中文" : "English"}
           </Link>
-          <button onClick={theme}>
-            {dark
-              ? en
-                ? "Light mode"
-                : "浅色模式"
-              : en
-                ? "Dark mode"
-                : "深色模式"}
+          <button className="icon-button" onClick={theme} aria-label={themeLabel}>
+            {dark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
         </div>
       </dialog>
@@ -313,105 +144,67 @@ export function Navbar() {
   );
 }
 
+const footerGroups = [
+  {
+    zh: "项目与业务", en: "Projects and services",
+    links: [
+      ["/cases/", "项目案例", "Projects"],
+      ["/services/", "业务能力", "Services"],
+      ["/solutions/", "场景方案", "Solutions"],
+      ["/products/", "产品目录", "Products"],
+    ],
+  },
+  {
+    zh: "研发与体验", en: "Research and experiences",
+    links: [
+      ["/research/", "研发方向", "Research"],
+      ["/culture-ai/", "Culture × AI", "Culture × AI"],
+      ["/videos/", "项目影像", "Films"],
+      ["/experiences/", "线上体验", "Online experiences"],
+    ],
+  },
+  {
+    zh: "关于美创", en: "About MGC",
+    links: [
+      ["/about/", "公司与团队", "Company and team"],
+      ["/insights/", "美创动态", "News and insights"],
+      ["/collaboration/", "人才与协作", "Careers and collaboration"],
+      ["/contact/", "项目咨询", "Project enquiries"],
+    ],
+  },
+];
+
 export function Footer() {
-  const en = usePathname().startsWith("/en");
+  const en = /^\/en(?:\/|$)/.test(usePathname());
   const prefix = en ? "/en" : "";
-  const groups = [
-    {
-      title: en ? "Explore" : "体验与能力",
-      items: [
-        [en ? "Expertise" : "服务能力", `${prefix}/services/`],
-        [en ? "Solutions" : "解决方案", `${prefix}/solutions/`],
-        [en ? "Products" : "产品目录", `${prefix}/products/`],
-        [en ? "Work" : "项目案例", `${prefix}/cases/`],
-      ],
-    },
-    {
-      title: en ? "Culture × AI" : "文化与技术",
-      items: [
-        ["Culture × AI", `${prefix}/culture-ai/`],
-        [en ? "Research" : "创新与研发", `${prefix}/research/`],
-        [en ? "Films" : "视频中心", `${prefix}/videos/`],
-        [en ? "Experiences" : "线上体验", `${prefix}/experiences/`],
-      ],
-    },
-    {
-      title: en ? "MGC" : "关于美创",
-      items: [
-        [en ? "About" : "公司与团队", `${prefix}/about/`],
-        [en ? "Insights" : "洞察与动态", `${prefix}/insights/`],
-        [en ? "Collaboration" : "协作与共创", `${prefix}/collaboration/`],
-        [en ? "Contact" : "商务合作", `${prefix}/contact/`],
-      ],
-    },
-  ];
   return (
-    <footer className="footer" data-scene={en ? "MGC" : "美创数字"}>
+    <footer className="footer">
       <div className="container">
         <div className="footer-top">
-          <div className="footer-intro" data-reveal-group>
-            <Link
-              href={en ? "/en/" : "/"}
-              className="brand footer-brand"
-              aria-label="美创数字，首页"
-            >
+          <div className="footer-intro">
+            <Link className="brand" href={prefix + "/"} aria-label={en ? "MGC Digital home" : "美创数字首页"}>
               <BrandMark />
             </Link>
-            <p data-reveal="editorial">
-              {en
-                ? "Culture, understood. Experience, reimagined."
-                : "文化的深度，AI 的新表达。"}
-            </p>
-            <a data-reveal="content" className="footer-phone" href={phoneHref}>
-              {phone}
-              <ArrowUpRight size={20} />
-            </a>
-            <p className="footer-address" data-reveal="content">
-              {en
-                ? "76 Meixihu Road, Building 2, Meixihu International R&D Center, Changsha, China"
-                : address}
-            </p>
+            <a className="footer-phone" href={phoneHref}>{phone}<ArrowUpRight size={17} aria-hidden="true" /></a>
+            <p className="footer-address">{en ? "Building 2, Meixi Lake International R&D Center, 76 Meixihu Road, Changsha, China" : address}</p>
           </div>
           <div className="footer-links">
-            {groups.map((g) => (
-              <div key={g.title}>
-                <span>{g.title}</span>
-                {g.items.map(([label, href]) => (
-                  <Link key={href} href={href} prefetch={false}>
-                    {label}
-                  </Link>
+            {footerGroups.map((group) => (
+              <div key={group.en}>
+                <h2>{en ? group.en : group.zh}</h2>
+                {group.links.map(([href, zh, label]) => (
+                  <Link key={href} href={prefix + href} prefetch={false}>{en ? label : zh}</Link>
                 ))}
               </div>
             ))}
           </div>
         </div>
-        <div className="footer-word" aria-hidden="true" data-reveal="content">
-          Culture × AI
-        </div>
         <div className="footer-bottom">
-          <span>
-            © {new Date().getFullYear()} {company}
-          </span>
+          <span>© {new Date().getFullYear()} {en ? "MGC Digital" : company}</span>
           <div>
-            <Link href={`${prefix}/privacy/`}>
-              {en ? "Privacy" : "隐私说明"}
-            </Link>
-            <Link href="/admin/">
-              {en ? "Brand workspace" : "品牌工作台"} ↗
-            </Link>
-            <button
-              onClick={() =>
-                window.scrollTo({
-                  top: 0,
-                  behavior: matchMedia("(prefers-reduced-motion: reduce)")
-                    .matches
-                    ? "instant"
-                    : "smooth",
-                })
-              }
-            >
-              {en ? "Back to top" : "回到顶部"} ↑
-            </button>
+            <Link href={prefix + "/privacy/"}>{en ? "Privacy" : "隐私说明"}</Link>
+            <Link href="/admin/">{en ? "Workspace" : "内容工作台"}</Link>
+            <button onClick={() => window.scrollTo({ top: 0 })}>{en ? "Back to top ↑" : "回到顶部 ↑"}</button>
           </div>
         </div>
       </div>

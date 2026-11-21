@@ -1,4 +1,4 @@
-// Called by check:swipe against the exact Culture × AI surface, not the homepage artifact rail.
+// Called by check:swipe against the exact Culture × AI surface, independently of the ArtifactJourney rail.
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 
@@ -48,7 +48,7 @@ export async function checkCultureSwipes({ browser, origin, test, report, widths
   }
   try {
     for (const width of widths) {
-      const targets = routes || (width === 390 ? ["", "en/", "culture-ai/", "en/culture-ai/"] : ["", "culture-ai/"]);
+      const targets = routes || (["culture-ai/", "en/culture-ai/"]);
       for (const route of targets) {
         await test(`Culture touch ${width}px /${route}: swipe all stages, reverse, edges and controls`, async () => {
           await page.setViewportSize({ width, height: 844 });
@@ -88,8 +88,9 @@ export async function checkCultureSwipes({ browser, origin, test, report, widths
           await page.keyboard.press("Home"); await aligned(0);
           await position();
           if (width === 390 && route === "culture-ai/") {
-            await fs.mkdir("docs/qa/culture-touch", { recursive: true });
-            await page.screenshot({ path: "docs/qa/culture-touch/mobile.png" });
+            const directory = process.env.MGC_REDESIGN_QA_DIR || "qa-results/redesign";
+            await fs.mkdir(directory, { recursive: true });
+            await page.screenshot({ path: directory + "/culture-touch.png" });
           }
           return { stagesBySwipe: [0, 1, 2, 3], fingerTracking: true, strongFling: "0→1", verticalScroll: true, lenses: 3, inspector: true, keyboard: true };
         });

@@ -6,7 +6,7 @@ export function CaseNavigation({
   chapters,
   english: en = false,
 }: {
-  chapters: string[];
+  chapters: readonly string[];
   english?: boolean;
 }) {
   const [active, setActive] = useState(0);
@@ -113,7 +113,6 @@ export function CaseNavigation({
               aria-current={active === i ? "step" : undefined}
               onClick={(event) => navigate(event, i)}
             >
-              <small>0{i + 1}</small>
               {label}
             </a>
           ))}

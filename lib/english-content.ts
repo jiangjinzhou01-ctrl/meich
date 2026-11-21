@@ -1,3 +1,9 @@
+export const projectNames: Record<string, string> = {
+  "liye-qin-slips": "Liye Qin Manuscript Museum",
+  "potala-snow-city": "Potala Palace · Snow City",
+  gaomiao: "Gaomiao Site Museum",
+};
+
 export const serviceEnglish = [
   {
     description:

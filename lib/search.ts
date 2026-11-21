@@ -1,6 +1,6 @@
 import { serviceEnglish } from "./english-content";
-import { catalogFor, getSourcePage, type CatalogItem, type SourceBlock } from "./source";
-import { services } from "./content";
+import { caseCatalogFor, catalogFor, getSourcePage, type CatalogItem, type SourceBlock } from "./source";
+import { projects, services } from "./content";
 export type SearchKind = "case" | "service" | "research" | "product";
 export type SearchEntry = CatalogItem & { kind: SearchKind; keywords: string };
 function projectText(blocks: SourceBlock[] = []) {
@@ -23,8 +23,12 @@ export function searchIndex(english = false): SearchEntry[] {
     ["products", "product"],
     ["research", "research"],
   ] as const) {
-    for (const i of catalogFor(pre + "/" + family)) {
-      const p = getSourcePage(i.path);
+    const items = kind === "case" ? caseCatalogFor(english) : catalogFor(pre + "/" + family);
+    for (const i of items) {
+      const curated = !english && kind === "case"
+        ? projects.find((project) => "/cases/" + project.slug === i.path)
+        : undefined;
+      const p = getSourcePage(curated?.source || i.path);
       entries.push({
         ...i,
         kind,
@@ -42,14 +46,7 @@ export function searchIndex(english = false): SearchEntry[] {
   services.forEach((s, i) =>
     entries.push({
       path: pre + "/services/#" + s.id,
-      title: english
-        ? [
-            "Digital exhibitions",
-            "Digital museums",
-            "Cultural creation",
-            "Digital operations",
-          ][i]
-        : s.title,
+      title: english ? s.enTitle : s.title,
       description: english ? serviceEnglish[i].description : s.description,
       image: s.image,
       domain: s.title,

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import type { ReactNode } from "react";
 import { siteUrl } from "@/lib/content";
 import { RevealText } from "./reveal";
@@ -98,7 +99,7 @@ export function PageHero({
           }}
         />
       )}
-      <SectionLabel immediate>{label}</SectionLabel>
+      {label && <SectionLabel immediate>{label}</SectionLabel>}
       <RevealText as="h1" level="cinematic" immediate delay={90}>{title}</RevealText>
       <div className="page-hero-bottom">
         <RevealText immediate delay={180}>{description}</RevealText>
@@ -107,33 +108,23 @@ export function PageHero({
     </section>
   );
 }
-export function ContactCTA({ english = false }: { english?: boolean } = {}) {
+export function ContactCTA({
+  english = false,
+  projectHref,
+}: { english?: boolean; projectHref?: string } = {}) {
   return (
-    <section
-      className="contact-cta"
-      data-scene={english ? "Contact" : "商务合作"}
-    >
-      <div className="container cta-inner" data-reveal-group>
+    <section className="contact-cta">
+      <div className="container cta-inner">
         <div>
-          <p className="cta-kicker" data-reveal="content" data-reveal-order="0">Culture × Technology × AI × Experience</p>
-          <h2 data-reveal="editorial">
-            {english ? (
-              <>
-                A meaningful experience.
-                <br />A conversation away.
-              </>
-            ) : (
-              <>
-                让下一个想法，
-                <br />
-                成为真实的体验。
-              </>
-            )}
-          </h2>
+          <h2>{english ? "Planning a cultural project?" : "正在筹备文化项目？"}</h2>
+          <p>{english ? "Tell us about your venue, your audience and what you want to make." : "说说你的场地、观众和想做的事，一起梳理项目需求。"}</p>
         </div>
-        <Button href={english ? "/en/contact/" : "/contact/"}>
-          {english ? "Contact" : "商务合作"}
-        </Button>
+        <Link className="button" href={projectHref || (english ? "/en/contact/" : "/contact/")}>
+          {projectHref
+            ? english ? "Discuss a similar project" : "咨询类似项目"
+            : english ? "Discuss a project" : "咨询项目"}
+          <ArrowUpRight size={19} aria-hidden="true" />
+        </Link>
       </div>
     </section>
   );

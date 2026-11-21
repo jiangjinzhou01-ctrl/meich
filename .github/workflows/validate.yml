@@ -7,8 +7,6 @@ permissions:
 jobs:
   production-builds:
     runs-on: ubuntu-latest
-    env:
-      MGC_QA_REPORT: v3.0-motion.json
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -35,7 +33,7 @@ jobs:
           MGC_PLAYWRIGHT_MODULE: ${{ runner.temp }}/mgc-qa/node_modules/playwright
       - uses: actions/upload-artifact@v4
         with:
-          name: mgc-v3-pages-preview
+          name: mgc-pages-preview
           path: out/
       - run: npm run build:server
       - run: npm run package:server
@@ -45,11 +43,5 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: mgc-v3-browser-evidence
-          path: |
-            docs/qa/v3.0-browser.json
-            docs/qa/v3.0-motion.json
-            docs/qa/swipe-regression.json
-            docs/qa/v3.0/
-            docs/qa/culture-touch/
-            docs/qa/motion-*.png
+          name: mgc-browser-evidence
+          path: qa-results/redesign/

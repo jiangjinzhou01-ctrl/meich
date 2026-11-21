@@ -4,7 +4,10 @@ const variants: Record<
   { width: number; height: number; webp: number[]; avif?: boolean }
 > = {
   gaomiao: { width: 1920, height: 959, webp: [640, 960], avif: true },
+  "museum-platform": { width: 1400, height: 536, webp: [640] },
+  operations: { width: 768, height: 432, webp: [640] },
   reception: { width: 1600, height: 900, webp: [640, 960], avif: true },
+  "potala-gallery": { width: 762, height: 508, webp: [] },
   potala: { width: 1400, height: 673, webp: [640, 960], avif: true },
   liye: { width: 1080, height: 651, webp: [640, 960], avif: true },
   "liye-cinema": { width: 1080, height: 659, webp: [640, 960], avif: true },

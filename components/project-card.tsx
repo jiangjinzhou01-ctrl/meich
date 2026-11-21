@@ -1,98 +1,38 @@
-import { projectEnglish } from "@/lib/english-content";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { projects } from "@/lib/content";
-type Project = (typeof projects)[number];
+import { projectEnglish, projectNames } from "@/lib/english-content";
 import { languagePair } from "@/lib/routes";
 import { ResponsiveImage } from "./responsive-image";
-export const projectNames: Record<string, string> = {
-  "liye-qin-slips": "Liye Qin Manuscript Museum",
-  "potala-snow-city": "Potala Palace · Snow City",
-  gaomiao: "Gaomiao Site Museum",
-};
-export function ProjectVisual({
-  project: p,
-  large = false,
-  sizes = "100vw",
-}: {
-  project: Project;
-  large?: boolean;
-  sizes?: string;
-}) {
-  return (
-    <div className="project-visual" data-reveal="media" data-reveal-order="0">
-      <ResponsiveImage
-        name={p.kind}
-        alt={p.imageAlt}
-        priority={large}
-        sizes={sizes}
-      />
-    </div>
-  );
-}
+
+type Project = (typeof projects)[number];
+
 export function ProjectCard({
-  project: p,
-  index = 0,
+  project,
   english: en = false,
 }: {
   project: Project;
-  index?: number;
   english?: boolean;
 }) {
-  const href = en
-    ? languagePair("/cases/" + p.slug + "/").en
-    : "/cases/" + p.slug + "/";
+  const pair = languagePair("/cases/" + project.slug + "/");
+  const title = en ? projectNames[project.slug] : project.title;
+  const photo = project.kind === "liye" ? "liye-cinema" : project.kind === "potala" ? "potala-gallery" : project.kind;
+  const alt = project.kind === "liye"
+    ? en ? "The museum’s immersive cinema" : "里耶古城（秦简）博物馆碗幕影院"
+    : project.kind === "potala"
+      ? en ? "Inside the Snow City exhibition" : "布达拉宫雪城展陈现场"
+      : en ? "Gaomiao Site Museum entrance" : project.imageAlt;
   return (
-    <Link
-      href={href}
-      prefetch={false}
-      data-reveal-group
-      data-nav-tone="dark"
-      data-scene={`${index + 1} / 03 · ${en ? projectNames[p.slug] : p.title}`}
-      className={
-        "project-card selected-project-" + index + " climate-" + p.kind
-      }
-    >
-      <span className="project-editorial-label">
-        {en
-          ? {
-              gaomiao: "SPACE / NARRATIVE",
-              liye: "WRITING / INTERPRETATION",
-              potala: "ARCHITECTURE / CULTURE",
-            }[p.kind]
-          : {
-              gaomiao: "空间 · 叙事",
-              liye: "文字 · 释读",
-              potala: "建筑 · 文化",
-            }[p.kind]}
-      </span>
-      <ProjectVisual
-        project={p}
-        sizes={index === 0 ? "100vw" : "(max-width:1023px) 100vw,50vw"}
-      />
-      <div className="project-scrim" />
-      <div className="project-film-copy">
-        <div
-          className="project-meta"
-          data-reveal="content"
-          data-reveal-order="0"
-        >
-          <span>0{index + 1}</span>
-          <span>{en ? "Selected work" : p.type}</span>
-          <span>{p.year || ""}</span>
+    <Link className="editorial-project-card" href={en ? pair.en : pair.zh} prefetch={false}>
+      <div className="editorial-project-photo">
+        <ResponsiveImage name={photo} alt={alt} sizes="(max-width: 700px) 92vw, 31vw" />
+      </div>
+      <div className="editorial-project-line">
+        <div>
+          <p>{en ? projectEnglish[project.slug].role : project.service}</p>
+          <h3>{title}</h3>
         </div>
-        <h3 data-reveal="editorial">
-          {en ? projectNames[p.slug] : p.title}
-          <ArrowUpRight size={28} />
-        </h3>
-        <p data-reveal="content">
-          {en ? projectEnglish[p.slug].description : p.description}
-        </p>
-        <span className="project-role" data-reveal="content">
-          {en
-            ? "MGC / " + projectEnglish[p.slug].role
-            : "美创职责 / " + p.service}
-        </span>
+        <ArrowUpRight size={21} aria-hidden="true" />
       </div>
     </Link>
   );

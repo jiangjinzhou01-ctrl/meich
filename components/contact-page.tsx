@@ -1,70 +1,51 @@
-import { PageHero } from "./ui";
-import { CopyAddress } from "./copy-address";
+import { ArrowUpRight, MapPin, Phone } from "lucide-react";
+import { address, phone, phoneHref, projects } from "@/lib/content";
+import { projectNames } from "@/lib/english-content";
+import { caseCatalogFor } from "@/lib/source";
 import { ContactForm } from "./contact-form";
-import { phone, phoneHref, address } from "@/lib/content";
+import { CopyAddress } from "./copy-address";
+import { PageHero } from "./ui";
+
 export function ContactPage({ english: en = false }: { english?: boolean }) {
+  const projectTitles = {
+    ...Object.fromEntries(caseCatalogFor(en).map((item) => [item.path.split("/").pop()!, item.title])),
+    ...Object.fromEntries(projects.map((project) => [
+      project.slug, en ? projectNames[project.slug] : project.title,
+    ])),
+  };
   return (
     <>
       <PageHero
-        label={en ? "Contact" : "联系我们"}
-        title={
-          en ? (
-            <>
-              The next cultural experience.
-              <br />
-              Starts with a conversation.
-            </>
-          ) : (
-            <>
-              下一段文化体验，
-              <br />
-              从一次对话开始。
-            </>
-          )
-        }
-        description={
-          en
-            ? "Tell us about your context, your goals, or an idea taking shape. Explore the connection between culture, creativity and technology."
-            : "告诉我们你的场景、目标，或一个还在萌芽的想法。一起寻找文化、创意与技术的结合方式。"
-        }
+        path={en ? "/en/contact/" : "/contact/"}
+        label=""
+        title={en ? "Discuss a project" : "项目咨询"}
+        description={en
+          ? "Tell us the venue, the audience and what you want to make. A brief outline is enough to start."
+          : "可以从场地、观众和想做的事聊起。已有展览主题或馆藏资料，也可以一起说说。"}
       />
-      <section className="container contact-layout">
-        <aside data-reveal-group>
-          <h2 data-reveal="editorial">{en ? "Start here." : "从这里开始。"}</h2>
-          <div className="contact-directions">
-            <span>{en ? "Projects" : "项目咨询"}</span>
-            <span>{en ? "Collaboration" : "商务合作"}</span>
-            <span>{en ? "Partnerships" : "合作伙伴"}</span>
-            <span>{en ? "Careers" : "人才交流"}</span>
-          </div>
-          <div className="contact-info">
-            <span>{en ? "Business enquiries" : "商务咨询"}</span>
-            <a className="contact-phone" href={phoneHref}>
-              {phone}
-            </a>
-            <span>{en ? "Visit" : "来访地址"}</span>
-            <p data-reveal="content">
-              {en
-                ? "Building 2, Meixi Lake International R&D Center, 76 Meixihu Road, Yuelu District, Changsha, Hunan, China"
-                : address}
-            </p>
+      <section className="container contact-layout editorial-contact">
+        <div className="contact-call">
+          <h2><Phone size={18} aria-hidden="true" />{en ? "Business enquiries" : "商务电话"}</h2>
+          <a href={phoneHref} className="contact-phone">{phone}</a>
+        </div>
+        <ContactForm english={en} projectTitles={projectTitles} />
+        <div className="contact-visit">
+          <h2><MapPin size={19} aria-hidden="true" />{en ? "Visit our Changsha office" : "长沙办公地址"}</h2>
+          <p>
+            {en ? "Building 2, Meixi Lake International R&D Center, 76 Meixihu Road, Yuelu District, Changsha, Hunan" : address}
+          </p>
+          <div className="contact-visit-actions">
             <CopyAddress english={en} />
-            <p data-reveal="content">
-              {en
-                ? "Please call ahead to arrange a visit."
-                : "到访前欢迎电话预约，便于安排接待。"}
-            </p>
             <a
               className="text-link"
               href="https://uri.amap.com/search?keyword=%E6%B9%96%E5%8D%97%E7%BE%8E%E5%88%9B%E6%95%B0%E5%AD%97%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&city=%E9%95%BF%E6%B2%99&view=map"
               target="_blank"
               rel="noreferrer"
             >
-              {en ? "Open Amap ↗" : "打开高德地图 ↗"}
+              {en ? "Open Amap" : "打开高德地图"}<ArrowUpRight size={15} aria-hidden="true" />
             </a>
           </div>
-        </aside>
-        <ContactForm english={en} />
+        </div>
       </section>
     </>
   );

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
-import { phone, phoneHref, projects } from "@/lib/content";
+import { phone, phoneHref } from "@/lib/content";
 type Values = {
   name: string;
   company: string;
@@ -43,7 +43,13 @@ const budgetEn = [
   "Above CNY 500,000",
   "Let's discuss",
 ];
-export function ContactForm({ english: en = false }: { english?: boolean }) {
+export function ContactForm({
+  english: en = false,
+  projectTitles,
+}: {
+  english?: boolean;
+  projectTitles: Record<string, string>;
+}) {
   const t = (zh: string, english: string) => (en ? english : zh);
   const [v, setV] = useState<Values>(initial);
   const [ready, setReady] = useState(false);
@@ -64,13 +70,14 @@ export function ContactForm({ english: en = false }: { english?: boolean }) {
     setReady(true);
     const params = new URLSearchParams(location.search);
     const type = params.get("type");
-    const project = projects.find((p) => p.slug === params.get("project"));
+    const slug = params.get("project") || "";
+    const project = Object.hasOwn(projectTitles, slug) ? projectTitles[slug] : undefined;
     if (project)
       setV((x) => ({
         ...x,
         message: en
-          ? `I would like to discuss a project related to ${project.en}. `
-          : `希望了解与「${project.title}」类似的项目合作。`,
+          ? `I would like to discuss a project related to ${project}. `
+          : `希望了解与「${project}」类似的项目合作。`,
       }));
     if (type === "partner") setV((x) => ({ ...x, type: "合作伙伴" }));
     if (type === "career") setV((x) => ({ ...x, type: "人才交流" }));
@@ -228,6 +235,7 @@ export function ContactForm({ english: en = false }: { english?: boolean }) {
       noValidate
       aria-busy={busy}
     >
+      <h2 className="contact-form-heading">{t("介绍你的项目", "Tell us about your project")}</h2>
       <div className="form-mode">
         <span>
           {endpoint
@@ -241,8 +249,8 @@ export function ContactForm({ english: en = false }: { english?: boolean }) {
                 "Send through the configured company endpoint.",
               )
             : t(
-                "先整理想法，再选择沟通方式。内容不会自动发送。",
-                "Prepare your ideas, then choose how to connect. Nothing is sent automatically.",
+                "整理后可复制或下载需求，再致电确认发送方式。",
+                "Copy or download your brief, then call to arrange delivery.",
               )}
         </p>
       </div>

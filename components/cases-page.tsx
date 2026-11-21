@@ -1,65 +1,33 @@
-import { PageHero, ContactCTA } from "./ui";
-import { ProjectCard } from "./project-card";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { caseCatalogFor, catalogFilters } from "@/lib/source";
 import { Catalog } from "./catalog";
-import { catalogFor, catalogFilters } from "@/lib/source";
-import { projects } from "@/lib/content";
+import { ContactCTA, PageHero } from "./ui";
+
 export function CasesPage({ english: en = false }: { english?: boolean }) {
-  const prefix = en ? "/en/cases" : "/cases";
-  const highlighted = new Set(
-    projects.map((p) =>
-      en
-        ? {
-            "liye-qin-slips": "/en/cases/brochure-2026-liye-qin-slips",
-            "potala-snow-city": "/en/cases/brochure-2026-potala-snow-city",
-            gaomiao: "/en/cases/gaomiao",
-          }[p.slug]
-        : `/cases/${p.slug}`,
-    ),
-  );
+  const prefix = en ? "/en" : "";
   return (
     <>
       <PageHero
-        label={en ? "Selected work" : "项目案例"}
-        title={
-          en ? (
-            <>Culture, made tangible.</>
-          ) : (
-            <>
-              把文化的深度，
-              <br />
-              变成真实的体验。
-            </>
-          )
-        }
-        description={
-          en
-            ? "Exhibitions, cultural spaces and digital experiences. Explore the project, the approach and our role."
-            : "从文物与历史，到空间、影像和互动。看项目如何落地，也看美创具体负责什么。"
-        }
-        path={`${prefix}/`}
+        path={prefix + "/cases/"}
+        label=""
+        title={en ? "Project archive" : "项目案例"}
+        description={en
+          ? "Explore exhibitions, museum experiences and cultural projects. Search by name, venue or service."
+          : "查找展览、数字文博与文化空间项目，了解美创在真实现场做了什么。"}
       />
-      <section className="container work-list">
-        <h2 className="sr-only">{en ? "Selected work" : "精选作品"}</h2>
-        <div className="selected-work-grid">
-          {projects.map((p, i) => (
-            <ProjectCard key={p.slug} project={p} index={i} english={en} />
-          ))}
-        </div>
-      </section>
-      <section className="container case-catalog section" id="case-results">
-        <h2 data-reveal="editorial">{en ? "Explore the complete archive." : "继续探索完整案例库。"}</h2>
-        <p data-reveal="content" className="catalog-intro">
-          {en
-            ? "Search by project, cultural subject, venue or capability."
-            : "按项目、文化主题、场馆和能力查找作品。"}
-        </p>
+      <section className="container project-index" id="case-results">
         <Catalog
-          items={catalogFor(prefix).filter(
-            (i) => !highlighted.has(i.path.replace(/\/$/, "")),
-          )}
-          filters={catalogFilters(prefix)}
+          items={caseCatalogFor(en)}
+          filters={catalogFilters(prefix + "/cases")}
           english={en}
+          searchLabel={en ? "Search projects" : "搜索案例"}
+          projectIndex
         />
+        <Link className="editorial-link" href={prefix + "/videos/"}>
+          {en ? "Explore project films" : "浏览项目影像"}
+          <ArrowRight size={17} aria-hidden="true" />
+        </Link>
       </section>
       <ContactCTA english={en} />
     </>

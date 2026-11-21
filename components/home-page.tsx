@@ -1,191 +1,140 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { HeroExperience } from "./hero-experience";
-import { FilmDialog } from "./film-dialog";
-import { ArtifactJourney } from "./artifact-journey";
-import { CultureLab } from "./culture-lab";
-import { ResponsiveImage } from "./responsive-image";
+import { ArrowDownRight, ArrowRight, ArrowUpRight } from "lucide-react";
+import { evidence } from "@/lib/evidence";
+import { company, projects, services } from "@/lib/content";
+import { serviceEnglish } from "@/lib/english-content";
+import { languagePair } from "@/lib/routes";
 import { ProjectCard } from "./project-card";
-import { EvidenceList } from "./evidence";
+import { ResponsiveImage } from "./responsive-image";
 import { ContactCTA } from "./ui";
-import { projects, asset } from "@/lib/content";
+
 export function HomePage({ english: en = false }: { english?: boolean }) {
-  const pre = en ? "/en" : "";
+  const prefix = en ? "/en" : "";
+  const [liye, potala, gaomiao] = projects;
+  const liyePath = languagePair("/cases/liye-qin-slips/");
+  const recognition = evidence[0];
+
   return (
-    <>
-      <HeroExperience english={en} />
-      <section
-        className="selected-work"
-        id="selected-work"
-        data-scene={en ? "Selected work" : "精选案例"}
-      >
-        <div className="container work-introduction" data-reveal-group>
-          <p className="section-label">
+    <div className="editorial-home" lang={en ? "en" : undefined}>
+      <section className="container home-opening">
+        <div className="home-opening-copy">
+          <p className="editorial-kicker">{en ? "MGC Digital · Changsha" : company}</p>
+          <h1 className="editorial-title">
+            {en ? (
+              <>Digital experiences <em>for cultural spaces</em></>
+            ) : (
+              <>为文化空间<em>设计数字体验</em></>
+            )}
+          </h1>
+          <p className="home-opening-intro">
             {en
-              ? "01 / Selected cultural experiences"
-              : "01 / 文化，落到真实现场"}
+              ? "We design exhibitions, make digital content and build interactive exhibits for museums and cultural destinations."
+              : "为博物馆、展馆和文旅场所设计展览、制作数字内容，并把互动展项落到现场。"}
           </p>
-          <h2 data-reveal="editorial">
-            {en ? "Culture, made tangible." : "让作品，讲述美创。"}
-          </h2>
+          <div className="editorial-actions">
+            <Link className="button editorial-primary" href={prefix + "/cases/"}>
+              {en ? "Explore projects" : "看项目"}
+              <ArrowDownRight size={18} aria-hidden="true" />
+            </Link>
+            <Link className="button editorial-secondary" href={prefix + "/contact/"}>
+              {en ? "Discuss a project" : "咨询项目"}
+              <ArrowUpRight size={17} aria-hidden="true" />
+            </Link>
+          </div>
+        </div>
+        <figure className="opening-plate">
           <Link
-            className="text-link"
-            data-reveal="interaction"
-            href={pre + "/cases/"}
+            href={en ? liyePath.en : liyePath.zh}
+            aria-label={en ? "View the Liye Qin Manuscript Museum project" : "查看里耶古城（秦简）博物馆项目"}
+            className="opening-photography"
           >
-            {en ? "All work" : "全部案例"}
-            <ArrowUpRight size={18} />
+            <ResponsiveImage
+              className="opening-photograph"
+              name="liye"
+              alt={en ? "Interior of the Liye Qin Manuscript Museum" : liye.imageAlt}
+              priority
+              sizes="(max-width: 920px) 92vw, 58vw"
+            />
+            <ResponsiveImage
+              className="opening-detail"
+              name="liye-details"
+              alt={en ? "Detail of the Liye manuscript interpretation panel" : "里耶秦简释读图局部"}
+              sizes="(max-width: 600px) 120px, 200px"
+            />
+          </Link>
+          <figcaption>
+            <span className="opening-caption-title">{en ? "Liye Qin Manuscript Museum" : liye.title}</span>
+            <span>{en ? "Exhibition design · 2025" : "展陈设计 · 2025"}</span>
+          </figcaption>
+        </figure>
+      </section>
+
+      <section className="container home-work" id="selected-work">
+        <div className="editorial-section-heading">
+          <h2>{en ? "Selected projects" : "精选项目"}</h2>
+          <Link className="editorial-link" href={prefix + "/cases/"}>
+            {en ? "Browse the project archive" : "浏览案例库"}
+            <ArrowRight size={18} aria-hidden="true" />
           </Link>
         </div>
-        <div className="selected-work-grid">
-          {[projects[2], projects[0], projects[1]].map((p, i) => (
-            <ProjectCard key={p.slug} project={p} index={i} english={en} />
+        <div className="home-project-grid">
+          {[liye, gaomiao, potala].map((project) => (
+            <ProjectCard key={project.slug} project={project} english={en} />
           ))}
         </div>
       </section>
-      <section
-        className="quiet-manifesto"
-        data-scene={en ? "Cultural understanding" : "理解文化"}
-      >
-        <img
-          className="archive-underlay"
-          src={asset("/brand/liye-details.webp")}
-          alt=""
-          width={1080}
-          height={764}
-          loading="lazy"
-        />
-        <div className="container" data-reveal-group>
-          <p
-            className="manifesto-lead"
-            data-reveal="editorial"
-            data-reveal-order="0"
-          >
-            {en
-              ? "Technology does not replace culture."
-              : "技术不是文化的替代。"}
-          </p>
-          <h2 data-reveal="cinematic">
-            {en
-              ? "It gives culture\nnew ways to speak."
-              : "它让文化，\n拥有新的表达方式。"}
-          </h2>
-          <p className="manifesto-body" data-reveal="content">
-            {en
-              ? "We begin with content, connecting cultural research, creative design, digital production and implementation."
-              : "我们从内容出发，连接文化研究、创意设计、数字生产与工程实施。让历史被理解，让体验真正发生。"}
-          </p>
-          <FilmDialog english={en} />
+
+      <section className="home-expertise">
+        <div className="container home-expertise-grid">
+          <div className="home-expertise-copy">
+            <h2>{en ? "What we do" : "业务与产品"}</h2>
+            <p>
+              {en
+                ? "Start with the collection, the venue and the visitor. Bring the design, the digital work and the delivery together."
+                : "从馆藏资料、场地与观众需求出发，把内容策划、创意设计和工程实施接起来。"}
+            </p>
+            <Link className="editorial-link" href={prefix + "/services/"}>
+              {en ? "Explore services and products" : "了解服务与交付"}
+              <ArrowRight size={18} aria-hidden="true" />
+            </Link>
+          </div>
+          <ul className="expertise-list">
+            {services.map((service, index) => (
+              <li key={service.id}>
+                <Link href={prefix + "/services/#" + service.id}>
+                  <strong>{en ? service.enTitle : service.title}</strong>
+                  <span>{(en ? serviceEnglish[index].items : service.items).slice(0, 2).join(" / ")}</span>
+                  <ArrowUpRight size={20} aria-hidden="true" />
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
-      <ArtifactJourney english={en} />
-      <CultureLab english={en} />
-      <section
-        className="research-preview"
-        data-nav-tone="dark"
-        data-scene="Research"
-      >
-        <div className="research-preview-media">
-          <ResponsiveImage
-            name="liye-details"
-            alt={en ? "Liye manuscript interpretation" : "里耶秦简释读资料"}
-            sizes="100vw"
-          />
-        </div>
-        <div className="container research-preview-content" data-reveal-group>
-          <p
-            className="research-label"
-            data-reveal="content"
-            data-reveal-order="0"
-          >
-            Research & Development
-          </p>
-          <h2 data-reveal="editorial">
+
+      <section className="container home-research">
+        <div>
+          <h2>{en ? "Research and practice" : "研发与实践"}</h2>
+          <p>
             {en
-              ? "A question today.\nAn experience tomorrow."
-              : "今天的研究，\n成为明天的体验。"}
-          </h2>
-          <p data-reveal="content">
-            {en
-              ? "3D digitization, museum software and interactive systems. Research grounded in cultural questions."
-              : "文物三维数字化、智慧软件与互动系统。从文化现场的问题出发，把研究连接到应用。"}
+              ? "Explore 3D heritage capture, museum software and new ways to interpret cultural collections."
+              : "围绕文物三维采集、智慧博物馆软件和多媒体交互，探索文化资料在展示与研究中的应用。"}
           </p>
-          <Link
-            className="scene-link"
-            data-reveal="interaction"
-            href={pre + "/research/"}
-          >
-            {en ? "Explore research" : "走进研发"}
-            <ArrowUpRight size={20} />
+          <Link className="editorial-link" href={prefix + "/research/"}>
+            {en ? "Explore MGC research" : "查看研发方向"}
+            <ArrowRight size={18} aria-hidden="true" />
           </Link>
         </div>
-      </section>
-      <section
-        className="container section home-evidence"
-        data-scene="Evidence"
-      >
-        <h2 data-reveal="editorial">
-          {en ? "Evidence, in the open." : "能力，有公开的来处。"}
-        </h2>
-        <EvidenceList english={en} compact />
-        <Link
-          href={pre + "/research/#evidence"}
-          className="text-link"
-          data-reveal="interaction"
-        >
-          {en ? "Read public records" : "查看公开记录"}
-          <ArrowUpRight size={18} />
-        </Link>
-      </section>
-      <section
-        className="container section home-about"
-        data-scene={en ? "About MGC" : "关于美创"}
-      >
-        <div className="home-about-title" data-reveal-group>
-          <h2 data-reveal="editorial">
-            {en
-              ? "A continuing\ncultural practice."
-              : "从文化出发，\n持续创造。"}
-          </h2>
-          <p data-reveal="content">
-            {en
-              ? "Based in Changsha. Connecting research, creativity, digital production and engineering."
-              : "立足长沙，连接文化研究、创意设计、数字生产与工程交付。"}
-          </p>
-          <Link
-            className="text-link"
-            data-reveal="interaction"
-            href={pre + "/about/"}
-          >
-            {en ? "Meet MGC" : "认识美创"}
-            <ArrowUpRight size={18} />
-          </Link>
-        </div>
-        <div className="home-about-record">
-          <ResponsiveImage
-            name="reception"
-            alt={en ? "MGC office reception" : "美创数字长沙办公空间"}
-            sizes="(max-width:767px) 100vw,50vw"
-          />
-          <dl data-reveal="content">
-            <div>
-              <dt>2008</dt>
-              <dd>{en ? "Brand practice begins" : "品牌实践起点"}</dd>
-            </div>
-            <div>
-              <dt>2015</dt>
-              <dd>{en ? "Legal entity established" : "工商主体成立"}</dd>
-            </div>
-            <div>
-              <dt>2024</dt>
-              <dd>
-                {en ? "Provincial technology center" : "省级企业技术中心认定"}
-              </dd>
-            </div>
-          </dl>
+        <div className="home-recognition">
+          <h3>{en ? recognition.en : recognition.title}</h3>
+          <p>{en ? recognition.enText : recognition.text}</p>
+          <a className="editorial-link" href={recognition.url} target="_blank" rel="noreferrer">
+            {en ? "Hunan industry and technology department" : recognition.source}
+            <ArrowUpRight size={17} aria-hidden="true" />
+          </a>
         </div>
       </section>
       <ContactCTA english={en} />
-    </>
+    </div>
   );
 }

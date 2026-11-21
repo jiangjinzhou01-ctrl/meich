@@ -3,13 +3,6 @@ export const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 export const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 export const asset = (path: string) => `${basePath}${path}`;
-export const navigation = [
-  { label: "能力", href: "/services/" },
-  { label: "案例", href: "/cases/" },
-  { label: "Culture × AI", href: "/culture-ai/" },
-  { label: "研发", href: "/research/" },
-  { label: "关于", href: "/about/" },
-];
 export const phone = "0731-89728572";
 export const phoneHref = "tel:+8673189728572";
 export const address = "湖南省长沙市岳麓区梅溪湖路76号，梅溪湖国际研发中心2栋";
@@ -20,6 +13,7 @@ export const services = [
     image: "/brand/immersive-cinema.webp",
     num: "01",
     en: "DIGITAL EXHIBITION",
+    enTitle: "Digital exhibitions",
     title: "数字展示",
     description:
       "让空间、影像与互动共同讲述文化故事，构建可感知、可参与的展示体验。",
@@ -31,6 +25,7 @@ export const services = [
     image: "/brand/museum-platform.webp",
     num: "02",
     en: "SMART MUSEUM",
+    enTitle: "Digital museums",
     title: "数字文博",
     description:
       "连接文物、场馆与观众，让文化遗产的保护、管理与传播延伸到数字世界。",
@@ -42,6 +37,7 @@ export const services = [
     image: "/brand/creative.webp",
     num: "03",
     en: "CULTURAL CREATION",
+    enTitle: "Cultural product design",
     title: "数字文创",
     description: "从馆藏与地域文化提取灵感，连接创意设计、产品制作与互动体验。",
     items: ["文博 IP 与文创开发", "文旅场景产品定制", "产品生产与渠道协作"],
@@ -52,6 +48,7 @@ export const services = [
     image: "/brand/operations.webp",
     num: "04",
     en: "DIGITAL OPERATIONS",
+    enTitle: "Digital operations",
     title: "数字运营",
     description: "围绕文化空间、内容传播与活动组织，让一次体验成为持续的连接。",
     items: ["文化空间运营", "短视频 IP 与新媒体运营", "文化活动运营"],

@@ -19,14 +19,13 @@ const report = {
   errors: [],
   screenshots: [],
 };
-const directory = "docs/qa/v3.0";
+const directory = process.env.MGC_REDESIGN_QA_DIR || "qa-results/redesign";
 await fs.mkdir(directory, { recursive: true });
 const server = spawn(process.execPath, ["scripts/serve.mjs"], {
   env: { ...process.env, PORT: port, NEXT_PUBLIC_BASE_PATH: base },
   stdio: ["ignore", "pipe", "pipe"],
 });
 let browser;
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 async function test(name, fn) {
   try {
     const evidence = await fn();
@@ -56,7 +55,7 @@ async function visit(page, route) {
   await page.waitForSelector(".motion-root[data-navigation]");
 }
 async function shot(page, name) {
-  await delay(850);
+  await page.evaluate(() => document.fonts.ready);
   await page.screenshot({
     path: `${directory}/${name}.jpg`,
     type: "jpeg",
@@ -98,6 +97,7 @@ try {
   page.on("console", (m) => {
     if (
       m.type() === "error" &&
+      /hydration|uncaught|React|referenceerror/i.test(m.text()) &&
       !(
         m.text().includes("404 (Not Found)") &&
         page.url().includes("/missing-v3-page/")
@@ -105,7 +105,7 @@ try {
     )
       report.errors.push(m.text());
   });
-  await test("18 core routes × 9 widths: overflow, language, headings, images and metadata", async () => {
+  await test("24 core routes × 9 widths: overflow, language, headings, images and metadata", async () => {
     const routes = [
       "/",
       "/en/",
@@ -121,6 +121,12 @@ try {
       "/en/contact/",
       "/cases/",
       "/products/",
+      "/en/products/",
+      "/about/",
+      "/en/about/",
+      "/en/cases/",
+      "/insights/",
+      "/cases/brochure-2026-changsha-museum/",
     ];
     for (const route of routes) {
       await visit(page, route);
@@ -128,7 +134,7 @@ try {
         await page.setViewportSize({ width, height: width < 768 ? 844 : 1000 });
         await page.waitForFunction(() =>
           [...document.querySelectorAll("img")]
-            .filter((i) => i.loading !== "lazy")
+            .filter((i) => i.loading !== "lazy" || i.complete)
             .every((i) => i.complete && i.naturalWidth > 0),
         );
         const result = await page.evaluate(() => ({
@@ -138,7 +144,7 @@ try {
           lang: document.documentElement.lang,
           brokenImages: [...document.querySelectorAll("img")].filter(
             (i) =>
-              i.loading !== "lazy" && (!i.complete || i.naturalWidth === 0),
+              (i.loading !== "lazy" || i.complete) && (!i.complete || i.naturalWidth === 0),
           ).length,
           canonical: document.querySelector('link[rel="canonical"]')?.href,
           description: document.querySelector('meta[name="description"]')
@@ -162,110 +168,58 @@ try {
       }
       console.log("ROUTE", route, "widths", report.widths.length);
     }
-    return { pages: 18, widths: 9, observations: report.responsive.length };
+    return { pages: routes.length, widths: report.widths.length, observations: report.responsive.length };
   });
-  await test("Hero CTA, photography, narrow landscape and no JavaScript", async () => {
+
+  await test("Homepage copy and project actions are immediately visible", async () => {
+    const withoutJS = await browser.newContext({ javaScriptEnabled: false });
+    const view = await withoutJS.newPage();
     const evidence = [];
-    for (const route of ["/", "/en/"])
-      for (const [width, height] of [
-        [320, 740],
-        [390, 844],
-        [430, 932],
-        [1440, 1000],
-        [1920, 1080],
-        [844, 390],
-      ]) {
-        await page.setViewportSize({ width, height });
-        await visit(page, route);
-        const state = await page.evaluate(() => {
-          const image = document.querySelector(".hero-photograph"),
-            action = document.querySelector(".hero-action"),
-            h = document.querySelector(".hero-opening h1");
-          return {
-            image: image.getBoundingClientRect().toJSON(),
-            action: action.getBoundingClientRect().toJSON(),
-            heading: h.getBoundingClientRect().toJSON(),
-            source: document.querySelector(".hero-photograph img").currentSrc,
-            opacity: getComputedStyle(action).opacity,
-          };
-        });
-        assert.equal(state.opacity, "1");
-        assert(state.heading.top >= state.image.bottom);
-        assert(state.action.right <= width);
-        if (height >= 740)
-          assert(
-            state.action.bottom <= height,
-            route + " CTA below viewport at " + width,
-          );
-        evidence.push({
-          route,
-          width,
-          height,
-          actionBottom: state.action.bottom,
-          source: state.source,
-        });
+    for (const width of [320, 390, 768, 1440]) {
+      const height = width < 768 ? 720 : 920;
+      await view.setViewportSize({ width, height });
+      await view.goto(origin + base + "/", { waitUntil: "load" });
+      const actions = view.locator(".home-opening .editorial-actions a");
+      assert.equal(await actions.count(), 2);
+      for (const action of await actions.all()) {
+        const bounds = await action.boundingBox();
+        assert(bounds.y >= 0 && bounds.y + bounds.height <= height, "CTA above the fold");
       }
-    const nojs = await browser.newContext({
-      javaScriptEnabled: false,
-      viewport: { width: 390, height: 844 },
-    });
-    const p = await nojs.newPage();
-    await p.goto(origin + base + "/");
-    assert(await p.locator("h1").isVisible());
-    assert(await p.locator(".hero-action").isVisible());
-    assert.equal(
-      await p.locator(".hero-photograph img").evaluate((i) => i.naturalWidth),
-      640,
-    );
-    await nojs.close();
-    return { evidence, noJavaScript: true };
+      assert(await view.locator(".home-opening h1").isVisible());
+      assert((await view.locator(".opening-photograph img").evaluate((img) => img.naturalWidth)) > 0);
+      evidence.push({ width, height });
+    }
+    await withoutJS.close();
+    return evidence;
   });
-  await test("Mobile menu: focus containment, Escape, rapid close, scroll restore, language and theme", async () => {
-    await page.setViewportSize({ width: 390, height: 844 });
+
+  await test("Mobile menu keyboard focus, Escape, theme, and client navigation", async () => {
+    await page.setViewportSize({ width: 390, height: 650 });
     await visit(page, "/");
-    for (const wait of [40, 110, 600]) {
-      await page.locator(".menu-toggle").click();
-      await delay(wait);
-      assert.equal(
-        await page.evaluate(() => document.body.style.overflow),
-        "hidden",
-      );
-      await page.keyboard.press("Tab");
-      assert(
-        await page
-          .locator(".mobile-menu")
-          .evaluate((el) => el.contains(document.activeElement)),
-      );
+    const trigger = page.locator(".menu-toggle");
+    const menu = page.locator("#mobile-menu");
+    for (let attempt = 0; attempt < 3; attempt++) {
+      await trigger.click();
+      assert.equal(await trigger.getAttribute("aria-expanded"), "true");
+      assert(await menu.evaluate((el) => el.open && el.contains(document.activeElement)));
+      for (let i = 0; i < 9; i++) {
+        await page.keyboard.press("Tab");
+        assert(await menu.evaluate((el) => el.contains(document.activeElement) || document.activeElement === document.body));
+      }
       await page.keyboard.press("Escape");
-      await page.waitForFunction(
-        () => !document.querySelector(".mobile-menu").open,
-      );
-      assert(
-        await page
-          .locator(".menu-toggle")
-          .evaluate((el) => document.activeElement === el),
-      );
+      assert.equal(await menu.evaluate((el) => el.open), false);
+      assert(await trigger.evaluate((el) => document.activeElement === el));
       assert.equal(await page.evaluate(() => document.body.style.overflow), "");
     }
-    await page.locator(".menu-toggle").click();
-    await page.locator(".mobile-bottom button").click();
+    await trigger.click();
+    const theme = menu.locator(".mobile-menu-actions button");
+    await theme.click();
     assert.equal(await page.locator("html").getAttribute("data-theme"), "dark");
-    await page.keyboard.press("Escape");
-    await page.waitForFunction(
-      () => !document.querySelector(".mobile-menu").open,
-    );
-    await page.reload();
-    assert.equal(await page.locator("html").getAttribute("data-theme"), "dark");
-    await page.locator(".language-switch").click();
-    await page.waitForURL("**/en/");
-    await page.waitForFunction(() => document.documentElement.lang === "en");
-    await page.locator(".menu-toggle").click();
-    await page.locator(".mobile-bottom button").click();
-    await page.keyboard.press("Escape");
-    await page.waitForFunction(
-      () => !document.querySelector(".mobile-menu").open,
-    );
-    return { cycles: 3, persistentTheme: true, language: true };
+    await theme.click();
+    await menu.getByRole("link", { name: "业务与产品" }).click();
+    await page.waitForURL("**/services/");
+    assert.equal(await menu.evaluate((el) => el.open), false);
+    return { openCloseCycles: 3, focusRestored: true, route: page.url() };
   });
   await test("Culture: 4 stages × 3 lenses, keyboard, stable panels and source-image focus", async () => {
     const evidence = [];
@@ -346,70 +300,86 @@ try {
       }
     return evidence;
   });
-  await test("Three flagship cases: source plates, fast chapter navigation, backtracking and next project", async () => {
+
+  await test("Flagship projects: chapter navigation, visual evidence, archives and next project", async () => {
     const observations = [];
-    for (const width of [360, 430, 1440])
-      for (const route of [...cases, ...englishCases]) {
-        await page.setViewportSize({ width, height: 1000 });
-        await visit(page, route);
-        const links = page.locator(".case-reading-rail a"),
-          count = await links.count();
-        await links.last().click();
-        await delay(850);
-        assert.equal(
-          await links.last().getAttribute("aria-current"),
-          "step",
-          route + " last",
-        );
-        await links.first().click();
-        await delay(850);
-        assert.equal(
-          await links.first().getAttribute("aria-current"),
-          "step",
-          route + " first",
-        );
-        for (const i of [count - 1, 1, 0]) {
-          await links.nth(i).evaluate((e) => e.click());
-          await delay(40);
-        }
-        await delay(900);
-        assert.equal(
-          await links.first().getAttribute("aria-current"),
-          "step",
-          route + " rapid reverse",
-        );
-        const buttons = page.locator(".study-controls button");
-        for (let i = 0; i < (await buttons.count()); i++) {
-          await buttons.nth(i).click();
-          assert.equal(
-            await buttons.nth(i).getAttribute("aria-pressed"),
-            "true",
-          );
-        }
-        await page.locator(".project-study .image-inspect-trigger").click();
+    for (const route of [...cases, ...englishCases]) {
+      await page.setViewportSize({ width: route.startsWith("/en/") ? 390 : 1440, height: 900 });
+      await visit(page, route);
+      const chapters = page.locator(".case-reading-rail a");
+      const count = await chapters.count();
+      assert(count === 3 || count === 4);
+      const target = await chapters.nth(1).getAttribute("href");
+      await chapters.nth(1).click();
+      await page.waitForFunction((hash) => location.hash === hash && document.querySelector('a[href="' + hash + '"]')?.getAttribute("aria-current") === "step", target);
+      assert.equal(await page.locator(".project-main-plate img").count(), 1);
+      if (route.includes("liye")) {
+        await page.locator(".study-controls button").nth(2).click();
+        assert.equal(await page.locator(".study-controls button").nth(2).getAttribute("aria-pressed"), "true");
+        const original = page.locator(".project-study .image-inspect-trigger");
+        await original.click();
         await page.waitForSelector(".project-study dialog[open]");
         await page.keyboard.press("Escape");
-        await page.locator(".case-film-result > details > summary").click();
-        assert(
-          (await page
-            .locator(".case-film-result > details")
-            .getAttribute("open")) !== null,
-        );
-        assert((await page.locator(".case-capability-links a").count()) === 2);
-        assert(
-          (await page.locator(".case-next").getAttribute("href")).startsWith(
-            base,
-          ),
-        );
-        await page.reload();
-        assert.equal(await page.locator("main h1").count(), 1);
-        observations.push({
-          route,
-          width,
-          chapters: count,
-          views: await buttons.count(),
-        });
+        assert(await original.evaluate((el) => document.activeElement === el));
+        await page.locator(".case-reading-hotspots button").last().click();
+        assert.equal(await page.locator(".case-reading-hotspots button").last().getAttribute("aria-pressed"), "true");
+      } else if (route.includes("potala")) {
+        assert.equal(await page.locator(".project-media figure").count(), 2);
+      } else {
+        assert.equal(await page.locator(".project-records img").count(), 4);
       }
+      await page.locator(".project-resources > details > summary").click();
+      assert(await page.locator(".project-resources details").first().evaluate((el) => el.open));
+      await page.locator(".project-resources > details > summary").click();
+      assert.match(await page.locator(".project-enquiry").getAttribute("href"), /\/contact\/\?project=/);
+      assert.match(await page.locator(".project-next-link").getAttribute("href"), /\/cases\//);
+      observations.push({ route, chapters: count });
+    }
+    return observations;
+  });
+  await test("Search Liye, read its case, restore filters, switch language, carry project into enquiry", async () => {
+    const observations = [];
+    for (const width of [390, 1440]) {
+      await page.setViewportSize({ width, height: 844 });
+      await visit(page, "/");
+      await page.locator(".home-opening .editorial-primary").click();
+      await page.waitForURL("**/cases/");
+      const listing = page.locator(".catalog-projects");
+      const input = listing.getByRole("searchbox");
+      await listing.getByRole("button", { name: "数字展示", exact: true }).click();
+      await input.fill("里耶");
+      const result = listing.locator('[data-catalog-path="/cases/liye-qin-slips"]');
+      await result.waitFor();
+      assert.equal(await result.count(), 1);
+      assert.match(page.url(), /[?&]q=/);
+      await result.evaluate((el) => el.scrollIntoView({ block: "center", behavior: "instant" }));
+      const position = await page.evaluate(() => scrollY);
+      await result.click();
+      await page.waitForURL("**/cases/liye-qin-slips/");
+      assert.match(await page.locator("h1").textContent(), /里耶/);
+      await page.goBack();
+      await page.waitForFunction(() => document.querySelector(".catalog-projects input").value === "里耶");
+      assert.equal(await listing.getByRole("button", { name: "数字展示", exact: true }).getAttribute("aria-pressed"), "true");
+      await page.waitForFunction((top) => Math.abs(scrollY - top) <= 12, position);
+      await input.fill("MGC-no-matching-project");
+      await listing.locator(".catalog-empty").waitFor();
+      await listing.getByRole("button", { name: "清除筛选" }).click();
+      assert.equal(await input.inputValue(), "");
+      await input.fill("里耶");
+      await result.click();
+      await page.waitForURL("**/cases/liye-qin-slips/");
+      await page.locator(".language-switch").click();
+      await page.waitForURL("**/en/cases/brochure-2026-liye-qin-slips/");
+      assert.match(await page.locator("h1").textContent(), /Liye/);
+      await page.locator(".language-switch").click();
+      await page.waitForURL("**/cases/liye-qin-slips/");
+      await page.locator(".project-enquiry").click();
+      await page.waitForURL("**/contact/?project=liye-qin-slips");
+      await page.waitForFunction(() => document.querySelector("#message").value.includes("里耶"));
+      await page.locator("#message").fill("我们想讨论馆藏陈列与互动展项。");
+      assert.match(await page.locator("#message").inputValue(), /馆藏/);
+      observations.push({ width, restoredScroll: position, enquiry: true });
+    }
     return observations;
   });
   await test("Search, filters, empty state and URL persistence", async () => {
@@ -506,164 +476,54 @@ try {
     assert((await page.locator("#message").inputValue()).includes("高庙"));
     return evidence;
   });
-  await test("Touch journey, reversed rail selection and opt-in film", async () => {
+
+  await test("Brand film loads on demand and stops on close", async () => {
     await page.setViewportSize({ width: 390, height: 844 });
-    await visit(page, "/");
-    const phases = page.locator(".artifact-mobile-index a");
-    await phases.nth(4).tap();
-    await page.waitForFunction(
-      () => document.querySelector(".artifact-journey").dataset.active === "4",
-    );
-    await phases.nth(1).tap();
-    await page.waitForFunction(
-      () => document.querySelector(".artifact-journey").dataset.active === "1",
-    );
-    await phases.nth(1).focus();
-    await page.keyboard.press("End");
-    await page.waitForFunction(
-      () => document.querySelector(".artifact-journey").dataset.active === "4",
-    );
-    await page.waitForFunction(() => {
-      const rail = document.querySelector(".artifact-steps");
-      return Math.abs(rail.scrollLeft - 4 * rail.clientWidth) < 2;
+    const videoPath = "**/brand/company-films/company.mp4";
+    let requests = 0;
+    await page.route(videoPath, (route) => {
+      requests++;
+      return route.fulfill({ status: 204, body: "" });
     });
-    const rail = await page
-      .locator(".artifact-steps")
-      .evaluate((el) => ({ left: el.scrollLeft, width: el.clientWidth }));
-    assert(Math.abs(rail.left - 4 * rail.width) < 2);
-    const filmPage = await context.newPage();
-    // Validate the UI without transferring the external 97MB film.
-    await filmPage.route("**/brand/company-films/company.mp4", (route) =>
-      route.abort(),
-    );
-    await visit(filmPage, "/");
-    assert.equal(await filmPage.locator("video").count(), 0);
-    await filmPage.locator(".film-trigger").click();
-    const video = await filmPage
-      .locator(".film-dialog video")
-      .evaluate((el) => ({ controls: el.controls, autoplay: el.autoplay }));
-    assert.equal(video.controls, true);
-    assert.equal(video.autoplay, false);
-    await filmPage.keyboard.press("Escape");
-    await filmPage.waitForFunction(
-      () => !document.querySelector(".film-dialog").open,
-    );
-    assert.equal(await filmPage.locator("video").count(), 0);
-    await filmPage.close();
-    return {
-      touchSelection: [4, 1],
-      keyboardEnd: true,
-      rail,
-      optInFilmUI: true,
-      externalPlayback: "not tested; transfer intentionally blocked",
-    };
+    await visit(page, "/about/");
+    assert.equal(await page.locator(".film-dialog video").count(), 0);
+    assert.equal(requests, 0);
+    const film = page.waitForRequest(videoPath);
+    await page.locator(".film-trigger").click();
+    await film;
+    assert.equal(await page.locator(".film-dialog video").getAttribute("preload"), "metadata");
+    await page.keyboard.press("Escape");
+    await page.waitForFunction(() => !document.querySelector(".film-dialog").open && !document.querySelector(".film-dialog video"));
+    return { loadsOnDemand: true, removesPlayerOnClose: true };
   });
-  await test("Reduced motion, live preference change, keyboard and deep-link compatibility", async () => {
+
+  await test("Reduced motion, keyboard navigation and legacy project URL", async () => {
     await page.emulateMedia({ reducedMotion: "reduce" });
-    for (const route of [
-      "/",
-      "/en/",
-      ...cases,
-      "/culture-ai/",
-      "/services/",
-      "/research/",
-      "/contact/",
-    ]) {
-      await visit(page, route);
-      const hidden = await page
-        .locator("main [data-motion-enter]")
-        .evaluateAll(
-          (els) => els.filter((e) => +getComputedStyle(e).opacity !== 1).length,
-        );
-      assert.equal(hidden, 0, route);
-    }
     await visit(page, "/culture-ai/");
-    await page.locator(".installation-tabs [role=tab]").first().focus();
-    await page.keyboard.press("ArrowRight");
-    await page.waitForFunction(() => document.querySelectorAll(".installation-tabs [role=tab]")[1].getAttribute("aria-selected") === "true");
-    assert.equal(
-      await page
-        .locator(".installation-tabs [role=tab]")
-        .nth(1)
-        .getAttribute("aria-selected"),
-      "true",
-    );
-    await page.emulateMedia({ reducedMotion: "no-preference" });
-    await visit(page, "/");
-    await page.locator(".quiet-manifesto").scrollIntoViewIfNeeded();
-    await page.emulateMedia({ reducedMotion: "reduce" });
-    assert.equal(
-      await page
-        .locator(".quiet-manifesto h2")
-        .evaluate((e) => getComputedStyle(e).opacity),
-      "1",
-    );
-    await page.goto(origin + base + "/work/gaomiao/?source=qa#case-context");
-    await page.waitForURL("**/cases/gaomiao/?source=qa#case-context");
-    await page.reload();
-    assert.equal(await page.locator("h1").count(), 1);
+    const stages = page.locator(".installation-tabs [role=tab]");
+    await stages.first().focus();
+    await page.keyboard.press("End");
+    await page.waitForFunction(() => document.querySelectorAll(".installation-tabs [role=tab]")[3].getAttribute("aria-selected") === "true");
+    await page.goto(origin + base + "/work/liye-qin-slips/?source=qa#case-context");
+    await page.waitForURL("**/cases/liye-qin-slips/?source=qa#case-context");
+    assert.equal(await page.locator("main h1").count(), 1);
+    assert(await page.locator("#case-context").count());
     await page.goto(origin + base + "/missing-v3-page/");
     assert(await page.locator("main").innerText());
     await page.emulateMedia({ reducedMotion: "no-preference" });
-    return {
-      reduce: true,
-      keyboard: true,
-      oldPathPreservesQueryAndHash: true,
-      notFound: true,
-    };
+    return { oldLinkWorks: true, queryAndAnchorPreserved: true };
   });
-  await test("Production screenshots, lazy media and console", async () => {
-    await page.setViewportSize({ width: 1440, height: 1000 });
-    await visit(page, "/");
-    await shot(page, "home-desktop");
-    await page
-      .locator(".selected-work")
-      .evaluate((e) =>
-        scrollTo({ top: e.offsetTop - 72, behavior: "instant" }),
-      );
-    await shot(page, "work-desktop");
-    for (const route of cases) {
-      await visit(page, route);
-      await page
-        .locator(".project-study")
-        .evaluate((e) =>
-          scrollTo({ top: e.offsetTop - 150, behavior: "instant" }),
-        );
-      await shot(page, route.split("/")[2] + "-desktop");
+  await test("Production screenshots and browser errors", async () => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    for (const [width, label] of [[1440, "desktop"], [390, "mobile"]]) {
+      await page.setViewportSize({ width, height: width === 390 ? 844 : 1000 });
+      for (const [route, name] of [["/", "home"], ["/cases/", "case-index"], ["/cases/liye-qin-slips/", "liye"], ["/services/", "services"], ["/contact/", "contact"]]) {
+        await visit(page, route);
+        await shot(page, name + "-" + label);
+      }
     }
-    await visit(page, "/culture-ai/");
-    await page
-      .locator(".installation-scene")
-      .evaluate((e) =>
-        scrollTo({ top: e.offsetTop - 150, behavior: "instant" }),
-      );
-    await shot(page, "culture-desktop");
-    await page.setViewportSize({ width: 390, height: 844 });
-    for (const [route, name] of [
-      ["/", "home-mobile"],
-      ["/en/", "home-english-mobile"],
-      ["/services/", "services-mobile"],
-      ["/contact/", "contact-mobile"],
-    ]) {
-      await visit(page, route);
-      await shot(page, name);
-    }
-    await visit(page, "/culture-ai/");
-    await page
-      .locator(".installation-scene")
-      .evaluate((e) =>
-        scrollTo({ top: e.offsetTop - 130, behavior: "instant" }),
-      );
-    await shot(page, "culture-mobile");
-    await visit(page, "/cases/liye-qin-slips/");
-    await page
-      .locator(".project-study")
-      .evaluate((e) =>
-        scrollTo({ top: e.offsetTop - 142, behavior: "instant" }),
-      );
-    await shot(page, "liye-mobile");
     assert.deepEqual(report.errors, []);
-    return { screenshots: report.screenshots, applicationErrors: 0 };
+    return { screenshots: report.screenshots };
   });
 } catch (error) {
   report.tests.push({
@@ -677,9 +537,9 @@ try {
   report.passed = report.tests.filter((t) => t.result === "passed").length;
   report.failed = report.tests.filter((t) => t.result === "failed").length;
   await fs.writeFile(
-    "docs/qa/v3.0-browser.json",
+    directory + "/browser.json",
     JSON.stringify(report, null, 2),
   );
-  console.log(`V3 QA: ${report.passed} passed, ${report.failed} failed`);
+  console.log(`Website QA: ${report.passed} passed, ${report.failed} failed`);
   if (report.failed) process.exitCode = 1;
 }

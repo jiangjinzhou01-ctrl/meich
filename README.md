@@ -3,6 +3,8 @@
 
 Next.js 15.5 / React 19 / TypeScript / Static Export。
 
+新版的内容出处、访客路径和验收方法见 [官网改版记录](docs/REDESIGN.md)。
+
 ## 运行
 
 ```bash
@@ -71,9 +73,9 @@ MGC_PLAYWRIGHT_MODULE=/tmp/mgc-qa/node_modules/playwright npm run check:v3
 # 再顺序构建并打包服务器，不能与静态构建并行：
 npm run build:server
 npm run package:server
-MGC_PLAYWRIGHT_MODULE=/tmp/mgc-qa/node_modules/playwright MGC_QA_REPORT=v3.0-motion.json npm run check:motion
+MGC_PLAYWRIGHT_MODULE=/tmp/mgc-qa/node_modules/playwright npm run check:motion
 ```
 
-已有 Chromium 时可设置 `MGC_CHROMIUM_PATH`；容器可按需要设置 `MGC_CHROMIUM_ARGS='["--no-sandbox"]'`。PR 工作流自动运行这两组浏览器检查并上传证据，只有 main 的既有发布工作流会部署正式站。
+已有 Chromium 时可设置 `MGC_CHROMIUM_PATH`；容器可按需要设置 `MGC_CHROMIUM_ARGS='["--no-sandbox"]'`。PR 工作流运行静态浏览器检查、触控检查和服务器包检查。报告与截图位于 `qa-results/redesign/`。正式 Pages 部署由 main 的既有工作流触发。
 
 手机图片轨道的轻滑/惯性专项回归：完成静态构建后，使用相同 Playwright 环境执行 `npm run check:swipe`。说明见 [触摸优化](docs/TOUCH-REFINEMENT.md)，结果在 `docs/qa/swipe-regression.json`。

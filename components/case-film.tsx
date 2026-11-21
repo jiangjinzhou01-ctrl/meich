@@ -1,282 +1,199 @@
-import { projectEnglish } from "@/lib/english-content";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { projects, asset, sourceSite } from "@/lib/content";
-import { getSourcePage } from "@/lib/source";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import { asset, projects, sourceSite } from "@/lib/content";
+import { projectEnglish, projectNames } from "@/lib/english-content";
 import { languagePair } from "@/lib/routes";
+import { getSourcePage } from "@/lib/source";
+import { CaseNavigation } from "./case-navigation";
+import { CaseReader } from "./case-reader";
+import { ImageInspector } from "./image-inspector";
+import { ProjectStudy } from "./project-study";
 import { ResponsiveImage } from "./responsive-image";
 import { SourceContent } from "./source-content";
-import { CaseReader } from "./case-reader";
-import { CaseNavigation } from "./case-navigation";
-import { ProjectStudy } from "./project-study";
-import { projectNames } from "./project-card";
-import { ContactCTA } from "./ui";
-export function CaseFilm({
-  slug,
-  english: en = false,
-}: {
-  slug: string;
-  english?: boolean;
-}) {
-  const index = projects.findIndex((p) => p.slug === slug);
-  if (index < 0) return null;
-  const p = projects[index],
-    next = projects[(index + 1) % projects.length];
-  const source = getSourcePage(
-    en ? languagePair("/cases/" + slug + "/").en : p.source,
-  );
-  const chapters =
-    slug === "liye-qin-slips"
-      ? en
-        ? [
-            "Cultural context",
-            "Viewing challenge",
-            "Interpretation",
-            "Delivery",
-          ]
-        : ["文化背景", "观看的挑战", "释读与设计", "空间与交付"]
-      : slug === "potala-snow-city"
-        ? en
-          ? [
-              "Context & role",
-              "Conservation",
-              "Visitor narrative",
-              "Implementation",
-            ]
-          : ["背景与职责", "保护与设计", "参观叙事", "实施与边界"]
-        : en
-          ? ["Cultural context", "Digital expression", "Delivery scope"]
-          : ["文化背景", "数字表达", "交付边界"];
+
+const chapterNames = {
+  liye: [
+    ["展览主题", "观看设计", "秦简释读", "影像与现场"],
+    ["Exhibition theme", "Display design", "Manuscript interpretation", "Film and space"],
+  ],
+  potala: [
+    ["项目范围", "建筑保护", "参观叙事", "现场实施"],
+    ["Project scope", "Conservation", "Visitor narrative", "Implementation"],
+  ],
+  gaomiao: [
+    ["展览空间", "数字互动", "现场制作"],
+    ["Exhibition space", "Digital interaction", "Exhibition design"],
+  ],
+} as const;
+
+const gaomiaoCaptions = [
+  ["展厅动线与墙面展陈", "Exhibition circulation and wall displays"],
+  ["展厅中央展柜", "Central display cases"],
+  ["夯土质感的展陈空间", "Earthen-texture exhibition setting"],
+  ["展柜与顶部影像", "Display cases and overhead film"],
+];
+
+export function CaseFilm({ slug, english: en = false }: { slug: string; english?: boolean }) {
+  const index = projects.findIndex((project) => project.slug === slug);
+  if (index === -1) return null;
+  const project = projects[index];
+  const next = projects[(index + 1) % projects.length];
+  const prefix = en ? "/en" : "";
+  const title = en ? projectNames[slug] : project.title;
+  const description = en ? projectEnglish[slug].description : project.description;
+  const role = en ? projectEnglish[slug].role : project.service;
+  const lang = en ? 1 : 0;
+  const kind = project.kind as keyof typeof chapterNames;
+  const chapters = chapterNames[kind][lang];
+  const path = languagePair("/cases/" + slug);
+  const nextPath = languagePair("/cases/" + next.slug);
+  const source = getSourcePage(en ? path.en : project.source);
+  const brochure = kind === "gaomiao" ? getSourcePage(prefix + "/cases/brochure-2026-gaomiao-museum") : undefined;
+  const enquiryPath = prefix + "/contact/?project=" + project.slug;
+  const photoCaption = {
+    liye: en ? "Inside the Liye Qin Manuscript Museum" : "「大秦迁陵 简读中华」主题展厅",
+    potala: en ? "Potala Palace exterior · architectural context" : "布达拉宫外景 · 建筑背景",
+    gaomiao: en ? "Entrance to the Gaomiao Site Museum exhibition" : "「凤起高庙」展厅入口",
+  }[kind];
+
   return (
-    <div className={"case-film climate-" + p.kind}>
-      <section
-        className="case-film-hero"
-        data-nav-tone="dark"
-        data-scene={en ? projectNames[slug] : p.title}
-      >
-        <ResponsiveImage
-          name={p.kind}
-          alt={
-            en
-              ? slug === "potala-snow-city"
-                ? "Potala Palace exterior, published project context photograph"
-                : projectNames[slug] + ", actual project photography"
-              : slug === "potala-snow-city"
-                ? "布达拉宫建筑外景，公开项目资料配图"
-                : p.imageAlt
-          }
-          priority
-          sizes="100vw"
-          className="scene-media"
-          cover
-        />
-        <div className="scene-shade" />
-        <div className="container case-film-heading" data-reveal-group>
-          <Link
-            className="scene-link"
-            href={en ? "/en/cases/" : "/cases/"}
-            data-reveal="content"
-            data-motion-enter
-          >
-            {en ? "All work" : "全部案例"}
-            <ArrowUpRight size={16} />
-          </Link>
-          <h1
-            data-reveal="cinematic"
-            data-motion-enter
-            style={{ "--motion-delay": "90ms" } as React.CSSProperties}
-          >
-            {en ? projectNames[slug] : p.title}
-          </h1>
-          <p
-            data-reveal="content"
-            data-motion-enter
-            style={{ "--motion-delay": "180ms" } as React.CSSProperties}
-          >
-            {en ? projectEnglish[slug].description : p.description}
-          </p>
-          <a className="scene-link" href="#case-context">
-            {en ? "Read the story" : "进入项目叙事"}
-            <ArrowUpRight size={19} />
-          </a>
-        </div>
-      </section>
-      <div
-        className="container case-film-facts"
-        data-scene={en ? "Project story" : "项目叙事"}
-      >
-        <div data-reveal="content">
-          <span>{en ? "MGC role" : "美创职责"}</span>
-          <strong>{en ? projectEnglish[slug].role : p.service}</strong>
-        </div>
-        <div data-reveal="content">
-          <span>{en ? "Type / Year" : "类型 / 年份"}</span>
-          <strong>
-            {en ? "Cultural exhibition" : p.type} /{" "}
-            {p.year || (en ? "Not published" : "未公开")}
-          </strong>
-        </div>
-        <div data-reveal="content">
-          <span>{en ? "Source" : "项目资料"}</span>
-          <a href={sourceSite + p.source} target="_blank" rel="noreferrer">
-            {en ? "Original project" : "查看原始资料"}
-            <ArrowUpRight size={16} />
-          </a>
-        </div>
-      </div>
-      <CaseNavigation key={slug} chapters={chapters} english={en} />
-      {p.sections.map((s, i) => (
-        <section
-          className="case-chapter"
-          id={i === 0 ? "case-context" : "case-chapter-" + i}
-          key={i}
-        >
-          <div className="container case-chapter-copy" data-reveal-group>
-            <span data-reveal="content" data-reveal-order="0">
-              {chapters[i]}
-            </span>
-            <h2 data-reveal="editorial">
-              {en ? projectEnglish[slug].sections[i].title : s.title}
-            </h2>
-            <p data-reveal="content">
-              {en ? projectEnglish[slug].sections[i].text : s.text}
-            </p>
+    <article className={`project-detail project-${kind}`}>
+      <header className="container project-heading">
+        <Link className="project-back" href={prefix + "/cases/"}>
+          <ArrowLeft size={17} aria-hidden="true" />{en ? "All projects" : "全部案例"}
+        </Link>
+        <div className="project-intro">
+          <div>
+            <h1>{title}</h1>
+            <p>{description}</p>
           </div>
-          {i === 0 && (
-            <ProjectStudy
-              kind={p.kind as "liye" | "potala" | "gaomiao"}
-              english={en}
-            />
-          )}
-          {slug === "liye-qin-slips" && i === 3 && <CaseReader english={en} />}
-          {slug === "gaomiao" && i === 1 && (
-            <div className="container case-field-records">
-              <div className="case-field-record-heading">
-                <h3>
-                  {en ? "Further into the exhibition." : "沿着动线，走进展厅。"}
-                </h3>
-                <p>
-                  {en
-                    ? "Four original plates from the published project archive. These small records retain their available resolution."
-                    : "四幅公开项目图版，补充入口之外的空间记录。保留现有资料的原始清晰度。"}
-                </p>
+          <div className="project-intro-facts">
+            <dl>
+              <div>
+                <dt>{en ? "MGC’s role" : "美创职责"}</dt>
+                <dd>{role}</dd>
               </div>
-              {[2, 3, 4, 5].map((n, j) => (
-                <figure key={n}>
-                  <img
-                    src={asset(`/brand/gaomiao-gallery-0${n}.webp`)}
-                    width={n === 2 || n === 3 ? 673 : 671}
-                    height={504}
-                    alt={
-                      en
-                        ? [
-                            "Gaomiao exhibition circulation and wall displays",
-                            "Gaomiao central display cases",
-                            "Gaomiao earthen-texture exhibition setting",
-                            "Gaomiao display cases and overhead moving-image surface",
-                          ][j]
-                        : [
-                            "高庙展厅动线与墙面展陈",
-                            "高庙展厅中央展柜",
-                            "高庙夯土质感展陈场景",
-                            "高庙展柜与顶部影像界面",
-                          ][j]
-                    }
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <figcaption>
-                    0{j + 1} /{" "}
-                    {en ? "Published project record" : "公开项目资料"}
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-          )}
-        </section>
-      ))}
-      <section className="container case-film-result" data-reveal-group>
-        <h2 data-reveal="editorial">
-          {en ? "From interpretation to experience." : "让文化，进入真实体验。"}
-        </h2>
-        <p data-reveal="content">
-          {en
-            ? "The original archive preserves the published project materials and images."
-            : "项目的真实资料与完整图集继续保留。更多研究、设计与实施细节，可在原始项目档案中阅读。"}
-        </p>
-        <div className="case-capability-links">
-          <Link
-            className="text-link"
-            href={
-              (en ? "/en" : "") +
-              "/services/#" +
-              (slug === "gaomiao" ? "heritage" : "display")
-            }
-          >
-            {en ? "Related expertise: " : "关联能力："}
-            {slug === "gaomiao"
-              ? en
-                ? "Digital museums"
-                : "数字文博"
-              : en
-                ? "Digital exhibitions"
-                : "数字展示"}
-            <ArrowUpRight size={18} />
-          </Link>
-          <Link
-            className="text-link"
-            href={(en ? "/en" : "") + "/contact/?project=" + slug}
-          >
-            {en ? "Discuss a similar project" : "沟通类似项目"}
-            <ArrowUpRight size={18} />
-          </Link>
+              {project.year && (
+                <div>
+                  <dt>{en ? "Year" : "项目年份"}</dt>
+                  <dd>{project.year}</dd>
+                </div>
+              )}
+            </dl>
+            <Link className="editorial-link project-enquiry" href={enquiryPath}>
+              {en ? "Discuss a similar project" : "咨询类似项目"}
+              <ArrowUpRight size={17} aria-hidden="true" />
+            </Link>
+          </div>
         </div>
+      </header>
+
+      <div className="container project-media">
+        <figure className="project-plate project-main-plate">
+          <ResponsiveImage name={kind} alt={photoCaption} priority
+            mobileSource={kind === "gaomiao" ? "gaomiao-hero-mobile" : undefined}
+            sizes={kind === "gaomiao" ? "92vw" : "(max-width: 760px) 92vw, 62vw"} />
+          <figcaption>{photoCaption}</figcaption>
+        </figure>
+        {kind === "liye" && (
+          <figure className="project-plate project-side-plate">
+            <ResponsiveImage name="liye-details" alt={en ? "Exhibition layout with Qin manuscripts and explanatory text" : "秦简实物、现代转写与重点说明的释读版面"}
+              sizes="(max-width: 760px) 92vw, 29vw" />
+            <figcaption>{en ? "Manuscript interpretation panel" : "秦简释读版面"}</figcaption>
+          </figure>
+        )}
+        {kind === "potala" && (
+          <figure className="project-plate project-side-plate">
+            <ResponsiveImage name="potala-gallery" alt={en ? "Historic scenes inside the Snow City exhibition" : "雪城展览中的历史生活场景"}
+              sizes="(max-width: 760px) 92vw, 29vw" />
+            <figcaption>{en ? "Snow City exhibition interior" : "雪城室内展陈"}</figcaption>
+          </figure>
+        )}
+      </div>
+
+      <CaseNavigation key={slug} chapters={chapters} english={en} />
+      <div className="container project-story">
+        {project.sections.map((section, position) => {
+          const copy = en ? projectEnglish[slug].sections[position] : section;
+          return (
+            <section className="project-chapter" id={position ? "case-chapter-" + position : "case-context"} key={position}>
+              <div className="project-chapter-copy" data-reveal-group>
+                <h2 data-reveal="editorial">{chapters[position]}</h2>
+                <div data-reveal="content">
+                  <h3>{copy.title}</h3>
+                  <p>{copy.text}</p>
+                </div>
+              </div>
+              {kind === "liye" && position === 2 && <ProjectStudy english={en} />}
+              {kind === "liye" && position === 3 && <CaseReader english={en} />}
+              {kind === "potala" && position === 2 && (
+                <div className="project-source-control">
+                  <ImageInspector name="potala-gallery" label={en ? "Snow City exhibition interior" : "雪城室内展陈"} english={en} />
+                </div>
+              )}
+              {kind === "gaomiao" && position === 1 && (
+                <div className="project-records">
+                  {gaomiaoCaptions.map(([zh, english], photo) => (
+                    <figure className="project-plate" key={zh}>
+                      <img
+                        src={asset(`/brand/gaomiao-gallery-0${photo + 2}.webp`)}
+                        alt={en ? english : zh}
+                        width={photo < 2 ? 673 : 671}
+                        height={504}
+                        loading="lazy"
+                      />
+                      <figcaption>{en ? english : zh}</figcaption>
+                    </figure>
+                  ))}
+                </div>
+              )}
+            </section>
+          );
+        })}
+      </div>
+
+      <section className="container project-resources" id="case-archive">
+        <h2>{en ? "Project material" : "项目资料"}</h2>
         {source && (
           <details>
-            <summary>
-              {en
-                ? "Read the complete project archive"
-                : "阅读完整项目资料与图集"}
-            </summary>
+            <summary>{en ? "Read the published project archive" : "阅读原始项目资料与图集"}</summary>
             <SourceContent page={source} idPrefix="project-archive-" />
-            {slug === "gaomiao" &&
-              getSourcePage(
-                (en ? "/en" : "") + "/cases/brochure-2026-gaomiao-museum",
-              ) && (
-                <SourceContent
-                  page={
-                    getSourcePage(
-                      (en ? "/en" : "") + "/cases/brochure-2026-gaomiao-museum",
-                    )!
-                  }
-                  idPrefix="brochure-archive-"
-                />
-              )}
+            {brochure && <SourceContent page={brochure} idPrefix="brochure-archive-" />}
           </details>
         )}
+        <a className="editorial-link" href={source?.source || sourceSite + project.source} target="_blank" rel="noreferrer">
+          {en ? "Source on MGC’s website" : "查看美创原站项目资料"}
+          <ArrowUpRight size={17} aria-hidden="true" />
+        </a>
       </section>
-      <Link
-        className="case-next"
-        data-scene={en ? "Next project" : "下一个项目"}
-        data-nav-tone="dark"
-        href={
-          en
-            ? languagePair("/cases/" + next.slug + "/").en
-            : "/cases/" + next.slug + "/"
-        }
-      >
-        <ResponsiveImage name={next.kind} alt={next.imageAlt} sizes="100vw" />
-        <div className="container case-next-copy" data-reveal-group>
-          <span data-reveal="content" data-reveal-order="0">
-            {en ? "Next project" : "下一个项目"}
-          </span>
-          <h2 data-reveal="editorial">
-            {en ? projectNames[next.slug] : next.title}
-            <ArrowUpRight size={27} />
-          </h2>
+
+      <section className="project-ending">
+        <div className="container project-ending-inner">
+          <div>
+            <h2>{en ? "Discuss a similar project" : "想做类似的项目？"}</h2>
+            <p>{en ? "Bring your venue, brief or collection to the conversation." : "可以从场地、展览主题或已有的馆藏资料聊起。"}</p>
+          </div>
+          <div className="editorial-actions">
+            <Link className="button editorial-primary" href={enquiryPath}>
+              {en ? "Discuss a similar project" : "咨询类似项目"}
+              <ArrowUpRight size={18} aria-hidden="true" />
+            </Link>
+            <Link className="button editorial-secondary" href={prefix + "/services/#" + (kind === "gaomiao" ? "heritage" : "display")}>
+              {en ? "Related services" : "查看相关服务"}
+              <ArrowRight size={18} aria-hidden="true" />
+            </Link>
+          </div>
         </div>
-      </Link>
-      <ContactCTA english={en} />
-    </div>
+      </section>
+      <div className="container project-next">
+        <Link className="project-next-link" href={en ? nextPath.en : nextPath.zh}>
+          <div>
+            <p>{en ? "Next project" : "下一个项目"}</p>
+            <h2>{en ? projectNames[next.slug] : next.title}</h2>
+          </div>
+          <ArrowRight size={24} aria-hidden="true" />
+        </Link>
+      </div>
+    </article>
   );
 }

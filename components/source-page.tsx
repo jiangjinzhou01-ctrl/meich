@@ -45,6 +45,8 @@ export function SourcePageView({ page }: { page: SourcePage }) {
   if (en && featured[prefix])
     return <CaseFilm slug={featured[prefix]} english />;
   const family = prefix.split("/")[1];
+  const isCase = family === "cases" && prefix !== "/cases";
+  const enquiry = `${en ? "/en" : ""}/contact/?project=${encodeURIComponent(prefix.split("/").at(-1) || "")}`;
   const index = indexes.includes(prefix);
   const label = en
     ? `${family.toUpperCase() || "MGC"} · MGC DIGITAL`
@@ -92,7 +94,7 @@ export function SourcePageView({ page }: { page: SourcePage }) {
       >
         {!index && family && (
           <Link className="text-link" href={`${en ? "/en" : ""}/${family}/`}>
-            {en ? "Back to all content" : "返回全部内容"} ↗
+            {isCase ? (en ? "All projects" : "全部案例") : (en ? "Back to all content" : "返回全部内容")} ↗
           </Link>
         )}
       </PageHero>
@@ -271,7 +273,7 @@ export function SourcePageView({ page }: { page: SourcePage }) {
             </details>
           </section>
         )}
-      <ContactCTA english={en} />
+      <ContactCTA english={en} projectHref={isCase ? enquiry : undefined} />
     </div>
   );
 }

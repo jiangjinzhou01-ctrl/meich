@@ -1,7 +1,6 @@
 /* MGC focus system. One observer for scroll; CSS owns all visual properties. */
 :root {
   --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --motion-exit-ease: cubic-bezier(0.4, 0, 0.8, 0.2);
   --motion-cinematic-duration: 980ms;
   --motion-cinematic-blur: 0px;
   --motion-cinematic-y: 18px;
@@ -14,8 +13,6 @@
   --motion-interaction-duration: 240ms;
   --motion-interaction-y: 4px;
   --motion-media-duration: 800ms;
-  --motion-menu-duration: 560ms;
-  --motion-menu-exit: 320ms;
   --motion-stagger: 90ms;
   /* Existing hover/feedback rules inherit the same language. */
   --ease: var(--motion-ease);
@@ -105,7 +102,7 @@
   }
   /* Keyed tab content changes immediately. Only its individual text layers move. */
   [data-motion-scope="interaction"]
-    > :is(span, h2, h3, p, ul, dl, .service-index-links),
+    > :is(span, h2, h3, p, ul, dl),
   [data-motion-scope="interaction"] > div > :is(h2, p, dl, .button) {
     --motion-y: var(--motion-interaction-y);
     --motion-blur: 0px;
@@ -160,16 +157,6 @@
   .motion-root[data-navigation="restore"] .artifact-copy > * {
     animation: none;
   }
-  .cinematic-hero .scene-media,
-  .case-film-hero .scene-media {
-    animation: motion-scene var(--motion-cinematic-duration) var(--motion-ease)
-      backwards;
-  }
-  .motion-root[data-navigation="restore"]
-    :is(.cinematic-hero, .case-film-hero)
-    .scene-media {
-    animation: none;
-  }
   .content-preview-hero h2,
   .content-preview-body h3 {
     --motion-blur: var(--motion-editorial-blur);
@@ -207,64 +194,12 @@
     opacity: 1;
   }
 }
-@keyframes motion-scene {
-  from {
-    transform: scale(1.02);
-  }
-  to {
-    transform: none;
-  }
-}
-@keyframes motion-menu-in {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-@keyframes motion-menu-out {
-  from {
-    opacity: var(--menu-exit-opacity, 1);
-    transform: var(--menu-exit-transform, none);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-}
-.mobile-menu[open] {
-  animation-duration: var(--motion-menu-duration);
-  animation-timing-function: var(--motion-ease);
-}
-.mobile-menu[open] .mobile-primary a {
-  animation: motion-menu-in 280ms var(--motion-ease)
-    calc(80ms + var(--menu-order, 0) * 45ms) backwards;
-}
-.mobile-menu[open] :is(.mobile-secondary, .mobile-contact, .mobile-bottom) {
-  animation: motion-menu-in 240ms var(--motion-ease) 200ms backwards;
-}
-.mobile-menu[open][data-closing="true"] {
-  animation-duration: var(--motion-menu-exit);
-  animation-timing-function: var(--motion-exit-ease);
-}
-.mobile-menu[open][data-closing="true"]
-  :is(.mobile-primary a, .mobile-secondary, .mobile-contact, .mobile-bottom) {
-  animation: motion-menu-out 180ms var(--motion-exit-ease) forwards;
-}
-.service-index-media,
 .installation-media {
   transition: opacity var(--motion-interaction-duration) var(--motion-ease);
 }
 .artifact-layer {
   transition: opacity var(--motion-content-duration) var(--motion-ease);
 }
-.mobile-primary a[aria-current="page"] {
-  color: var(--accent-ink);
-}
-.research-laboratory [data-reveal="editorial"],
 .research-directions [data-reveal="editorial"] {
   --motion-blur: 0px;
   --motion-y: 8px;
@@ -281,7 +216,6 @@
     --motion-content-y: 4px;
     --motion-interaction-duration: 200ms;
     --motion-media-duration: 650ms;
-    --motion-menu-duration: 460ms;
     --motion-stagger: 60ms;
   }
 }

@@ -9,6 +9,7 @@ import { siteUrl } from "@/lib/content";
 const reserved = new Set([
   "/",
   "/about",
+  "/en/about",
   "/contact",
   "/en/contact",
   "/privacy",

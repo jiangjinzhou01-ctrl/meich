@@ -1,16 +1,12 @@
-import {CaseFilm} from "@/components/case-film";
+import { CaseFilm } from "@/components/case-film";
 import type { Metadata } from "next";
-import Link from "next/link";
-import Image from "next/image";
 import { getSourcePage, sourcePages } from "@/lib/source";
-import { SourceContent } from "@/components/source-content";
 import { SourcePageView } from "@/components/source-page";
 import { StaticRedirect } from "@/components/static-redirect";
 import { aliases, canonicalPath } from "@/lib/routes";
 import { pageMetadata } from "@/lib/metadata";
 import { notFound } from "next/navigation";
-import { projects, siteUrl, sourceSite, asset } from "@/lib/content";
-import { ProjectVisual } from "@/components/project-card";
+import { projects, siteUrl } from "@/lib/content";
 import { PageHero, ContactCTA } from "@/components/ui";
 export function generateStaticParams() {
   return Array.from(

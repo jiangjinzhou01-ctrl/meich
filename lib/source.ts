@@ -1,7 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
-import { canonicalPath } from "./routes";
-import { asset, sourceSite } from "./content";
+import { canonicalPath, languagePair } from "./routes";
+import { asset, projects, sourceSite } from "./content";
+import { projectEnglish, projectNames } from "./english-content";
 export type SourceBlock = {
   type: string;
   text?: string;
@@ -148,6 +149,32 @@ export function catalogFor(prefix: string): CatalogItem[] {
     });
   return Array.from(new Map(items.map((item) => [item.path, item])).values());
 }
+export function caseCatalogFor(english = false): CatalogItem[] {
+  const archive = catalogFor(english ? "/en/cases" : "/cases");
+  const remaining = new Map(archive.map((item) => [item.path, item]));
+  const featured = projects.map((project): CatalogItem => {
+    const pair = languagePair("/cases/" + project.slug);
+    const path = (english ? pair.en : pair.zh).replace(/\/$/, "");
+    const entry = remaining.get(path);
+    remaining.delete(path);
+    const role = english ? projectEnglish[project.slug].role : project.service;
+    return {
+      path,
+      title: english ? projectNames[project.slug] : project.title,
+      description: english ? projectEnglish[project.slug].description : project.description,
+      image: asset(project.image),
+      domain: entry?.domain || (english
+        ? project.kind === "gaomiao" ? "Digital Museums & Heritage" : "Digital Exhibitions"
+        : project.type),
+      labels: [role, ...(entry?.labels || [])],
+      tags: entry?.tags || {},
+      venue: entry?.venue || "",
+      format: entry?.format || "",
+    };
+  });
+  return [...featured, ...remaining.values()];
+}
+
 function getCatalogMetadata(): Record<
   string,
   {

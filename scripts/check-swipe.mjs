@@ -55,6 +55,7 @@ try {
   page.setDefaultTimeout(8000);
   page.on("pageerror", e => report.errors.push(e.message));
   const cdp = await context.newCDPSession(page);
+  const artifactPage = origin + "culture-ai/";
   const rail = page.locator(".artifact-steps");
   async function aligned(index) {
     await page.waitForFunction(index => {
@@ -95,7 +96,7 @@ try {
   }
   for (const width of [360, 390, 412, 430]) {
     await page.setViewportSize({ width, height: 844 });
-    await page.goto(origin, { waitUntil: "networkidle" });
+    await page.goto(artifactPage, { waitUntil: "networkidle" });
     await page.waitForSelector(".artifact-steps.has-swipe-control");
     await test(`${width}px: short/slow/fast/long gestures, reversal and edges`, async () => {
       const observations = [];
@@ -149,7 +150,7 @@ try {
   });
   await test("No-JavaScript native pan fallback", async () => {
     const fallback = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
-    const p = await fallback.newPage(); await p.goto(origin);
+    const p = await fallback.newPage(); await p.goto(artifactPage);
     const state = await p.locator(".artifact-steps").evaluate(el => ({ controlled: el.classList.contains("has-swipe-control"), touchAction: getComputedStyle(el).touchAction, stop: getComputedStyle(el.firstElementChild).scrollSnapStop }));
     assert.equal(state.controlled, false); assert.equal(state.touchAction, "auto"); assert.equal(state.stop, "always");
     await fallback.close(); return state;
@@ -162,8 +163,9 @@ finally {
   await browser?.close(); server.kill("SIGTERM");
   report.passed = report.tests.filter(t => t.result === "passed").length;
   report.failed = report.tests.filter(t => t.result === "failed").length;
-  await fs.mkdir("docs/qa", { recursive: true });
-  await fs.writeFile(process.env.MGC_SWIPE_QA_REPORT || "docs/qa/swipe-regression.json", JSON.stringify(report, null, 2));
+  const directory = process.env.MGC_REDESIGN_QA_DIR || "qa-results/redesign";
+  await fs.mkdir(directory, { recursive: true });
+  await fs.writeFile(process.env.MGC_SWIPE_QA_REPORT || directory + "/swipe.json", JSON.stringify(report, null, 2));
   console.log(`Swipe QA: ${report.passed} passed, ${report.failed} failed`);
   if (report.failed) process.exitCode = 1;
 }
