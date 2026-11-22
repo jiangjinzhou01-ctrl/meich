@@ -1,137 +1,57 @@
 import Link from "next/link";
-import { ArrowDownRight, ArrowRight, ArrowUpRight } from "lucide-react";
-import { evidence } from "@/lib/evidence";
-import { company, projects, services } from "@/lib/content";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { asset, projects, services } from "@/lib/content";
 import { serviceEnglish } from "@/lib/english-content";
 import { languagePair } from "@/lib/routes";
+import { ExhibitionCover } from "./exhibition-cover";
 import { ProjectCard } from "./project-card";
-import { ResponsiveImage } from "./responsive-image";
 import { ContactCTA } from "./ui";
 
 export function HomePage({ english: en = false }: { english?: boolean }) {
   const prefix = en ? "/en" : "";
-  const [liye, potala, gaomiao] = projects;
-  const liyePath = languagePair("/cases/liye-qin-slips/");
-  const recognition = evidence[0];
-
+  const liye = languagePair("/cases/liye-qin-slips/")[en ? "en" : "zh"];
   return (
-    <div className="editorial-home" lang={en ? "en" : undefined}>
-      <section className="container home-opening">
-        <div className="home-opening-copy">
-          <p className="editorial-kicker">{en ? "MGC Digital · Changsha" : company}</p>
-          <h1 className="editorial-title">
-            {en ? (
-              <>Digital experiences <em>for cultural spaces</em></>
-            ) : (
-              <>为文化空间<em>设计数字体验</em></>
-            )}
-          </h1>
-          <p className="home-opening-intro">
-            {en
-              ? "We design exhibitions, make digital content and build interactive exhibits for museums and cultural destinations."
-              : "为博物馆、展馆和文旅场所设计展览、制作数字内容，并把互动展项落到现场。"}
-          </p>
-          <div className="editorial-actions">
-            <Link className="button editorial-primary" href={prefix + "/cases/"}>
-              {en ? "Explore projects" : "看项目"}
-              <ArrowDownRight size={18} aria-hidden="true" />
-            </Link>
-            <Link className="button editorial-secondary" href={prefix + "/contact/"}>
-              {en ? "Discuss a project" : "咨询项目"}
-              <ArrowUpRight size={17} aria-hidden="true" />
-            </Link>
+    <div className="programme" lang={en ? "en" : "zh-CN"}>
+      <ExhibitionCover english={en} />
+      <section className="container gallery-programme" id="selected-work">
+        <div className="programme-heading">
+          <h2>{en ? "Exhibition spaces" : "展览现场"}</h2>
+          <Link className="folio-link" href={prefix + "/cases/"}>{en ? "Project index" : "全部案例"}<ArrowUpRight size={19} /></Link>
+        </div>
+        <div className="gallery-pair">
+          <ProjectCard project={projects[2]} english={en} />
+          <ProjectCard project={projects[1]} english={en} />
+        </div>
+      </section>
+
+      <section className="workshop-spread">
+        <div className="container workshop-layout">
+          <figure className="workshop-photo">
+            <img src={asset("/brand/liye-bench.webp")} width={1080} height={810} loading="lazy" alt={en ? "Checking the angle and illumination of a Liye manuscript display" : "里耶展柜调试现场，工作人员在灯光下比对简牍的观看角度"} />
+            <figcaption>{en ? "Liye · Adjusting a manuscript display" : "里耶现场 · 简牍陈列调试"}</figcaption>
+          </figure>
+          <div className="workshop-text">
+            <p className="small-rule">{en ? "From the workshop" : "制作手记"}</p>
+            <h2>{en ? <>How do you read<br />a Qin slip?</> : <>一枚秦简，<br />怎样读清？</>}</h2>
+            <p>{en ? "Start at the display case. Test the viewing angle, adjust the mount, then set the original alongside a transcription and notes on the words." : "先到展柜前，试角度、调托台。再把简牍原貌、现代转写和重点词语并置，让观众看清字形，也读懂简文。"}</p>
+            <Link className="folio-link" href={liye + "#case-chapter-1"}>{en ? "Read the Liye project" : "翻阅里耶项目手记"}<ArrowUpRight size={19} /></Link>
           </div>
-        </div>
-        <figure className="opening-plate">
-          <Link
-            href={en ? liyePath.en : liyePath.zh}
-            aria-label={en ? "View the Liye Qin Manuscript Museum project" : "查看里耶古城（秦简）博物馆项目"}
-            className="opening-photography"
-          >
-            <ResponsiveImage
-              className="opening-photograph"
-              name="liye"
-              alt={en ? "Interior of the Liye Qin Manuscript Museum" : liye.imageAlt}
-              priority
-              sizes="(max-width: 920px) 92vw, 58vw"
-            />
-            <ResponsiveImage
-              className="opening-detail"
-              name="liye-details"
-              alt={en ? "Detail of the Liye manuscript interpretation panel" : "里耶秦简释读图局部"}
-              sizes="(max-width: 600px) 120px, 200px"
-            />
-          </Link>
-          <figcaption>
-            <span className="opening-caption-title">{en ? "Liye Qin Manuscript Museum" : liye.title}</span>
-            <span>{en ? "Exhibition design · 2025" : "展陈设计 · 2025"}</span>
-          </figcaption>
-        </figure>
-      </section>
-
-      <section className="container home-work" id="selected-work">
-        <div className="editorial-section-heading">
-          <h2>{en ? "Selected projects" : "精选项目"}</h2>
-          <Link className="editorial-link" href={prefix + "/cases/"}>
-            {en ? "Browse the project archive" : "浏览案例库"}
-            <ArrowRight size={18} aria-hidden="true" />
-          </Link>
-        </div>
-        <div className="home-project-grid">
-          {[liye, gaomiao, potala].map((project) => (
-            <ProjectCard key={project.slug} project={project} english={en} />
-          ))}
+          <figure className="workshop-inset">
+            <img src={asset("/brand/liye-details-640.webp")} width={640} height={453} loading="lazy" alt={en ? "Original manuscript, transcription and interpretation" : "简牍实物、现代文字转写与重点释义版面"} />
+            <figcaption>{en ? "Detail · Interpretation panel" : "图版局部 · 秦简释读"}</figcaption>
+          </figure>
         </div>
       </section>
 
-      <section className="home-expertise">
-        <div className="container home-expertise-grid">
-          <div className="home-expertise-copy">
-            <h2>{en ? "What we do" : "业务与产品"}</h2>
-            <p>
-              {en
-                ? "Start with the collection, the venue and the visitor. Bring the design, the digital work and the delivery together."
-                : "从馆藏资料、场地与观众需求出发，把内容策划、创意设计和工程实施接起来。"}
-            </p>
-            <Link className="editorial-link" href={prefix + "/services/"}>
-              {en ? "Explore services and products" : "了解服务与交付"}
-              <ArrowRight size={18} aria-hidden="true" />
-            </Link>
-          </div>
-          <ul className="expertise-list">
-            {services.map((service, index) => (
-              <li key={service.id}>
-                <Link href={prefix + "/services/#" + service.id}>
-                  <strong>{en ? service.enTitle : service.title}</strong>
-                  <span>{(en ? serviceEnglish[index].items : service.items).slice(0, 2).join(" / ")}</span>
-                  <ArrowUpRight size={20} aria-hidden="true" />
-                </Link>
-              </li>
-            ))}
-          </ul>
+      <section className="container practice-index">
+        <div className="practice-heading"><h2>{en ? "Studio practice" : "美创的工作"}</h2>
+          <p>{en ? "From planning a space to looking after its digital life." : "从展馆的内容策划与空间设计，一路做到落地制作和开馆后的运营。"}</p>
+          <Link className="folio-link" href={prefix + "/research/"}>{en ? "Explore our research" : "了解技术研发"}<ArrowRight size={17} /></Link>
         </div>
-      </section>
-
-      <section className="container home-research">
-        <div>
-          <h2>{en ? "Research and practice" : "研发与实践"}</h2>
-          <p>
-            {en
-              ? "Explore 3D heritage capture, museum software and new ways to interpret cultural collections."
-              : "围绕文物三维采集、智慧博物馆软件和多媒体交互，探索文化资料在展示与研究中的应用。"}
-          </p>
-          <Link className="editorial-link" href={prefix + "/research/"}>
-            {en ? "Explore MGC research" : "查看研发方向"}
-            <ArrowRight size={18} aria-hidden="true" />
-          </Link>
-        </div>
-        <div className="home-recognition">
-          <h3>{en ? recognition.en : recognition.title}</h3>
-          <p>{en ? recognition.enText : recognition.text}</p>
-          <a className="editorial-link" href={recognition.url} target="_blank" rel="noreferrer">
-            {en ? "Hunan industry and technology department" : recognition.source}
-            <ArrowUpRight size={17} aria-hidden="true" />
-          </a>
+        <div className="practice-entries">
+          {services.map((service, i) => <Link key={service.id} href={prefix + "/services/#" + service.id}>
+            <strong>{en ? service.enTitle : service.title}</strong><span>{en ? serviceEnglish[i].items[0] : service.items[0]}</span><ArrowUpRight size={21} />
+          </Link>)}
         </div>
       </section>
       <ContactCTA english={en} />

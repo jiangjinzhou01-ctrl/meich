@@ -1,0 +1,151 @@
+/* A working surface for three printed exhibition editions. */
+:root {
+  --atlas-blue: #2343ab;
+  --atlas-paper: #f4f1e8;
+  --rail-width: clamp(142px,11vw,192px);
+}
+.atlas-opening {
+  position: relative; overflow: hidden; isolation: isolate;
+  color: #fbf7e9; background: var(--atlas-blue);
+  --gutter: clamp(20px,3.7vw,72px);
+}
+.atlas-mast { display: flex; align-items: flex-start; justify-content: space-between; gap: 22px; padding-block: clamp(26px,3.3vw,58px) clamp(8px,1vw,18px); }
+.atlas-mast h1 { font: 700 clamp(57px,6.25vw,105px)/1 var(--font); letter-spacing: -.075em; white-space: nowrap; }
+.atlas-mast h1 em { font: 400 1.06em/.9 var(--gallery-type); }
+.programme:lang(en) .atlas-mast h1 { font-size: clamp(53px,5.75vw,95px); letter-spacing: -.075em; }
+.programme:lang(en) .atlas-mast h1 em { font-style: italic; letter-spacing: -.04em; }
+.atlas-intro { width: min(31%,350px); }
+.atlas-intro p { color: inherit; font-size: clamp(14px,1vw,17px); line-height: 1.65; }
+.atlas-actions { margin-top: 6px; gap: 24px; }
+.atlas-actions a { min-height: 36px; display: inline-flex; align-items: center; border-bottom: 1px solid #c7cfe8; color: #fff8ec; font-size: 14px; font-weight: 550; }
+.atlas-actions a:hover, .open-edition:hover { color: #fff; border-color: #fff; }
+.atlas-opening :focus-visible { outline: 3px solid #ffe17c; outline-offset: 4px; }
+.print-table {
+  --plate-w: clamp(234px,min(26vw,43svh),430px);
+  --spread: clamp(175px,19vw,335px);
+  --drag: 0px;
+  height: calc(var(--plate-w) * 1.25 + clamp(76px,6vw,105px));
+  position: relative; user-select: none; touch-action: pan-y pinch-zoom; cursor: grab;
+  background-image: radial-gradient(ellipse at 50% 60%,#9ca7e12d,transparent 62%);
+}
+.print-table:focus-visible { outline: 1px solid #f6ebad; outline-offset: -5px; }
+.print-table[data-dragging] { cursor: grabbing; }
+.atlas-plate {
+  --x: 0px; --y: 0px; --rot: -3deg; --scale: 1;
+  display: block; position: absolute; left: 50%; top: 50%;
+  width: var(--plate-w); aspect-ratio: 4/5; color: #1e201b;
+  transform: translate(-50%,-50%) translate(calc(var(--x) + var(--drag)),var(--y)) rotate(var(--rot)) scale(var(--scale));
+  transition: transform 460ms cubic-bezier(.19,.75,.15,1),box-shadow 240ms ease;
+  transform-origin: center; box-shadow: 3px 12px 24px #0914484f,0 1px 3px #111b384d;
+  cursor: grab; -webkit-user-drag: none; container-type: inline-size;
+}
+.atlas-plate[data-slot=previous] { --x: calc(0px - var(--spread)); --y: 11px; --rot: -12deg; --scale: .89; z-index: 1; }
+.atlas-plate[data-slot=next] { --x: var(--spread); --y: 5px; --rot: 11deg; --scale: .90; z-index: 2; }
+.atlas-plate[data-slot=active] { z-index: 3; cursor: pointer; }
+.atlas-plate:focus-visible { z-index: 5; }
+.print-table[data-dragging] .atlas-plate { transition: none; cursor: grabbing; }
+.print-table img { pointer-events: none; -webkit-user-drag: none; }
+.printed-cover { position: absolute; inset: 0; display: grid; grid-template-rows: auto minmax(0,1fr) auto; padding: 5.3cqw 6.3cqw 5.5cqw; overflow: hidden; }
+.print-imprint { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid currentColor; padding-bottom: 1.4cqw; z-index: 1; }
+.print-imprint strong { font: 750 4.4cqw/1 var(--font); letter-spacing: -.08em; }
+.print-imprint span { font: 500 3.1cqw/1.1 var(--mono); letter-spacing: .04em; }
+.print-credit { position: relative; z-index: 1; display: grid; gap: .7cqw; border-top: 1px solid currentColor; padding-top: 2cqw; }
+.print-credit strong { font: 550 3.6cqw/1.25 var(--font); }
+.print-credit span { font: 400 2.75cqw/1.3 var(--font); }
+.print-liye { background: #eee8d4; color: #27251b; }
+.print-liye-art { position: relative; }
+.slip-title,.slip-subtitle { position: absolute; writing-mode: vertical-rl; font-family: var(--gallery-type); font-weight: 400; line-height: 1; white-space: nowrap; }
+.slip-title { inset: 6% auto auto -1%; font-size: 17.4cqw; letter-spacing: -.085em; }
+.slip-subtitle { top: 10%; left: 24.5%; font-size: 7.6cqw; color: #9b3529; letter-spacing: .015em; }
+.printed-slip {
+  position: absolute; width: auto; max-width: 18%; object-fit: fill; mix-blend-mode: multiply;
+  mask-image: linear-gradient(to right,transparent,#000 13% 86%,transparent),linear-gradient(to bottom,transparent,#000 1.3% 98.7%,transparent);
+  mask-composite: intersect;
+}
+.slip-long { height: 87%; left: 52%; top: 5%; }
+.slip-short { height: 68%; left: 78%; bottom: 8%; }
+.print-baishi { background: #d6d9ae; color: #263627; }
+.print-baishi-art { position: relative; padding-block: 2cqw 3cqw; display: flex; flex-direction: column; min-height: 0; }
+.baishi-title { position: absolute; z-index: 1; top: 4.5cqw; left: -1cqw; font: 400 12.2cqw/.96 var(--gallery-type); letter-spacing: -.08em; }
+.baishi-title em { display: block; margin-left: 8cqw; font-style: normal; }
+.print-baishi-art img { width: 100%; height: 61%; margin-top: auto; object-fit: cover; }
+.print-huxiang { background: #fc6e46; color: #351c17; }
+.print-huxiang-art { position: relative; min-height: 0; }
+.print-huxiang-art img { position: absolute; inset: 17% 0 auto; width: 100%; height: 66%; object-fit: cover; }
+.sound-title { position: absolute; z-index: 1; top: 2.8%; left: -.4cqw; font: 800 18.3cqw/1 var(--font); letter-spacing: -.09em; color: #261b15; }
+.sound-second { top: auto; left: auto; right: 0; bottom: 1%; }
+.atlas-desk { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 20px; border-top: 1px solid #d4dcff80; padding: 9px 0 15px; }
+.atlas-controls { display: inline-flex; align-items: center; gap: 5px; }
+.atlas-controls button { min-width: 44px; min-height: 44px; display: grid; place-items: center; }
+.atlas-controls button:hover { background: #ffffff24; }
+.atlas-controls span { white-space: nowrap; font: 12px var(--mono); }
+.atlas-controls i { font-style: normal; opacity: .6; }
+.desk-instruction { color: #e1e5f5; display: inline-flex; align-items: center; gap: 7px; font-size: 12px; }
+.open-edition { display: inline-flex; gap: 19px; align-items: center; min-height: 44px; }
+.open-edition > span { font-size: 14px; }
+.open-edition strong { display: inline-flex; gap: 5px; align-items: center; font-size: 14px; font-weight: 550; }
+.atlas-opening + .gallery-programme { padding-top: clamp(38px,4.2vw,70px); }
+.mobile-index { display: none; }
+@media (min-width: 1101px) {
+  :root { --nav-height: 0px; }
+  html { scroll-padding-top: 25px; }
+  .navbar { width: var(--rail-width); height: 100dvh; inset: 0 auto 0 0; border: 0; border-right: 1px solid var(--border); background: var(--bg); color: var(--ink); }
+  main, .footer { margin-left: var(--rail-width); }
+  .navbar .nav-inner { width: 100%; padding: 29px clamp(12px,1.25vw,26px) 22px; display: flex; align-items: flex-start; flex-direction: column; justify-content: flex-start; gap: 0; }
+  .navbar .official-logo { width: clamp(96px,7.3vw,130px); }
+  .desktop-nav { flex-direction: column; width: 100%; align-items: stretch; gap: 0; margin: clamp(70px,13vh,155px) 0 auto; }
+  .desktop-nav a { display: flex; min-height: 46px; align-items: center; font-size: 14px; border-bottom: 1px solid var(--border); white-space: normal; line-height: 1.35; }
+  .desktop-nav a:first-child { border-top: 1px solid var(--border); }
+  .desktop-nav a::after { content: none; }
+  .desktop-nav a[aria-current=page], .desktop-nav a:hover { color: var(--accent-ink); }
+  .desktop-nav a[aria-current=page]::before { content: ""; width: 10px; height: 2px; background: currentColor; margin-right: 6px; }
+  .navbar .nav-actions { display: flex; flex-wrap: wrap; width: 100%; justify-content: flex-start; gap: 0; }
+  .navbar .language-switch, .navbar .icon-button { color: var(--ink); }
+  .navbar .icon-button:hover, .navbar .language-switch:hover { background: var(--surface); color: var(--accent-ink); }
+  .navbar .nav-cta { order: -1; width: 100%; background: none; border: 0; border-block: 1px solid var(--border); margin: 0; padding: 6px 0; color: var(--ink); min-height: 44px; }
+  .navbar .nav-cta:hover { color: var(--accent-ink); }
+  .navbar .menu-toggle { display: none; }
+  .navbar :focus-visible { outline-color: var(--accent-ink); }
+  .case-reading-rail { top: 0; }
+}
+@media (max-width: 1100px) {
+  .navbar .nav-inner { display: flex; justify-content: space-between; }
+  .navbar .desktop-nav, .navbar .nav-actions .theme-toggle { display: none; }
+  .navbar .mobile-index, .navbar .menu-toggle { display: inline-flex; align-items: center; min-height: 44px; }
+  .navbar .nav-actions { gap: 5px; }
+  .navbar .mobile-index { font-size: 13px; padding-inline: 6px; }
+  .navbar .menu-toggle { width: auto; padding-inline: 11px; gap: 5px; font-size: 13px; }
+  .navbar .menu-toggle span { font-weight: 550; }
+  .navbar .menu-toggle, .navbar .language-switch { border-left: 1px solid var(--border); }
+  .mobile-top { padding-bottom: clamp(26px,7svh,65px); }
+  .mobile-primary a { min-height: clamp(68px,10svh,96px); font: 400 clamp(26px,7vw,42px)/1.15 var(--gallery-type); letter-spacing: -.04em; }
+}
+@media (min-width: 701px) and (max-width: 1100px) {
+  .atlas-intro { width: min(42%,340px); }
+  .print-table { --plate-w: clamp(255px,32vw,355px); --spread: 23vw; }
+}
+@media (max-width: 700px) {
+  .atlas-mast { display: block; padding: 22px 0 0; }
+  .atlas-mast h1 { font-size: clamp(46px,12vw,72px); }
+  .programme:lang(en) .atlas-mast h1 { font-size: clamp(42px,11vw,65px); }
+  .atlas-intro { width: 100%; margin-top: 11px; }
+  .atlas-intro p { font-size: 14px; line-height: 1.55; max-width: 32em; }
+  .atlas-actions { margin-top: 2px; gap: 20px; }
+  .atlas-actions a { font-size: 13px; min-height: 36px; }
+  .print-table { --plate-w: clamp(181px,53vw,280px); --spread: clamp(135px,39vw,220px); height: calc(var(--plate-w)*1.25 + 55px); }
+  .atlas-desk { grid-template-columns: auto minmax(0,1fr); gap: 3px; padding: 5px 0 9px; }
+  .desk-instruction { display: none; }
+  .atlas-controls { gap: 0; }
+  .atlas-controls span { font-size: 10px; }
+  .open-edition { justify-self: end; display: grid; justify-items: end; gap: 1px; align-content: center; }
+  .open-edition > span { font-size: 11px; }
+  .open-edition strong { font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .atlas-plate { transition: none; }
+}
+@media (max-width: 360px) {
+  .navbar .official-logo { width: 94px; }
+  .navbar .nav-actions { gap: 0; }
+  .navbar .mobile-index, .navbar .menu-toggle { padding-inline: 6px; }
+}

@@ -5,35 +5,16 @@ import { projectEnglish, projectNames } from "@/lib/english-content";
 import { languagePair } from "@/lib/routes";
 import { ResponsiveImage } from "./responsive-image";
 
-type Project = (typeof projects)[number];
-
-export function ProjectCard({
-  project,
-  english: en = false,
-}: {
-  project: Project;
-  english?: boolean;
-}) {
-  const pair = languagePair("/cases/" + project.slug + "/");
-  const title = en ? projectNames[project.slug] : project.title;
-  const photo = project.kind === "liye" ? "liye-cinema" : project.kind === "potala" ? "potala-gallery" : project.kind;
-  const alt = project.kind === "liye"
-    ? en ? "The museum’s immersive cinema" : "里耶古城（秦简）博物馆碗幕影院"
-    : project.kind === "potala"
-      ? en ? "Inside the Snow City exhibition" : "布达拉宫雪城展陈现场"
-      : en ? "Gaomiao Site Museum entrance" : project.imageAlt;
+export function ProjectCard({ project, english: en = false }: { project: (typeof projects)[number]; english?: boolean }) {
+  const pair = languagePair("/cases/" + project.slug);
+  const potala = project.kind === "potala";
+  const alt = potala ? (en ? "Interior of the Snow City exhibition at the Potala Palace" : "布达拉宫雪城室内展陈") : (en ? "Entrance to the Gaomiao exhibition" : project.imageAlt);
   return (
-    <Link className="editorial-project-card" href={en ? pair.en : pair.zh} prefetch={false}>
-      <div className="editorial-project-photo">
-        <ResponsiveImage name={photo} alt={alt} sizes="(max-width: 700px) 92vw, 31vw" />
-      </div>
-      <div className="editorial-project-line">
-        <div>
-          <p>{en ? projectEnglish[project.slug].role : project.service}</p>
-          <h3>{title}</h3>
-        </div>
-        <ArrowUpRight size={21} aria-hidden="true" />
-      </div>
+    <Link className={"programme-project card-" + project.kind} href={en ? pair.en : pair.zh}>
+      <ResponsiveImage name={potala ? "potala-gallery" : project.kind} alt={alt}
+        sizes={potala ? "(max-width: 700px) 83vw, 34vw" : "(max-width: 700px) 92vw, 57vw"} />
+      <div className="programme-project-meta"><span>{en ? projectEnglish[project.slug].role : project.service}</span>{project.year && <time>{project.year}</time>}</div>
+      <div className="programme-project-title"><h3>{en ? projectNames[project.slug] : project.title}</h3><ArrowUpRight size={22} /></div>
     </Link>
   );
 }

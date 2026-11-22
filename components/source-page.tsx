@@ -54,12 +54,12 @@ export function SourcePageView({ page }: { page: SourcePage }) {
   const title =
     prefix === "/products"
       ? en
-        ? "Products for cultural experiences."
-        : "文化体验的产品与系统。"
+        ? "Product directory"
+        : "产品目录"
       : prefix === "/videos"
         ? en
-          ? "Stories, in motion."
-          : "让文化故事，在影像中发生。"
+          ? "Film collection"
+          : "影像收藏"
         : page.title;
   let blocks = page.blocks;
   // Related card sections get their own list instead of duplicated long text links.
@@ -69,12 +69,14 @@ export function SourcePageView({ page }: { page: SourcePage }) {
       /继续了解|相关产品|相关案例|RELATED|Related/.test(b.text || ""),
   );
   if (relatedStart >= 0) blocks = blocks.slice(0, relatedStart);
-  const hero = blocks.find((b) => b.type === "image");
-  if (hero && family !== "experiences")
-    blocks = blocks.filter((b) => b !== hero);
+  const film = family === "videos" && !index ? blocks.find((block) => block.type === "video" && block.src) : undefined;
+  const trailerStart = blocks.findIndex((block) => block.type === "h2" && /继续观看|继续探索|More films|Keep (watching|exploring)/i.test(block.text || ""));
+  const subject = trailerStart < 0 ? blocks : blocks.slice(0, trailerStart);
+  const hero = !film && !index && family !== "experiences" ? subject.find((block) => block.type === "image" && block.src) : undefined;
+  blocks = blocks.filter((block) => block !== hero && block !== film);
   const research = family === "research" && !index;
   return (
-    <div lang={page.lang}>
+    <div lang={page.lang} className={"archive-public archive-" + family + (index ? " is-directory" : " is-record")}>
       {page.anchors
         ?.filter(
           (id) =>
@@ -86,6 +88,7 @@ export function SourcePageView({ page }: { page: SourcePage }) {
         .map((id) => (
           <span className="source-anchor" id={id} key={id} />
         ))}
+      <div className={"source-introduction" + (hero || film ? " illustrated" : "")}>
       <PageHero
         path={`${path}/`}
         label={label}
@@ -98,6 +101,21 @@ export function SourcePageView({ page }: { page: SourcePage }) {
           </Link>
         )}
       </PageHero>
+      {hero && (
+        <figure className="source-frontispiece">
+          <img src={sourceImage(hero.src!)} alt={hero.alt || page.title} width={1200} height={800} fetchPriority="high" />
+          {hero.alt && <figcaption>{hero.alt}</figcaption>}
+        </figure>
+      )}
+      {film && (
+        <figure className="source-frontispiece film-frontispiece">
+          <video controls playsInline preload="none" poster={film.poster ? sourceImage(film.poster) : undefined} aria-label={page.title}>
+            <source src={film.src} type="video/mp4" />
+          </video>
+          <figcaption><a href={film.src} target="_blank" rel="noreferrer">{en ? "Open original film" : "打开原片"} ↗</a></figcaption>
+        </figure>
+      )}
+      </div>
       {index ? (
         <section
           className="container catalog-section"
@@ -179,18 +197,7 @@ export function SourcePageView({ page }: { page: SourcePage }) {
         </section>
       ) : (
         <>
-          {hero && family !== "experiences" && (
-            <figure className="container source-hero-image" data-reveal="media">
-              <img
-                src={sourceImage(hero.src!)}
-                alt={hero.alt || page.title}
-                width={1440}
-                height={850}
-                fetchPriority="high"
-              />
-              <figcaption>{hero.alt}</figcaption>
-            </figure>
-          )}
+
           <div className="container source-layout">
             <aside className="source-sidebar">
               <span>{en ? "IN THIS PAGE" : "内容导览"}</span>

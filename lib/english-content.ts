@@ -52,7 +52,7 @@ export const projectEnglish: Record<
 > = {
   "liye-qin-slips": {
     description:
-      "Transform writing and everyday life recorded in the Qin manuscripts into a history visitors can read, feel and explore.",
+      "From the wooden slips unearthed in Well No. 1 to the multiplication table on display, the exhibition opens a window into everyday life in Qianling County.",
     role: "Creative design / Implementation",
     sections: [
       {
@@ -91,14 +91,14 @@ export const projectEnglish: Record<
         text: "Palace conservation, local coinage and wine culture each provide a distinct cultural lens. Historical life scenes connect the themes into a coherent spatial experience.",
       },
       {
-        title: "Bring cultural content into space and production.",
-        text: "Exhibition design and implementation bring together objects, graphics and staged scenes. The scope and presentation follow MGC’s published project materials; no unverified commercial outcome metrics are added.",
+        title: "Barley wine at Qiangcang.",
+        text: "An animation traces the making of barley wine at the Qiangcang exhibition. At the Kansu residence, staged interiors turn the focus to daily life.",
       },
     ],
   },
   gaomiao: {
     description:
-      "Bring archaeological heritage into space, digital media and interaction, connecting knowledge with a tangible museum experience.",
+      "Enter through the Gaomiao entrance hall and follow the objects, wall displays and moving images into the archaeology of the site.",
     role: "Spatial design / Digital exhibition",
     sections: [
       {
@@ -110,8 +110,8 @@ export const projectEnglish: Record<
         text: "MGC's public project materials describe UI interaction, AR interaction and multimedia film, connecting cultural content with visitor participation.",
       },
       {
-        title: "Technology serves the story.",
-        text: "Space, digital content and interaction form a shared exhibition experience. Product configurations and the exact delivery scope remain subject to the project team's confirmed records.",
+        title: "Material and light in the gallery.",
+        text: "Earthen-textured walls enclose the exhibition. Central cases have their own lighting, while graphics around the room and moving images overhead can be read from farther away.",
       },
     ],
   },

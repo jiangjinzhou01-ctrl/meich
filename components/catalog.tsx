@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useId, useMemo, useRef, useState, type MouseEvent } from "react";
-import { ArrowUpRight, Plus, Search, X } from "lucide-react";
+import { ArrowUpRight, GalleryHorizontalEnd, List, Plus, Search, X } from "lucide-react";
 import type { CatalogFilter, CatalogItem } from "@/lib/source";
 
 const pageSize = 12;
@@ -41,6 +41,8 @@ export function Catalog({
   const restoration = useRef<{ top: number; path: string } | null>(null);
   const grid = useRef<HTMLDivElement>(null);
   const searchInput = useRef<HTMLInputElement>(null);
+  const [layout, setLayout] = useState<"plates" | "list">("list");
+  const [viewedPath, setViewedPath] = useState("");
   const restoreKey = "mgcCatalog:" + id;
   const domains = useMemo(() => Array.from(new Set(items.map((item) => item.domain).filter(Boolean))), [items]);
   const facets = useMemo(() => filters.filter((filter) =>
@@ -51,6 +53,7 @@ export function Catalog({
   useEffect(() => {
     function restore() {
       const params = new URLSearchParams(window.location.search);
+      if (projectIndex) setLayout(params.get("view") === "images" ? "plates" : "list");
       const selected: Record<string, string> = {};
       const domain = params.get(paramPrefix + "domain") || "";
       const domainLabel = domainAliases[domain]?.[english ? 1 : 0] || domain;
@@ -70,7 +73,7 @@ export function Catalog({
     restore();
     window.addEventListener("popstate", restore);
     return () => window.removeEventListener("popstate", restore);
-  }, [domains, english, facets, items.length, paramPrefix, restoreKey]);
+  }, [domains, english, facets, items.length, paramPrefix, projectIndex, restoreKey]);
 
   useEffect(() => {
     const saved = restoration.current;
@@ -112,6 +115,14 @@ export function Catalog({
     );
   }
 
+  function changeLayout(next: "plates" | "list") {
+    const url = new URL(window.location.href);
+    if (next === "plates") url.searchParams.set("view", "images");
+    else url.searchParams.delete("view");
+    window.history.replaceState(window.history.state, "", url);
+    setLayout(next);
+  }
+
   function clear() {
     save(initialState);
     searchInput.current?.focus({ preventScroll: true });
@@ -124,11 +135,13 @@ export function Catalog({
     (!selected.domain || item.domain === selected.domain) &&
     facets.every(({ name }) => !selected[name] || item.tags[name]?.includes(selected[name]))
   ));
+  const selectedItem = results.slice(0, limit).find((item) => item.path === viewedPath) || results[0];
+  const showPreview = projectIndex && layout === "list" && !!selectedItem?.image;
   const active = !!term || Object.values(selected).some(Boolean);
   const label = searchLabel || (english ? "Search catalog" : "搜索目录");
 
   return (
-    <div className={projectIndex ? "catalog catalog-projects" : "catalog"} id={id}>
+    <div className={projectIndex ? "catalog catalog-projects" : "catalog"} data-layout={projectIndex ? layout : undefined} id={id}>
       <div className="catalog-top">
         <form className="catalog-search" role="search" aria-label={label} onSubmit={(event) => event.preventDefault()}>
           <label className="sr-only" htmlFor={searchId}>{label}</label>
@@ -174,6 +187,12 @@ export function Catalog({
       )}
       <div className="catalog-status">
         <p role="status">{english ? `${results.length} results` : `找到 ${results.length} 项`}</p>
+        {projectIndex && (
+          <div className="archive-views" role="group" aria-label={english ? "Archive view" : "浏览方式"}>
+            <button type="button" aria-pressed={layout === "plates"} onClick={() => changeLayout("plates")}><GalleryHorizontalEnd size={16} />{english ? "Images" : "图像"}</button>
+            <button type="button" aria-pressed={layout === "list"} onClick={() => changeLayout("list")}><List size={17} />{english ? "List" : "目录"}</button>
+          </div>
+        )}
         {active && (
           <button type="button" onClick={clear}>
             {english ? "Clear filters" : "清除筛选"}
@@ -181,10 +200,14 @@ export function Catalog({
           </button>
         )}
       </div>
+      <div className={showPreview ? "archive-reading-table" : undefined}>
       <div className="catalog-grid" ref={grid}>
         {results.slice(0, limit).map((item) => (
           <Link className="catalog-card" href={item.path + "/"} key={item.path} prefetch={false}
-            data-catalog-path={item.path} onClick={(event) => remember(event, item.path)}>
+            data-catalog-path={item.path} data-previewed={showPreview && item.path === selectedItem.path ? "true" : undefined}
+            onFocus={showPreview ? () => setViewedPath(item.path) : undefined}
+            onPointerEnter={showPreview ? (event) => { if (event.pointerType === "mouse" || event.pointerType === "pen") setViewedPath(item.path); } : undefined}
+            onClick={(event) => remember(event, item.path)}>
             {item.image && (
               <div className="catalog-image">
                 <img src={item.image} alt="" width={800} height={520} loading="lazy" decoding="async" />
@@ -195,6 +218,18 @@ export function Catalog({
             <p>{item.description}</p>
           </Link>
         ))}
+      </div>
+      {showPreview && (
+        <div className="archive-viewer">
+          <Link href={selectedItem.path + "/"} prefetch={false} onClick={(event) => remember(event, selectedItem.path)}>
+            <figure><img src={selectedItem.image} alt={selectedItem.title} width={800} height={540} decoding="async" />
+            <figcaption><span>{[selectedItem.domain, selectedItem.format].filter(Boolean).join(" · ")}</span>
+              <strong>{selectedItem.title}</strong>
+              <p>{selectedItem.description}</p>
+            </figcaption></figure>
+          </Link>
+        </div>
+      )}
       </div>
       {!results.length && (
         <div className="catalog-empty">

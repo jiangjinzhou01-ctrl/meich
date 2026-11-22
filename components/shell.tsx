@@ -90,6 +90,9 @@ export function Navbar() {
             ))}
           </nav>
           <div className="nav-actions">
+            <Link className="mobile-index" href={prefix + "/cases/"} prefetch={false}>
+              {en ? "Project index" : "项目索引"}
+            </Link>
             <Link className="language-switch" href={languageHref} aria-label={languageLabel} prefetch={false}>
               {en ? "中文" : "EN"}
             </Link>
@@ -102,7 +105,7 @@ export function Navbar() {
             <button ref={trigger} className="icon-button menu-toggle" onClick={openMenu}
               aria-expanded={open} aria-controls="mobile-menu"
               aria-label={en ? "Open navigation" : "打开导航菜单"}>
-              <Menu size={23} />
+              <Menu size={20} aria-hidden="true" /><span>{en ? "Menu" : "目录"}</span>
             </button>
           </div>
         </div>

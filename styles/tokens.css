@@ -1,16 +1,16 @@
 :root {
-  --bg: #f8f5ed;
-  --surface: #eee9de;
-  --panel: #fcfaf5;
-  --ink: #211f1a;
-  --muted: #5c574e;
-  --border: #d8d0c2;
-  --subtle: #ebe6da;
-  --accent: #a3292b;
-  --accent-ink: #982426;
-  --seal: #92272a;
-  --seal-hover: #762022;
-  --editorial-heading: "Noto Serif CJK SC", "Songti SC", "STSong", SimSun, Georgia, serif;
+  --bg: #f5f3ed;
+  --surface: #e8e6dd;
+  --panel: #fbfaf6;
+  --ink: #20241f;
+  --muted: #565b54;
+  --border: #c9c9bd;
+  --subtle: #e8e7df;
+  --accent: #ce4b31;
+  --accent-ink: #9e3323;
+  --seal: #a13526;
+  --seal-hover: #81291d;
+  --editorial-heading: var(--font-instrument), var(--font-plates), "Noto Serif CJK SC", "Songti SC", "STSong", SimSun, Georgia, serif;
   --on-accent: #fff;
   --font:
     var(--font-geist-sans), "PingFang SC", "Microsoft YaHei", "Noto Sans SC",
@@ -23,11 +23,11 @@
   --fast: 180ms;
   --normal: 360ms;
   --slow: 700ms;
-  --gutter: clamp(20px, 4.8vw, 86px);
+  --gutter: clamp(19px, 4.25vw, 80px);
   --space: var(--gutter);
   --radius: 2px;
   --section-space: clamp(80px, 9vw, 160px);
-  --nav-height: 74px;
+  --nav-height: 68px;
   --nav-media-bg: #161616;
   --display: clamp(38px, 5.1vw, 78px);
   --h2: clamp(30px, 3.3vw, 52px);
@@ -49,7 +49,7 @@
 }
 @media (max-width: 767px) {
   :root {
-    --nav-height: 66px;
+    --nav-height: 58px;
     --section-space: 76px;
     --display: clamp(32px, 8.6vw, 48px);
     --h2: clamp(28px, 7vw, 38px);

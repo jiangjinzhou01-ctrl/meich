@@ -45,6 +45,11 @@ export function CaseFilm({ slug, english: en = false }: { slug: string; english?
   const lang = en ? 1 : 0;
   const kind = project.kind as keyof typeof chapterNames;
   const chapters = chapterNames[kind][lang];
+  const titleLines = {
+    liye: ["里耶古城", "（秦简）博物馆"],
+    potala: ["布达拉宫雪城", "展览升级改造"],
+    gaomiao: ["高庙遗址", "博物馆"],
+  }[kind];
   const path = languagePair("/cases/" + slug);
   const nextPath = languagePair("/cases/" + next.slug);
   const source = getSourcePage(en ? path.en : project.source);
@@ -58,58 +63,34 @@ export function CaseFilm({ slug, english: en = false }: { slug: string; english?
 
   return (
     <article className={`project-detail project-${kind}`}>
-      <header className="container project-heading">
-        <Link className="project-back" href={prefix + "/cases/"}>
-          <ArrowLeft size={17} aria-hidden="true" />{en ? "All projects" : "全部案例"}
-        </Link>
-        <div className="project-intro">
-          <div>
-            <h1>{title}</h1>
-            <p>{description}</p>
-          </div>
-          <div className="project-intro-facts">
-            <dl>
-              <div>
-                <dt>{en ? "MGC’s role" : "美创职责"}</dt>
-                <dd>{role}</dd>
-              </div>
-              {project.year && (
-                <div>
-                  <dt>{en ? "Year" : "项目年份"}</dt>
-                  <dd>{project.year}</dd>
-                </div>
-              )}
-            </dl>
-            <Link className="editorial-link project-enquiry" href={enquiryPath}>
-              {en ? "Discuss a similar project" : "咨询类似项目"}
-              <ArrowUpRight size={17} aria-hidden="true" />
+      <header className="case-jacket">
+        <div className="container case-jacket-inner">
+          <div className="case-jacket-type">
+            <Link className="project-back" href={prefix + "/cases/"}>
+              <ArrowLeft size={16} />{en ? "All projects" : "全部案例"}
             </Link>
+            <h1 className="section-display">{en ? title : titleLines.map((line) => <span className="case-name-line" key={line}>{line}</span>)}</h1>
+            <p>{description}</p>
+            <div className="jacket-facts">
+              <dl>
+                <div><dt>{en ? "MGC’s role" : "美创职责"}</dt><dd>{role}</dd></div>
+                {project.year && <div><dt>{en ? "Year" : "项目年份"}</dt><dd>{project.year}</dd></div>}
+              </dl>
+              <Link className="folio-link project-enquiry" href={enquiryPath}>{en ? "Discuss a similar project" : "咨询类似项目"}<ArrowUpRight size={17} /></Link>
+            </div>
           </div>
+          <figure className="jacket-print project-main-plate">
+            {kind === "liye" ? (
+              <img src={asset("/brand/liye-table.webp")} width={1080} height={564} fetchPriority="high"
+                alt={en ? "The multiplication table manuscript and its interpretation in the transparent case" : "「九九表」简牍与释读文字并列于透明展柜中"} />
+            ) : (
+              <ResponsiveImage name={kind} alt={photoCaption} priority mobileSource={kind === "gaomiao" ? "gaomiao-hero-mobile" : undefined}
+                sizes="(max-width: 760px) 100vw, 54vw" />
+            )}
+            <figcaption>{kind === "liye" ? en ? "The multiplication table · interactive display case" : "「九九表」透明互动展柜" : photoCaption}</figcaption>
+          </figure>
         </div>
       </header>
-
-      <div className="container project-media">
-        <figure className="project-plate project-main-plate">
-          <ResponsiveImage name={kind} alt={photoCaption} priority
-            mobileSource={kind === "gaomiao" ? "gaomiao-hero-mobile" : undefined}
-            sizes={kind === "gaomiao" ? "92vw" : "(max-width: 760px) 92vw, 62vw"} />
-          <figcaption>{photoCaption}</figcaption>
-        </figure>
-        {kind === "liye" && (
-          <figure className="project-plate project-side-plate">
-            <ResponsiveImage name="liye-details" alt={en ? "Exhibition layout with Qin manuscripts and explanatory text" : "秦简实物、现代转写与重点说明的释读版面"}
-              sizes="(max-width: 760px) 92vw, 29vw" />
-            <figcaption>{en ? "Manuscript interpretation panel" : "秦简释读版面"}</figcaption>
-          </figure>
-        )}
-        {kind === "potala" && (
-          <figure className="project-plate project-side-plate">
-            <ResponsiveImage name="potala-gallery" alt={en ? "Historic scenes inside the Snow City exhibition" : "雪城展览中的历史生活场景"}
-              sizes="(max-width: 760px) 92vw, 29vw" />
-            <figcaption>{en ? "Snow City exhibition interior" : "雪城室内展陈"}</figcaption>
-          </figure>
-        )}
-      </div>
 
       <CaseNavigation key={slug} chapters={chapters} english={en} />
       <div className="container project-story">
@@ -124,8 +105,36 @@ export function CaseFilm({ slug, english: en = false }: { slug: string; english?
                   <p>{copy.text}</p>
                 </div>
               </div>
+              {kind === "liye" && position === 0 && (
+                <div className="project-media story-print">
+                  <figure><img src={asset("/brand/liye-visitors.webp")} width={1080} height={809} loading="lazy" alt={en ? "Visitors looking at the central display beneath the curved screen" : "观众围绕核心展柜，双曲面屏在上方展示迁陵洞庭郡"} />
+                    <figcaption>{en ? "Qianling and Dongting · the main case and curved screen" : "「迁陵洞庭郡」组合陈列 · 核心展柜与双曲面屏"}</figcaption></figure>
+                </div>
+              )}
+              {kind === "liye" && position === 1 && (
+                <div className="project-media process-prints">
+                  <figure><img src={asset("/brand/liye-bench.webp")} width={1080} height={810} loading="lazy" alt={en ? "Adjusting the viewing angle of a display case" : "调试展柜的观看角度与照明"} />
+                    <figcaption>{en ? "Testing the viewing angle" : "测试展柜的观展角度"}</figcaption></figure>
+                  <figure><img src={asset("/brand/liye-casework.webp")} width={1080} height={810} loading="lazy" alt={en ? "Positioning the manuscript supports under the display light" : "在陈列照明下比对简牍的摆放位置"} />
+                    <figcaption>{en ? "Checking manuscript placement" : "比对简牍的陈列位置"}</figcaption></figure>
+                </div>
+              )}
+              {kind === "potala" && position === 0 && (
+                <div className="project-media snow-prints">
+                  <figure><ResponsiveImage name="potala" alt={photoCaption} sizes="(max-width: 700px) 93vw, 48vw" /><figcaption>{photoCaption}</figcaption></figure>
+                  <figure><ResponsiveImage name="potala-gallery" alt={en ? "Inside the Snow City exhibition" : "雪城专题展览室内"} sizes="(max-width: 700px) 80vw, 35vw" />
+                    <figcaption>{en ? "Inside the Snow City exhibition" : "雪城专题展览 · 室内"}</figcaption></figure>
+                </div>
+              )}
               {kind === "liye" && position === 2 && <ProjectStudy english={en} />}
-              {kind === "liye" && position === 3 && <CaseReader english={en} />}
+              {kind === "liye" && position === 3 && <>
+                <CaseReader english={en} />
+                <figure className="projection-print"><img src={asset("/brand/liye-projection.webp")}
+                  srcSet={asset("/brand/liye-projection-640.webp") + " 640w, " + asset("/brand/liye-projection.webp") + " 1080w"}
+                  sizes="(max-width: 700px) 91vw, 55vw" width={1080} height={650} loading="lazy"
+                  alt={en ? "A gold map of Qin filling the curved screen" : "金色秦地图投影于碗幕之上"} />
+                  <figcaption>{en ? "Liye · a second scene in the immersive cinema" : "里耶 · 碗幕影院另一幕"}</figcaption></figure>
+              </>}
               {kind === "potala" && position === 2 && (
                 <div className="project-source-control">
                   <ImageInspector name="potala-gallery" label={en ? "Snow City exhibition interior" : "雪城室内展陈"} english={en} />
@@ -187,6 +196,7 @@ export function CaseFilm({ slug, english: en = false }: { slug: string; english?
       </section>
       <div className="container project-next">
         <Link className="project-next-link" href={en ? nextPath.en : nextPath.zh}>
+          <img className="next-project-photo" src={asset(next.image)} alt="" width={240} height={140} loading="lazy" />
           <div>
             <p>{en ? "Next project" : "下一个项目"}</p>
             <h2>{en ? projectNames[next.slug] : next.title}</h2>

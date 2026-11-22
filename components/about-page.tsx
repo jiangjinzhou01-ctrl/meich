@@ -1,59 +1,43 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { company } from "@/lib/content";
+import { ArrowUpRight } from "lucide-react";
+import { asset, company } from "@/lib/content";
 import { getSourcePage } from "@/lib/source";
 import { FilmDialog } from "./film-dialog";
-import { ResponsiveImage } from "./responsive-image";
 import { SourceContent } from "./source-content";
-import { ContactCTA, PageHero } from "./ui";
+import { ContactCTA } from "./ui";
 
 export function AboutPage({ english: en = false }: { english?: boolean }) {
   const prefix = en ? "/en" : "";
   const source = getSourcePage(prefix + "/about");
   return (
     <>
-      <PageHero
-        label=""
-        path={prefix + "/about/"}
-        title={en ? "About MGC Digital" : "关于美创数字"}
-        description={en
-          ? "Based in Changsha, MGC Digital brings cultural research, exhibition design, digital production and museum software together."
-          : company + "立足长沙，面向博物馆、展馆和文旅场所，连接文化研究、展陈设计、数字内容制作与智慧软件。"}
-      >
-        <div className="service-page-links">
-          <Link className="editorial-link" href={prefix + "/insights/"}>
-            {en ? "Company news" : "美创动态"}<ArrowRight size={17} aria-hidden="true" />
-          </Link>
-          <Link className="editorial-link" href={en ? "/en/collaboration/" : "/careers/"}>
-            {en ? "Join or collaborate" : "人才与协作"}<ArrowRight size={17} aria-hidden="true" />
-          </Link>
+      <header className="company-mast">
+        <div className="container company-mast-inner">
+          <div>
+            <p className="small-rule">{en ? "MGC Digital · Changsha" : company}</p>
+            <h1 className="section-display">{en ? <>A studio<br />in Changsha</> : <>从长沙<br />出发。</>}</h1>
+            <p>{en ? "Cultural researchers, exhibition designers, filmmakers and software developers share a studio in Changsha. Their work connects collections with the people who visit them." : "在长沙，文化研究、空间设计、数字影像和软件团队一起工作。美创的项目从一批馆藏、一处遗址或一个地方故事开始。 "}</p>
+            <FilmDialog english={en} />
+          </div>
+          <figure><img src={asset("/brand/studio.webp")} width={1280} height={720} alt={en ? "Design team working at the Changsha office" : "设计团队在长沙工作室办公"} fetchPriority="high" />
+            <figcaption>{en ? "MGC Digital · the Changsha studio" : "美创数字 · 长沙工作室"}</figcaption></figure>
         </div>
-      </PageHero>
-      <section className="container company-overview">
-        <figure className="company-photo">
-          <ResponsiveImage name="reception" alt={en ? "MGC Digital’s Changsha office reception" : "美创数字长沙办公空间"} sizes="(max-width: 760px) 92vw, 55vw" priority />
-          <figcaption>{en ? "MGC Digital · Changsha office" : "美创数字 · 长沙办公空间"}</figcaption>
-        </figure>
-        <div className="company-history">
-          <h2>{en ? "Our practice in Changsha" : "从长沙出发"}</h2>
-          <p>{en
-            ? "Cultural researchers, designers, digital producers and software teams work together on the same project. Their work runs from understanding the material through to the visitor experience."
-            : "内容研究、空间设计、数字制作与软件开发在同一个项目里协作，从读懂资料一路做到观众能在现场使用的体验。"}</p>
-          <dl>
-            <div><dt>2008</dt><dd>{en ? "Start of the brand’s practice" : "品牌实践起点"}</dd></div>
-            <div><dt>2015</dt><dd>{en ? "Legal entity established" : "工商主体成立"}</dd></div>
-          </dl>
-          <FilmDialog english={en} />
+      </header>
+      <section className="container studio-history">
+        <h2>{en ? "The practice" : "公司沿革"}</h2>
+        <dl>
+          <div><dt>2008</dt><dd>{en ? "The team began working in digital exhibitions." : "团队开始从事数字展示，积累展陈与多媒体项目经验。"}</dd></div>
+          <div><dt>2015</dt><dd>{en ? "Hunan MGC Digital Technology Co., Ltd. was formally established on 9 February." : "2 月 9 日，湖南美创数字科技有限公司正式成立。"}</dd></div>
+        </dl>
+        <div className="service-page-links">
+          <Link className="folio-link" href={prefix + "/insights/"}>{en ? "Studio news" : "美创动态"}<ArrowUpRight size={17}/></Link>
+          <Link className="folio-link" href={en ? "/en/collaboration/" : "/careers/"}>{en ? "Careers and collaboration" : "人才与协作"}<ArrowUpRight size={17}/></Link>
         </div>
       </section>
-      {source && (
-        <section className="container company-archive" id="profile">
-          <details>
-            <summary>{en ? "Company profile, team and published records" : "公司概况、创始人与专家团队资料"}</summary>
-            <SourceContent page={source} excludeIds={["profile"]} />
-          </details>
-        </section>
-      )}
+      {source && <section className="container company-archive" id="profile">
+        <details><summary>{en ? "Company profile, founder and expert team" : "公司概况、创始人与专家团队资料"}</summary>
+          <SourceContent page={source} excludeIds={["profile"]} /></details>
+      </section>}
       <ContactCTA english={en} />
     </>
   );

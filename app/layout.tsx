@@ -7,6 +7,12 @@ const GeistSans = localFont({
   display: "swap",
   preload: true,
 });
+const exhibitionLatin = localFont({
+  src: "../public/fonts/instrument-serif-latin.woff2", variable: "--font-instrument", display: "swap", weight: "400",
+});
+const exhibitionChinese = localFont({
+  src: "../public/fonts/exhibition-song-sc.woff2", variable: "--font-plates", display: "swap", weight: "400",
+});
 import { Navbar, Footer, MotionProvider } from "@/components/shell";
 import { company, siteUrl, asset } from "@/lib/content";
 import "./globals.css";
@@ -20,7 +26,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "zh_CN",
     siteName: company,
-    title: "美创数字 · 为文化空间设计数字体验",
+    title: "美创数字 · 博物馆展览设计与数字制作",
     description: "为博物馆、展馆和文旅场所设计展览、制作数字内容和实施互动展项。",
     images: [{ url: `${siteUrl}/og.png`, width: 1200, height: 630 }],
   },
@@ -36,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html className={GeistSans.variable} lang="zh-CN" suppressHydrationWarning>
+    <html className={[GeistSans.variable, exhibitionLatin.variable, exhibitionChinese.variable].join(" ")} lang="zh-CN" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{

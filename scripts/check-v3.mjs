@@ -186,11 +186,70 @@ try {
         assert(bounds.y >= 0 && bounds.y + bounds.height <= height, "CTA above the fold");
       }
       assert(await view.locator(".home-opening h1").isVisible());
-      assert((await view.locator(".opening-photograph img").evaluate((img) => img.naturalWidth)) > 0);
+      assert.equal(await view.locator(".atlas-plate").count(), 3);
+      assert(await view.locator(".atlas-plate img").evaluateAll((images) => images.every((img) => img.naturalWidth > 0)));
+      assert.match(await view.locator(".atlas-plate[data-slot=active]").getAttribute("href"), /liye-qin-slips/);
       evidence.push({ width, height });
     }
     await withoutJS.close();
     return evidence;
+  });
+
+  await test("The printed project covers respond to keys, drag, touch and direct entry", async () => {
+    await page.setViewportSize({ width: 1440, height: 920 });
+    await visit(page, "/");
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    const table = page.locator(".print-table");
+    const current = table.locator("[data-slot=active]");
+    await table.focus();
+    await page.keyboard.press("ArrowRight");
+    assert.match(await current.getAttribute("href"), /qi-baishi/);
+    await page.keyboard.press("End");
+    assert.match(await current.getAttribute("href"), /hearing-huxiang/);
+    await page.getByRole("button", { name: "下一张封面" }).click();
+    assert.match(await current.getAttribute("href"), /liye-qin-slips/);
+    const rect = await current.boundingBox();
+    const x = rect.x + rect.width / 2, y = rect.y + rect.height / 2;
+    await page.mouse.move(x, y);
+    await page.mouse.down();
+    await page.mouse.move(x - 110, y + 4, { steps: 8 });
+    await page.mouse.up();
+    assert.match(await current.getAttribute("href"), /qi-baishi/);
+    assert.equal(new URL(page.url()).pathname, base + "/");
+    await table.focus();
+    await page.keyboard.press("Enter");
+    await page.waitForURL("**/cases/brochure-2026-qi-baishi/");
+    await page.setViewportSize({ width: 390, height: 844 });
+    await visit(page, "/en/");
+    const touch = await context.newCDPSession(page);
+    const plate = await current.boundingBox();
+    const sx = plate.x + plate.width / 2, sy = plate.y + plate.height / 2;
+    await touch.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: sx, y: sy }] });
+    for (const delta of [12, 30, 60, 100]) await touch.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: sx - delta, y: sy + 2 }] });
+    await touch.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+    assert.match(await current.getAttribute("href"), /en.*qi-baishi/);
+    await current.tap();
+    await page.waitForURL("**/en/cases/brochure-2026-qi-baishi/");
+    await touch.detach();
+    await page.emulateMedia({ reducedMotion: "no-preference" });
+    return { editions: 3, keyboard: true, mouseDrag: true, touch: true, tapAfterDrag: true };
+  });
+
+  await test("Project index preview follows focus and keeps the requested view across reloads", async () => {
+    await page.setViewportSize({ width: 1440, height: 920 });
+    await visit(page, "/cases/");
+    const catalog = page.locator(".catalog-projects");
+    const cards = catalog.locator("[data-catalog-path]");
+    await cards.nth(1).focus();
+    const path = await cards.nth(1).getAttribute("href");
+    assert.equal(await catalog.locator(".archive-viewer a").getAttribute("href"), path);
+    await catalog.getByRole("button", { name: "图像", exact: true }).click();
+    assert.match(page.url(), /view=images/);
+    await page.reload();
+    await page.waitForSelector('.catalog-projects[data-layout="plates"]');
+    await catalog.getByRole("button", { name: "目录", exact: true }).click();
+    assert.equal(await catalog.getAttribute("data-layout"), "list");
+    return { focusPreview: true, viewRestoration: true };
   });
 
   await test("Mobile menu keyboard focus, Escape, theme, and client navigation", async () => {
@@ -517,7 +576,7 @@ try {
     await page.emulateMedia({ reducedMotion: "reduce" });
     for (const [width, label] of [[1440, "desktop"], [390, "mobile"]]) {
       await page.setViewportSize({ width, height: width === 390 ? 844 : 1000 });
-      for (const [route, name] of [["/", "home"], ["/cases/", "case-index"], ["/cases/liye-qin-slips/", "liye"], ["/services/", "services"], ["/contact/", "contact"]]) {
+      for (const [route, name] of [["/", "home"], ["/cases/", "case-index"], ["/cases/liye-qin-slips/", "liye"], ["/services/", "services"], ["/contact/", "contact"], ["/about/", "about"], ["/research/", "research"], ["/cases/potala-snow-city/", "snow-city"], ["/cases/gaomiao/", "gaomiao"]]) {
         await visit(page, route);
         await shot(page, name + "-" + label);
       }
